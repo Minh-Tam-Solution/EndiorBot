@@ -29,6 +29,29 @@ authority: CEO + CTO G3 PRE-APPROVED 2026-04-27
 
 ## Launch Day Sequence (CEO executes)
 
+### Phase 0: Release Integrity Gate (08:45)
+
+**HARD GATE — do NOT proceed to Phase 1 without ALL green:**
+
+```bash
+cd /Users/dttai/Documents/Python/01.NQH/EndiorBot
+
+# 1. Verify keys rotated (CTO hard gate — Sprint 145 A1)
+grep "Pre-publish key rotation (2026-04-27" SECURITY.md && echo "✅ Keys rotated" || echo "❌ BLOCK"
+
+# 2. Clean build + smoke test
+pnpm build && echo "✅ Build clean" || echo "❌ BLOCK"
+pnpm test 2>&1 | tail -3  # Expect: 8,124+ pass
+
+# 3. Package integrity
+npm pack --dry-run 2>&1 | grep "total files" # Expect: ~2,300 files, 0 sensitive
+
+# 4. No secrets in staged files
+git diff --cached --name-only | grep -E "\.env$|\.mcp" && echo "❌ BLOCK" || echo "✅ Clean"
+```
+
+**All 4 green → proceed. Any red → STOP and fix.**
+
 ### Phase 1: Flip Public (09:00)
 
 ```bash
@@ -64,6 +87,8 @@ npm info endiorbot
 ```
 
 ### Phase 3: GitHub Releases (09:30)
+
+**Ownership:** CEO creates both releases. @pm verifies links + checksums after publish.
 
 #### EndiorBot Release
 
@@ -153,27 +178,48 @@ MIT License — MTS SDLC Framework is a trademark of Minh Tam Solution.
 # GitHub Pages: Settings → Pages → Source: Deploy from branch → main → /site
 # CNAME already at site/CNAME → endior.net
 
-# DNS: endior.net → GitHub Pages IPs
+# DNS (apex domain — use A records, NOT CNAME):
 # A records: 185.199.108.153, 185.199.109.153, 185.199.110.153, 185.199.111.153
-# OR CNAME: endior.net → minh-tam-solution.github.io
+# www CNAME: www.endior.net → minh-tam-solution.github.io
 ```
 
 #### sdlcframework.org (Framework)
 
 ```bash
-# Option A (immediate): redirect to GitHub repo
-# CNAME: sdlcframework.org → github.com/Minh-Tam-Solution/SDLC-Enterprise-Framework
-
-# Option B (Sprint 147): full docs site
+# CPO condition 1: apex domain redirect — use registrar URL redirect, NOT CNAME
+# Option A (recommended for launch): URL redirect at registrar
+#   sdlcframework.org → https://github.com/Minh-Tam-Solution/SDLC-Enterprise-Framework
+#   (Registrar: Namecheap/GoDaddy/Cloudflare → URL Redirect Record for @ → GitHub URL)
+#
+# Option B (Sprint 147): GitHub Pages site + A records (same as endior.net pattern)
 ```
 
 #### sdlcframework.dev (Orchestrator)
 
 ```bash
-# Simple "Coming Soon" page or redirect to MTS website
+# URL redirect at registrar → https://mtsolution.com.vn (or "Coming Soon" page)
 ```
 
-### Phase 5: Social Announcement (10:30)
+#### Pre-Social Gate (CPO condition 2)
+
+**HARD GATE before Phase 5:** Do NOT post on social media until ALL links verified:
+
+```bash
+# Must ALL return 200 or 301/302 redirect:
+curl -sI https://endior.net | head -1           # Expect: HTTP/2 200
+curl -sI https://sdlcframework.org | head -1     # Expect: HTTP/1.1 301 (redirect to GitHub)
+curl -sI https://sdlcframework.dev | head -1     # Expect: HTTP/1.1 301 (redirect)
+npx endiorbot --help                             # Expect: usage output
+npm info endiorbot                               # Expect: package metadata
+```
+
+If any link fails → **STOP social posting**. Fix DNS/deploy first. Social can happen hours later — broken links on launch day is worse than delayed announcement.
+
+### Phase 5: Social Announcement (10:30 — AFTER pre-social gate passes)
+
+**Sequencing (CPO directive):** X/Twitter + LinkedIn first → wait 30-60min for initial feedback → Facebook + Reddit.
+
+**Ownership:** CEO posts on all channels. @pm prepares copy (pre-written below).
 
 #### Twitter/X Thread
 
@@ -262,9 +308,56 @@ The tool is the reference implementation.
 Links in comments.
 ```
 
+#### Facebook — CEO Personal + MTS Fan Page
+
+**CEO Personal (facebook.com/dttai):**
+```
+🚀 Hôm nay mình open-source 2 dự án sau 145 sprints phát triển:
+
+🤖 EndiorBot — công cụ AI cho solo developer
+   14 AI agents × 5 kênh × 39 commands
+   Trả lời trong 30 giây thay vì 30-60 phút
+
+📚 SDLC Framework 6.3.1 — phương pháp luận phát triển AI+Human
+   503 tài liệu, 11 modules đào tạo (39 giờ), 18 SOUL templates
+
+Cả 2 đều MIT License — miễn phí cho cá nhân và thương mại.
+
+GitHub: github.com/Minh-Tam-Solution/EndiorBot
+npm: npx endiorbot --help
+Docs: endior.net
+
+#opensource #AI #developer #SDLC #TypeScript
+```
+
+**MTS Fan Page (Minh Tam Solution):**
+```
+🎉 Minh Tam Solution chính thức open-source SDLC Framework 6.3.1 — 
+phương pháp luận phát triển phần mềm AI+Human đã được thực chiến 
+qua 14 nền tảng trong NQH Technology Ecosystem.
+
+Framework bao gồm:
+✅ 7 trụ cột (Pillars) cho AI+Human Excellence
+✅ 10 giai đoạn vòng đời phát triển (WHY → GOVERN)
+✅ 18 SOUL templates cho AI agents
+✅ 11 modules đào tạo (39 giờ) + 80 câu hỏi kiểm tra
+✅ 503 tài liệu phương pháp luận
+
+Kèm theo: EndiorBot — công cụ tham chiếu (reference implementation) 
+với 14 AI agents, 5 kênh giao tiếp, 8,124+ tests.
+
+🔗 Framework: github.com/Minh-Tam-Solution/SDLC-Enterprise-Framework
+🔗 EndiorBot: github.com/Minh-Tam-Solution/EndiorBot
+🔗 Docs: sdlcframework.org | endior.net
+
+MIT License — miễn phí sử dụng.
+
+#MTS #SDLC #AIEngineering #OpenSource #Framework
+```
+
 #### Reddit
 
-Post to:
+Post to (30-60 phút sau X/LinkedIn — CPO social sequencing):
 - r/programming — "EndiorBot: Open-source AI agent orchestrator for solo developers"
 - r/typescript — "14 SOUL agents in TypeScript — EndiorBot architecture"
 - r/artificial — "SDLC Framework 6.3.1: Methodology for AI+Human development"
@@ -287,9 +380,11 @@ Post to:
 ## Rollback Plan
 
 If critical issue found post-launch:
-1. **npm unpublish** (within 72h): `npm unpublish endiorbot@0.1.0-beta.1`
-2. **Repo back to private**: GitHub Settings → Danger Zone → Make private
-3. **Fix → re-publish**: Fix issue, bump to `0.1.0-beta.2`, re-publish
+1. **npm deprecate** (immediate): `npm deprecate endiorbot@0.1.0-beta.1 "Critical issue found — use beta.2 when available"`
+   - Preferred over `npm unpublish` (npm policy limits unpublish to 72h + may be blocked if downloads exist)
+2. **Fix → re-publish**: Fix issue, bump to `0.1.0-beta.2`, `npm publish --access public`
+3. **Update GitHub Release**: Edit release notes to point to beta.2
+4. **Repo stays public** (unless security vulnerability in code itself — then flip private temporarily)
 
 ---
 
