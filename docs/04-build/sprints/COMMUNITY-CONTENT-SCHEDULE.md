@@ -324,7 +324,7 @@ Sau hơn 10 tháng phát triển qua 145 sprints, chúng tôi chia sẻ 2 sản 
 🏆 Đã được thực chiến qua:
 • EndiorBot — 14 agents, 5 kênh, 8,124+ tests
 • AncestorTree — Nền tảng gia phả, xây trong 1 buổi tối
-• BFlow Platform — 200K+ SME
+• BFlow Platform — kế toán doanh nghiệp
 • NQH Technology Ecosystem — 14 nền tảng
 
 🔗 EndiorBot: github.com/Minh-Tam-Solution/EndiorBot
@@ -494,7 +494,7 @@ MIT License. Feedback and contributions welcome!
 **Tags:** `AI`, `TypeScript`, `OpenSource`, `SDLC`
 
 Same outline as Dev.to, adapted for Vietnamese audience:
-- Add Vietnamese business context (BFlow 200K SME, NQH ecosystem)
+- Add Vietnamese business context (BFlow kế toán, NQH ecosystem)
 - Reference AncestorTree as relatable case study (gia phả = Vietnamese culture)
 - Include MTS-SDLC-Lite as starter methodology for Vietnamese startups
 - Use Vietnamese code comments in examples
@@ -606,7 +606,7 @@ What makes it different from "just use agile":
 We used this methodology to build:
 • EndiorBot (14 agents, 8,124 tests)
 • AncestorTree (genealogy platform, built in 1 evening)
-• BFlow Platform (200K+ SME)
+• BFlow Platform (kế toán doanh nghiệp)
 
 The framework is free, MIT-licensed, and has 11 training modules (39 hours) with 80 quiz questions.
 
