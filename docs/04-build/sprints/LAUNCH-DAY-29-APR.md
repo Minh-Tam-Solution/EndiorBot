@@ -13,6 +13,24 @@ attribution: "Initiated by @dttai, built with Minh Tam Solution"
 
 > **OpenClaw origin:** OpenClaw is internal MTS code. No external license obligation. NOTICE clause added to README.
 
+## MTS Open-Source Ecosystem (cross-promotion)
+
+EndiorBot is the 4th OSS project from MTS. Launch leverages existing audience:
+
+| Project | Repo | Role in Launch |
+|---------|------|----------------|
+| **MTS-SDLC-Lite** | [GitHub](https://github.com/Minh-Tam-Solution/MTS-SDLC-Lite) | Methodology foundation — "EndiorBot implements SDLC at scale" |
+| **TinySDLC** | [GitHub](https://github.com/Minh-Tam-Solution/tinysdlc) / [npm](https://npmjs.com/package/tinysdlc) | Predecessor — "EndiorBot is the production evolution of TinySDLC" |
+| **AncestorTree** | [GitHub](https://github.com/Minh-Tam-Solution/AncestorTree) | Proof case — "Built in 1 evening with 8 AI agents" |
+| **SDLC Framework 6.3.1** | [GitHub](https://github.com/Minh-Tam-Solution/SDLC-Enterprise-Framework) | Full methodology — "503 docs, 11 training modules" |
+
+**Cross-promotion actions on launch day:**
+- Add "See also: EndiorBot" link to MTS-SDLC-Lite + TinySDLC + AncestorTree READMEs
+- Reference AncestorTree success story in social posts: "1 person + 8 agents → production genealogy platform"
+- TinySDLC README: "For production-grade orchestration, see EndiorBot"
+
+---
+
 ## Pre-Launch Checklist (verified 2026-04-27)
 
 | # | Item | Status | Evidence |
@@ -30,6 +48,10 @@ attribution: "Initiated by @dttai, built with Minh Tam Solution"
 | 11 | OTT routing bugs fixed | DONE | Telegram router gutted, 1 local handler (/start) |
 | 12 | Landing page | DONE | `site/index.html` ready for GitHub Pages |
 | 13 | SDLC compliance | 96% | Target 95% — PASSED |
+| 14 | CODE_OF_CONDUCT.md | DONE | Contributor Covenant 2.1 |
+| 15 | FUNDING.yml | DONE | GitHub Sponsors + Buy Me a Coffee |
+| 16 | Clean npm install test | DONE | tarball → install → `endiorbot --help` works |
+| 17 | good-first-issue labels | TODO | Create 10+ issues before launch (CEO 28/4 evening) |
 
 ---
 
@@ -374,6 +396,64 @@ MIT License — miễn phí sử dụng.
 **30/4-1/5 (based on r/opensource reception — skip if <20 upvotes):**
 - r/programming — "EndiorBot: 14 AI agents orchestrated via CLI, Telegram, or Desktop"
 - r/typescript — "Building an agent orchestrator: 8,124 tests, 51 ADRs, 145 sprints"
+
+#### Hacker News — Show HN (29/4 21:00 ICT = US morning peak)
+
+```
+Show HN: EndiorBot – 14 AI agents in your terminal with SDLC governance
+
+EndiorBot is an open-source AI agent orchestrator for solo developers.
+It routes @agent mentions to 14 specialized SDLC agents (PM, Architect,
+Coder, Reviewer, Tester, etc.) across CLI, Web, Telegram, Zalo, and Desktop.
+
+Key decisions:
+- CC-first routing: Claude Code primary, Kimi (free OAuth) as fallback
+- Gateway resilience: circuit breaker (2 failures → skip → 60s cooldown)
+- 39 unified commands across all 5 channels via single CommandDispatcher
+- Ported from Python (OpenClaw) to TypeScript — 145 sprints, 8,124 tests
+
+Built on SDLC Framework 6.3.1 (also open-sourced today) — a tool-agnostic
+methodology with 503 docs, 11 training modules, and 18 agent templates.
+
+The same methodology was used to build AncestorTree (genealogy platform)
+in 1 evening with 8 AI agents — https://ancestortree.endior.net
+
+GitHub: https://github.com/Minh-Tam-Solution/EndiorBot
+npm: npx endiorbot --help
+```
+
+---
+
+## 3-Layer Weekly Rollout (proven from AncestorTree launch)
+
+### Week 1: Core Developer Community (29/4-3/5)
+
+| Day | Channel | Content |
+|-----|---------|---------|
+| Mon 29/4 | GitHub Discussions (pinned) + Release Notes | EN + VI |
+| Mon 29/4 | X/Twitter thread + LinkedIn post | Global dev audience |
+| Mon 29/4 | Facebook CEO + MTS Fan Page | Vietnamese dev community |
+| Mon 29/4 21:00 ICT | Hacker News (Show HN) | Pure technical angle |
+| Tue 30/4 | Reddit r/opensource | Problem-first framing |
+| Wed 1/5 | Reddit r/programming (if r/opensource >20 upvotes) | Architecture deep-dive |
+| Fri 3/5 | Cross-promote from MTS-SDLC-Lite + TinySDLC + AncestorTree READMEs | Existing audience |
+
+### Week 2: Technical Deep-Dive (5-9/5)
+
+| Channel | Content |
+|---------|---------|
+| Dev.to (English) | "Building an AI Agent Orchestrator — 145 Sprints" (~1500 words) |
+| Viblo (Vietnamese) | Same article adapted for Vietnamese dev community |
+| X/Twitter | 10-tweet architecture thread (CC-first routing, circuit breaker, 5-channel design) |
+| LinkedIn | Follow-up: "Methodology behind the tool — SDLC 6.3.1" |
+
+### Week 3+: Amplification (12/5+)
+
+| Channel | Content |
+|---------|---------|
+| Reddit r/selfhosted, r/sideproject | Positioning for indie hackers |
+| GitHub AMA Discussion | "Ask me anything about 145 sprints of AI-assisted development" |
+| YouTube/Loom | 5-min demo video: init → serve → Telegram chat |
 
 ---
 
