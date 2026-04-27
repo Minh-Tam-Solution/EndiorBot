@@ -13,7 +13,7 @@ It integrates with Claude Code as an Agent Orchestrator, enabling @agent invocat
 
 **Identity**: Solo Developer Power Tool — not a platform, not an SDLC enforcer.
 
-> **Origin:** EndiorBot was ported from [OpenClaw](https://github.com/Minh-Tam-Solution/EndiorBot/blob/main/docs/01-planning/openclaw-backport/PRD.md) (Python) to TypeScript in Sprint 54 (ADR-005). The OpenClaw backport (Sprint 131-132) brought exec-policy, Active Memory, and SSRF protection patterns into the current architecture.
+> **Origin:** EndiorBot was ported from OpenClaw (Python, internal MTS codebase) to TypeScript in Sprint 54 (ADR-005). The OpenClaw backport (Sprint 131-132) brought exec-policy, Active Memory, and SSRF protection patterns into the current architecture. OpenClaw is owned by Minh Tam Solution; code transferred to EndiorBot is released under MIT for this project.
 
 ## Methodology
 
@@ -35,9 +35,8 @@ Application development documentation under `docs/` is written in **English** (S
 
 - Node.js >= 20
 - pnpm (via corepack: `corepack enable`)
-- An AI API key (Anthropic required; Google API key recommended for fallback)
 
-> **Provider routing (Sprint 143+):** Claude Code is primary for Tier 1/2 tasks. Kimi serves as fallback when Claude Code is unavailable. Set `ANTHROPIC_API_KEY` and optionally `GOOGLE_API_KEY` in your `.env` file.
+> **Claude Code is recommended but not required.** Planning, methodology, and consultation agents work without it via Kimi (free OAuth), OpenAI, or any configured LLM. Claude Code is primary for coding workflow (@coder, @architect in PATCH mode).
 
 ## Install
 

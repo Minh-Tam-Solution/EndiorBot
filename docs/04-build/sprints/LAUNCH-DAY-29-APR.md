@@ -1,11 +1,17 @@
 ---
 type: launch-plan
 date: 2026-04-29
+slip_date: 2026-04-30
 status: READY — all blockers resolved
 authority: CEO + CTO G3 PRE-APPROVED 2026-04-27
+attribution: "Initiated by @dttai, built with Minh Tam Solution"
 ---
 
 # Launch Day Plan — 29 April 2026
+
+> **Slip policy:** If 28/4 22:00 ICT gate fails (DNS/npm not ready) → slip to **30/4 morning ICT** (still Tuesday US evening). Hard gate, not soft reminder.
+
+> **OpenClaw origin:** OpenClaw is internal MTS code. No external license obligation. NOTICE clause added to README.
 
 ## Pre-Launch Checklist (verified 2026-04-27)
 
@@ -279,7 +285,7 @@ npx endiorbot serve
 📖 Docs: endior.net
 🎓 Framework: sdlcframework.org
 
-MIT License — built by @dttai for solo developers everywhere
+MIT License — initiated by @dttai, built with Minh Tam Solution
 ```
 
 #### Dev.to Article (publish within 1 week)
@@ -399,8 +405,8 @@ If critical issue found post-launch:
 
 | Metric | Target | Stretch |
 |--------|--------|---------|
-| GitHub stars (EndiorBot) | 50 | 200 |
-| GitHub stars (Framework) | 100 | 500 |
+| GitHub stars (EndiorBot) | 100 | 300 |
+| GitHub stars (Framework) | 50 | 200 |
 | npm weekly installs | 50 | 200 |
 | First external PR | 2 weeks | 1 week |
 | Dev.to article views | 500 | 2,000 |
