@@ -51,7 +51,7 @@ CEO directive: launch **SDLC Framework 6.3.1** (methodology) and **EndiorBot** (
 ### A2: Update SECURITY.md (~15min)
 
 - Add rotation date: "All credentials rotated on YYYY-MM-DD prior to public launch"
-- Verify security contact email works (security@endior.net or dttai@endior.net)
+- Verify security contact email works (security@endior.net or dttai@mtsolution.com.vn)
 
 **Owner:** @cso
 

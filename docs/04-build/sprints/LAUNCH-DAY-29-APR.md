@@ -41,7 +41,7 @@ EndiorBot is the 4th OSS project from MTS. Launch leverages existing audience:
 | 4 | Internal refs cleaned | DONE | 0 nqh-internal, 0 CEO Power Tool in active docs |
 | 5 | CI/CD pipeline | DONE | `.github/workflows/ci.yml` — `--pool=forks --retry=2` |
 | 6 | npm pack clean | DONE | 0 sensitive files in package |
-| 7 | SECURITY.md | DONE | Key rotation documented, contact dttai@endior.net |
+| 7 | SECURITY.md | DONE | Key rotation documented, contact dttai@mtsolution.com.vn |
 | 8 | CHANGELOG | DONE | Sprint 139-145 entries added |
 | 9 | ADR traceability | DONE | 51 ADRs, ADR-003 + ADR-006 created |
 | 10 | God classes refactored | DONE | All 3 below 1,000 lines |
@@ -91,8 +91,8 @@ git push origin main
 # 2. Flip EndiorBot repo to public
 # GitHub → github.com/Minh-Tam-Solution/EndiorBot → Settings → Danger Zone → Change visibility → Public
 
-# 3. Flip SDLC Framework repo to public (coordinate with Orchestrator team)
-# GitHub → github.com/Minh-Tam-Solution/SDLC-Enterprise-Framework → Settings → Public
+# 3. SDLC Framework — handled by Orchestrator team (NOT EndiorBot scope)
+# Coordinate: confirm Orchestrator team flips Framework public on same day
 
 # 4. Verify both repos accessible
 open https://github.com/Minh-Tam-Solution/EndiorBot
