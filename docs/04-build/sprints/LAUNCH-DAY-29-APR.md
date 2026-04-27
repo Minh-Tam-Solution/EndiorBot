@@ -100,7 +100,11 @@ GitHub → Releases → Draft new release:
 ```markdown
 ## EndiorBot v0.1.0-beta.1
 
-> Solo Developer AI Orchestration Tool — get answers in 30s instead of 30min
+> AI dev team in your terminal — 14 SDLC agents, 5 channels, answers in 30 seconds
+
+> **Beta notice:** This is a v0.1.0 beta release. APIs may change between 0.x versions. Desktop app is a Developer Preview. Production use should start with CLI + Telegram channels.
+
+> **Origin:** EndiorBot was ported from OpenClaw (Python) to TypeScript in Sprint 54. The OpenClaw backport (Sprint 131-132) brought exec-policy, Active Memory, and SSRF protection into the current architecture.
 
 ### Highlights
 
@@ -135,8 +139,9 @@ npx endiorbot serve
 ### Known Limitations (Beta)
 
 - APIs may change between 0.x releases
-- Desktop requires `pnpm dev` (no prebuilt binaries yet)
+- Desktop app is in **Developer Preview** — requires `pnpm dev` (no prebuilt binaries)
 - 2 moderate dev-only vulnerabilities (vite, brace-expansion)
+- Checkpoint restore not yet implemented
 
 MIT License — free for personal and commercial use.
 ```
@@ -224,7 +229,7 @@ If any link fails → **STOP social posting**. Fix DNS/deploy first. Social can 
 #### Twitter/X Thread
 
 ```
-1/5 🚀 Launching EndiorBot — open-source AI orchestration for solo developers
+1/5 🚀 Launching EndiorBot — AI dev team in your terminal
 
 14 AI agents × 5 channels × 39 commands
 Get answers in 30s instead of 30min
@@ -355,12 +360,14 @@ MIT License — miễn phí sử dụng.
 #MTS #SDLC #AIEngineering #OpenSource #Framework
 ```
 
-#### Reddit
+#### Reddit (staggered — expert recommendation)
 
-Post to (30-60 phút sau X/LinkedIn — CPO social sequencing):
-- r/programming — "EndiorBot: Open-source AI agent orchestrator for solo developers"
-- r/typescript — "14 SOUL agents in TypeScript — EndiorBot architecture"
-- r/artificial — "SDLC Framework 6.3.1: Methodology for AI+Human development"
+**29/4 20:30 ICT (US morning):**
+- r/opensource — "EndiorBot: Open-source AI dev team in your terminal — 14 SDLC agents" (lowest hostility, methodology-friendly)
+
+**30/4-1/5 (based on r/opensource reception — skip if <20 upvotes):**
+- r/programming — "EndiorBot: 14 AI agents orchestrated via CLI, Telegram, or Desktop"
+- r/typescript — "Building an agent orchestrator: 8,124 tests, 51 ADRs, 145 sprints"
 
 ---
 

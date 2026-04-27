@@ -6,12 +6,14 @@
 
 > **Beta:** APIs may change between releases. Not recommended for production use yet.
 
-> **Solo Developer AI Orchestration Tool** — get answers in <30s instead of 30-60 min
+> **AI dev team in your terminal** — 14 SDLC agents, 5 channels, answers in 30 seconds
 
 EndiorBot is a personal AI power tool for solo developers working on enterprise-scale projects.
 It integrates with Claude Code as an Agent Orchestrator, enabling @agent invocations with SDLC governance across CLI, Web, Telegram, Zalo, and Desktop channels.
 
 **Identity**: Solo Developer Power Tool — not a platform, not an SDLC enforcer.
+
+> **Origin:** EndiorBot was ported from [OpenClaw](https://github.com/Minh-Tam-Solution/EndiorBot/blob/main/docs/01-planning/openclaw-backport/PRD.md) (Python) to TypeScript in Sprint 54 (ADR-005). The OpenClaw backport (Sprint 131-132) brought exec-policy, Active Memory, and SSRF protection patterns into the current architecture.
 
 ## Methodology
 
