@@ -11,7 +11,7 @@
  * @authority ADR-007 Budget Control, Phase 3
  */
 
-import { describe, it, expect, beforeEach, afterEach } from "vitest";
+import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 import { execSync, spawnSync } from "node:child_process";
 import { mkdtempSync, rmSync, existsSync, writeFileSync, mkdirSync } from "node:fs";
 import { join } from "node:path";
@@ -20,6 +20,12 @@ import { tmpdir } from "node:os";
 // ============================================================================
 // Test Setup
 // ============================================================================
+
+// Bump testTimeout to 60s for this file: spawnSync calls have a 30s internal
+// timeout but vitest's default 10s would kill the test before spawnSync returns,
+// producing exitCode=1 (process killed) instead of the actual CLI exit code.
+// CI Docker scheduling is slower than dev machines — issue #8 RCA.
+vi.setConfig({ testTimeout: 60_000, hookTimeout: 60_000 });
 
 const CLI_PATH = join(process.cwd(), "endiorbot.mjs");
 
@@ -353,11 +359,7 @@ describe("E2E: Fix Stats with Data", () => {
 // ============================================================================
 
 describe("E2E: Category Filtering", () => {
-  // TEMPORARILY SKIPPED: see issue #8 — 14/14 PASS locally, CI-only deterministic
-  // failure at this assertion. CLI exits 1 in CI Docker env vs 0 on dev machine.
-  // Hypothesis: spawnSync 30s timeout under CI scheduling, or process.execPath
-  // resolution. Re-enable after issue #8 RCA + fix lands. — 2026-04-29
-  it.skip("should accept valid categories (CI flake — issue #8)", () => {
+  it("should accept valid categories", () => {
     const categories = ["BUILD", "LINT", "TYPE", "TEST"];
 
     for (const category of categories) {
@@ -384,10 +386,7 @@ describe("E2E: Fix then Stats Integration", () => {
     }
   });
 
-  // TEMPORARILY SKIPPED: see issue #8 — 14/14 PASS locally, CI-only deterministic
-  // failure at the exitCode assertion below. Same root cause as the "should accept
-  // valid categories" skip above. Re-enable after issue #8 RCA + fix lands. — 2026-04-29
-  it.skip("should persist fix data for stats (CI flake — issue #8)", () => {
+  it("should persist fix data for stats", () => {
     // First run fix with some errors
     const tscOutput = `src/test.ts(1,7): error TS2304: Cannot find name 'x'.`;
 
