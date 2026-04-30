@@ -42,6 +42,12 @@ jobs:
         run: npm pack --dry-run
 
       - name: Publish
-        run: npm publish --provenance --access public
+        # `--tag beta` is required while we're in pre-1.0 prerelease cycle.
+        # Without it, npm tries to push 0.1.0-beta.* to the `latest` dist-tag,
+        # which (a) is wrong policy for prereleases and (b) returns 403 with
+        # the granular access token (which is scoped to per-package writes,
+        # not `latest` tag changes). After v1.0.0, drop `--tag beta` so stable
+        # releases default to `latest`.
+        run: npm publish --provenance --access public --tag beta
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
