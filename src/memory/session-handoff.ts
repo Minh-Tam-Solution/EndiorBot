@@ -65,8 +65,19 @@ export function saveHandoff(projectId: string, handoff: SessionHandoff): void {
 
 /**
  * Load the most recent handoff document for a project.
- * Uses filesystem mtime to find the newest file — O(1) reads instead of O(n).
- * (CTO F1: loadLatestHandoff perf optimization)
+ *
+ * Uses mtime as a fast-path heuristic to identify a probable newest file,
+ * then falls back to scanning all files by `createdAt` if there are mtime
+ * ties (e.g., multiple writes in the same millisecond on fast filesystems).
+ *
+ * The mtime fast-path covers the common case (1 file or clear mtime ordering).
+ * The createdAt scan handles the edge case (file mtimes equal — would
+ * non-deterministically return the first iterated file otherwise).
+ *
+ * Aligned with `loadAllHandoffs` semantics (which sorts by `createdAt`).
+ *
+ * Refs: issue #8 — CI Docker writes occur within same millisecond, mtime
+ * ties produce wrong result. Fixed by createdAt tiebreaker.
  *
  * @param projectId - Project identifier
  * @returns Latest SessionHandoff or null if none exists
@@ -79,21 +90,57 @@ export function loadLatestHandoff(projectId: string): SessionHandoff | null {
   const files = readdirSync(handoffDir).filter((f) => f.endsWith(".json"));
   if (files.length === 0) return null;
 
-  // Find newest file by mtime — avoids reading all files (CTO F1)
+  // Fast path: 1 file → just read it
+  if (files.length === 1) {
+    try {
+      const content = readFileSync(join(handoffDir, files[0]!), "utf-8");
+      return JSON.parse(content) as SessionHandoff;
+    } catch {
+      return null;
+    }
+  }
+
+  // Find newest file by mtime, tracking ties for fallback
   let newestFile = files[0]!;
-  let newestMtime = 0;
+  let newestMtime = -1;
+  let mtimeTie = false;
   for (const file of files) {
     try {
       const mtime = statSync(join(handoffDir, file)).mtimeMs;
       if (mtime > newestMtime) {
         newestMtime = mtime;
         newestFile = file;
+        mtimeTie = false;
+      } else if (mtime === newestMtime && file !== newestFile) {
+        mtimeTie = true;
       }
     } catch {
       // Skip files we can't stat
     }
   }
 
+  // Fallback: if any mtime tie at the top, scan by createdAt to break it
+  // deterministically (consistent with loadAllHandoffs semantics).
+  if (mtimeTie) {
+    let newestByCreatedAt: SessionHandoff | null = null;
+    for (const file of files) {
+      try {
+        const content = readFileSync(join(handoffDir, file), "utf-8");
+        const handoff = JSON.parse(content) as SessionHandoff;
+        if (
+          newestByCreatedAt === null ||
+          handoff.createdAt.localeCompare(newestByCreatedAt.createdAt) > 0
+        ) {
+          newestByCreatedAt = handoff;
+        }
+      } catch {
+        // Skip malformed
+      }
+    }
+    return newestByCreatedAt;
+  }
+
+  // Common path: mtime winner is unambiguous
   try {
     const content = readFileSync(join(handoffDir, newestFile), "utf-8");
     return JSON.parse(content) as SessionHandoff;

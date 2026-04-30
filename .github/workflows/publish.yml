@@ -36,17 +36,7 @@ jobs:
         run: pnpm build
 
       - name: Test
-        # Excluding 2 test files pending issue #8 RCA (target v0.1.0-beta.2):
-        # 1. tests/cli/commands/fix-e2e.test.ts — passes 14/14 locally,
-        #    fails deterministically in CI Docker (exitCode=1 vs 0).
-        # 2. tests/integration/sprint-101-tier-routing-clawvault.test.ts —
-        #    loadLatestHandoff returns wrong session in CI; suspected mtime-
-        #    sort race when 2 file writes occur in same millisecond on fast CI.
-        # Other 8108+ tests still run + must pass.
-        run: |
-          pnpm vitest run \
-            --exclude 'tests/cli/commands/fix-e2e.test.ts' \
-            --exclude 'tests/integration/sprint-101-tier-routing-clawvault.test.ts'
+        run: pnpm test
 
       - name: Dry-run pack (verify files whitelist)
         run: npm pack --dry-run

@@ -21,11 +21,11 @@ import { tmpdir } from "node:os";
 // Test Setup
 // ============================================================================
 
-// Bump testTimeout to 60s for this file: spawnSync calls have a 30s internal
-// timeout but vitest's default 10s would kill the test before spawnSync returns,
-// producing exitCode=1 (process killed) instead of the actual CLI exit code.
-// CI Docker scheduling is slower than dev machines — issue #8 RCA.
-vi.setConfig({ testTimeout: 60_000, hookTimeout: 60_000 });
+// Bump testTimeout to 120s for this file: each test may invoke runCli multiple
+// times; CI cold-start of node + endiorbot.mjs + dist bundle takes 5-15s in
+// Docker per spawn. Test budget = 120s (4 spawns × 30s). spawnSync timeout
+// independently set to 60s. Issue #8 RCA.
+vi.setConfig({ testTimeout: 120_000, hookTimeout: 120_000 });
 
 const CLI_PATH = join(process.cwd(), "endiorbot.mjs");
 
@@ -38,11 +38,16 @@ function createTempDir(): string {
 
 /**
  * Run CLI command and return output.
+ *
+ * Distinguishes spawn errors / signal kills / real exit codes so test
+ * failures surface the actual cause (issue #8 RCA: previously
+ * `result.status ?? 1` masked killed-by-signal as exitCode=1, indistinguishable
+ * from CLI's own exit-1).
  */
 function runCli(
   args: string[],
   options: { input?: string; cwd?: string; env?: Record<string, string> } = {}
-): { stdout: string; stderr: string; exitCode: number } {
+): { stdout: string; stderr: string; exitCode: number; signal: NodeJS.Signals | null; error: Error | null } {
   const result = spawnSync(process.execPath, [CLI_PATH, ...args], {
     encoding: "utf-8",
     input: options.input,
@@ -53,13 +58,34 @@ function runCli(
       // Prevent interactive prompts
       CI: "true",
     },
-    timeout: 30000,
+    timeout: 60_000,
   });
 
+  const stdout = result.stdout || "";
+  const stderr = result.stderr || "";
+
+  // Surface debug context when CI=true and exit is not clean (status null = signal/timeout/error)
+  if (process.env.CI === "true" && result.status === null) {
+    // eslint-disable-next-line no-console
+    console.error(
+      `[runCli debug] non-clean exit:\n` +
+        `  args:    ${JSON.stringify(args)}\n` +
+        `  cwd:     ${options.cwd || process.cwd()}\n` +
+        `  status:  ${result.status}\n` +
+        `  signal:  ${result.signal}\n` +
+        `  error:   ${result.error?.message || "none"}\n` +
+        `  stdout:  ${stdout.slice(0, 500)}\n` +
+        `  stderr:  ${stderr.slice(0, 500)}`
+    );
+  }
+
   return {
-    stdout: result.stdout || "",
-    stderr: result.stderr || "",
-    exitCode: result.status ?? 1,
+    stdout,
+    stderr,
+    // status is null when killed by signal or timeout — surface separately
+    exitCode: result.status ?? -1,
+    signal: result.signal ?? null,
+    error: result.error ?? null,
   };
 }
 
