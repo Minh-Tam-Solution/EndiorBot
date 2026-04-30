@@ -40,18 +40,25 @@ Application development documentation under `docs/` is written in **English** (S
 
 ## Install
 
+> **Beta channel during pre-1.0**: Use the `@beta` tag explicitly. We don't push prerelease versions to npm's `latest` tag, so a bare `npx endiorbot` resolves to nothing until v1.0 ships.
+
 ```bash
-# Via npx (no install needed)
-npx endiorbot --help
-npx endiorbot init
-npx endiorbot serve
+# Via npx (no install needed) — beta channel
+npx endiorbot@beta --help
+npx endiorbot@beta init
+npx endiorbot@beta serve
 
 # Or install globally
-npm install -g endiorbot
+npm install -g endiorbot@beta
+
+# Or pin a specific beta version
+npm install -g endiorbot@0.1.0-beta.1
 
 # Or via Docker
 docker run -p 18790:18790 endiorbot/endiorbot serve
 ```
+
+After v1.0.0 ships, the `@beta` qualifier will become optional and the bare `npx endiorbot` form will work for stable installs.
 
 ## Quick Start
 

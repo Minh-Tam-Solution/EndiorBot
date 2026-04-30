@@ -40,18 +40,20 @@ EndiorBot is a personal AI tool for solo developers. It integrates with Claude C
 
 ## Installation
 
+> Beta channel during pre-1.0: use `@beta` qualifier. After v1.0 ships, the bare `npx endiorbot` form will work for stable installs.
+
 ### Via npx (recommended)
 
 ```bash
-npx endiorbot --help
-npx endiorbot init
-npx endiorbot serve
+npx endiorbot@beta --help
+npx endiorbot@beta init
+npx endiorbot@beta serve
 ```
 
 ### Global install
 
 ```bash
-npm install -g endiorbot
+npm install -g endiorbot@beta
 endiorbot --help
 ```
 

@@ -41,8 +41,10 @@ Access:
 
 ### Option B: npm Global Install
 
+> Beta channel during pre-1.0: use `@beta` qualifier.
+
 ```bash
-npm install -g endiorbot
+npm install -g endiorbot@beta
 endiorbot init --tier STANDARD
 endiorbot serve
 ```
@@ -50,8 +52,8 @@ endiorbot serve
 ### Option C: npx (No Install)
 
 ```bash
-npx endiorbot serve
-npx endiorbot init
+npx endiorbot@beta serve
+npx endiorbot@beta init
 ```
 
 ### Option E: Desktop App (Electron)
