@@ -64,8 +64,13 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Install system deps for keytar (libsecret)
+        run: sudo apt-get update && sudo apt-get install -y libsecret-1-dev
+
       - name: Build
         run: pnpm build
 
       - name: Test (with retry for flaky gateway port contention)
-        run: pnpm test --pool=forks --retry=2
+        # Note the `--` separator: passes flags to vitest, not pnpm.
+        # Without it, pnpm intercepts `--pool` and `--retry` as pnpm options.
+        run: pnpm test -- --pool=forks --retry=2
