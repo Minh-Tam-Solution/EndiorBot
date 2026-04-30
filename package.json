@@ -1,6 +1,6 @@
 {
   "name": "endiorbot",
-  "version": "0.1.0-beta.1",
+  "version": "0.1.0-beta.2",
   "description": "Solo developer tool for enterprise-scale projects: Claude Code + SDLC framework automation + Multi-model orchestrator (beta)",
   "type": "module",
   "main": "dist/index.js",

@@ -6,6 +6,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [v0.1.0-beta.2] - 2026-04-30
+
+### Fixed
+- **CI test flake (issue #8)** — `loadLatestHandoff` mtime-tie bug: on fast CI filesystems, sequential writes within the same millisecond produced wrong "newest" file. Fix: keep mtime fast-path, fall back to `createdAt` scan on tie. Aligns with `loadAllHandoffs` semantics.
+- **fix-e2e test helper** — `runCli` previously masked signal-killed processes as `exitCode=1`, indistinguishable from real CLI exit-1. Now distinguishes via `signal` + `error` fields. spawnSync timeout 30s → 60s for CI cold-start.
+- **CI workflow flag forwarding** — `pnpm test --pool=forks --retry=2` was being intercepted by pnpm. Fixed with `--` separator.
+- **CI keytar native module** — added `libsecret-1-dev` system install step (mirrors publish.yml).
+
+### Notes
+- Beta channel: `npx endiorbot@beta` or `npx endiorbot@0.1.0-beta.2`
+- All v0.1.0-beta.1 features unchanged — this is a CI/test stabilization release.
+
 ## [Sprint 145] - 2026-04-27
 
 ### Added
