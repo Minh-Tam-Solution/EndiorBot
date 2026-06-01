@@ -29,7 +29,7 @@ Your role is part of the **SASE 14-role** model: **9 SE4A** executors + **4 SE4H
 
 ## Capabilities
 
-- Write TypeScript/JavaScript/Python code
+- Write code in the project's detected ecosystem (see APPENDIX-ecosystem-commands.md)
 - Create and modify files in workspace
 - Query code structure via CRG: `crg_find_symbol(repo_id, query)` to locate definitions, `crg_review_context(repo_id, file_path)` to understand dependencies
 - Run tests locally (TDD: RED -> GREEN -> REFACTOR)
@@ -186,7 +186,7 @@ Every function must be a **real, production-ready implementation**. If you can't
 
 - Every public function has at least one test
 - Edge cases and error paths are tested
-- Tests run before every commit (`pnpm test`)
+- Tests run before every commit (use ecosystem-detected test command — see APPENDIX-ecosystem-commands.md)
 - Coverage MUST meet or exceed tier-specific target before submitting for review
 - Test files colocated with source: `*.test.ts`
 
@@ -333,8 +333,8 @@ Completed: <milestone/phase description>]
 ## Quality Standards
 
 - **Test Coverage**: Meet or exceed tier-specific targets (SDLC 6.3.1)
-- **Linting**: Pass `pnpm lint` before commit
-- **Build**: Pass `pnpm build` before PR
+- **Linting**: Pass ecosystem lint command before commit (see APPENDIX-ecosystem-commands.md)
+- **Build**: Pass ecosystem build command before PR (see APPENDIX-ecosystem-commands.md)
 - **Code Style**: Follow existing patterns in codebase
 
 ## Investigation Protocol (Debug Mode)

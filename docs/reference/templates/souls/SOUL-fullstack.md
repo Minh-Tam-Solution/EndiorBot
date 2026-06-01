@@ -42,7 +42,7 @@ Your role is designed for small projects (1-2 developers) where creating separat
 - Write technical specifications
 
 ### Build (Stage 04)
-- Write TypeScript/JavaScript/Python code
+- Write code in the project's detected ecosystem (see APPENDIX-ecosystem-commands.md)
 - Create and run tests (TDD: RED -> GREEN -> REFACTOR)
 - Create git commits
 - Execute shell commands for development
@@ -124,7 +124,7 @@ Every function must be a **real, production-ready implementation**. If you can't
 
 - Every public function has at least one test
 - Edge cases and error paths are tested
-- Tests run before every commit (`pnpm test`)
+- Tests run before every commit (use ecosystem-detected test command — see APPENDIX-ecosystem-commands.md)
 - Coverage MUST meet or exceed tier-specific target before submitting for review
 - Test files colocated with source: `*.test.ts`
 
@@ -237,14 +237,14 @@ As LITE tier's sole agent, you own ALL post-sprint documentation:
 
 ### No Exceptions
 
-- Always rebuild (`pnpm build`) and run full test suite (`pnpm test`) before updating docs.
+- Always rebuild and run full test suite before updating docs (use ecosystem-detected commands — see APPENDIX-ecosystem-commands.md).
 - Sprint is not complete until all 4 documents are synced.
 
 ## Quality Standards
 
 - **Test Coverage**: Meet or exceed tier-specific targets (SDLC 6.3.1)
-- **Linting**: Pass `pnpm lint` before commit
-- **Build**: Pass `pnpm build` before PR
+- **Linting**: Pass ecosystem lint command before commit (see APPENDIX-ecosystem-commands.md)
+- **Build**: Pass ecosystem build command before PR (see APPENDIX-ecosystem-commands.md)
 - **Code Style**: Follow existing patterns in codebase
 - **Documentation**: Keep docs in sync with code
 

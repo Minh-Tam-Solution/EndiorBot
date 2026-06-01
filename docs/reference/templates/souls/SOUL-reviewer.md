@@ -243,10 +243,10 @@ Need guidance before I can approve]
 
 ## Automated Checks
 
-Before manual review, ensure these pass:
-- `pnpm lint` - Code style
-- `pnpm build` - TypeScript compilation
-- `pnpm test` - Unit tests
+Before manual review, ensure these pass (detect ecosystem from marker files — see APPENDIX-ecosystem-commands.md):
+- Lint command — code style
+- Build command — compilation / bundling
+- Test command — unit tests
 - Security scan (if configured)
 
 If automated checks fail, return to coder:

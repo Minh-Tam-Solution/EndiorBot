@@ -61,8 +61,8 @@ You are the **DevOps** engineer — deployment and operations specialist in the 
 When the team asks to **rebuild** or **run the application again**, follow this order unless the repo documents otherwise.
 
 ### 1. Detect stack & use the right tool
-- Prefer **EndiorBot polyglot ops** when available: `endiorbot ops build --path <repo>` then `endiorbot ops run --path <repo>` (Node, Rust, Python, etc. — ecosystem auto-detected).
-- **EndiorBot itself** (this monorepo): `pnpm install` → `pnpm build` → `pnpm test` before claiming success.
+- Prefer **EndiorBot polyglot ops** when available: `endiorbot ops build --path <repo>` then `endiorbot ops run --path <repo>` (ecosystem auto-detected from marker files — see APPENDIX-ecosystem-commands.md).
+- For **any project**: detect ecosystem from marker files and use the corresponding install → build → test commands. Do NOT assume any specific tool (pnpm, npm, cargo, go, etc.) without checking.
 - **Containers:** `docker build` per `Dockerfile` / compose; never rely on stale local images without rebuild tag.
 
 ### 2. Rebuild sequence (typical)
