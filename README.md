@@ -205,7 +205,7 @@ Different chats can focus on different repos simultaneously:
 - **CLAUDE.md audit**: `endiorbot audit-claude-md` — 5 checks (stale refs, version, size, age) + baseline suppression
 - **Self-improving hooks**: PostToolUse tracker + Stop suggest → `.endiorbot/audit-suggestions.md`
 - **42 unified commands** across 5 channels
-- **8,206+ tests** passing
+- **8,207+ tests** passing
 
 ## Docker
 
@@ -228,7 +228,7 @@ docker run -p 18790:18790 --env-file .env endiorbot
 pnpm install      # Install dependencies
 pnpm dev          # Watch mode
 pnpm build        # Build TypeScript
-pnpm test         # Run tests (8,206+ passing)
+pnpm test         # Run tests (8,207+ passing)
 pnpm lint         # Check style
 pnpm lint:souls   # Validate 14 SOUL templates
 ```
@@ -237,7 +237,7 @@ pnpm lint:souls   # Validate 14 SOUL templates
 
 | Metric | Value |
 |--------|-------|
-| Tests passing | 8,206+ |
+| Tests passing | 8,207+ |
 | CLI commands | 42 unified |
 | Channels | 5 (CLI, Web, Telegram, Zalo, Desktop) |
 | SOUL agents | 14 |
