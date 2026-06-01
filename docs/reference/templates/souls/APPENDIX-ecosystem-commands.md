@@ -4,17 +4,17 @@
 > detect the ecosystem from marker files and use the corresponding commands.
 > Do NOT hardcode `pnpm`, `npm`, or any specific tool.
 
-## Detection Table
+## Detection Table (priority order — matches `ecosystem-detector.ts`)
 
-| Marker File | Ecosystem | Install | Build | Test | Lint |
-|-------------|-----------|---------|-------|------|------|
-| `package.json` | Node.js | `{pm} install` | `{pm} build` | `{pm} test` | `{pm} lint` |
-| `go.mod` | Go | `go mod download` | `go build ./...` | `go test ./...` | `golangci-lint run` |
-| `Cargo.toml` | Rust | — | `cargo build` | `cargo test` | `cargo clippy` |
-| `requirements.txt` / `pyproject.toml` | Python | `pip install -r requirements.txt` | — | `pytest` | `ruff check .` |
-| `pubspec.yaml` | Dart/Flutter | `flutter pub get` | `flutter build` | `flutter test` | `dart analyze` |
-| `pom.xml` / `build.gradle` | Java/Kotlin | `mvn install` / `gradle build` | `mvn package` / `gradle build` | `mvn test` / `gradle test` | — |
-| `Dockerfile` | Docker | — | `docker build .` | — | `hadolint Dockerfile` |
+| Priority | Marker File | Ecosystem | Install | Build | Test | Lint |
+|----------|-------------|-----------|---------|-------|------|------|
+| 1 | `Dockerfile` / `docker-compose.yml` | Docker | — | `docker build .` | — | `hadolint Dockerfile` |
+| 2 | `Cargo.toml` | Rust | — | `cargo build` | `cargo test` | `cargo clippy` |
+| 3 | `go.mod` | Go | `go mod download` | `go build ./...` | `go test ./...` | `golangci-lint run` |
+| 4 | `pyproject.toml` / `requirements.txt` | Python | `pip install -r requirements.txt` | — | `pytest` | `ruff check .` |
+| 5 | `pubspec.yaml` | Dart/Flutter | `flutter pub get` | `flutter build` | `flutter test` | `dart analyze` |
+| 6 | `pom.xml` / `build.gradle` | Java/Kotlin | `mvn install` / `gradle build` | `mvn package` / `gradle build` | `mvn test` / `gradle test` | — |
+| 7 | `package.json` (fallback) | Node.js | `{pm} install` | `{pm} build` | `{pm} test` | `{pm} lint` |
 
 **`{pm}`** = detected package manager: `pnpm` if `pnpm-lock.yaml`, `yarn` if `yarn.lock`, `bun` if `bun.lock`, `npm` otherwise.
 
