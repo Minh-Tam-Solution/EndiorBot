@@ -31,7 +31,7 @@ export function registerSkillsCommand(program: Command): void {
 
       console.log(fmt.bold(`Discovered ${skills.length} skill(s):\n`));
       for (const skill of skills) {
-        const source = skill.source === "folder" ? "📁" : "📄";
+        const source = skill.source === "folder" ? "📁" : skill.source === "root" ? "📋" : "📄";
         console.log(`  ${source} ${fmt.bold(skill.name)}`);
         if (skill.description) {
           console.log(`     ${fmt.dim(skill.description)}`);

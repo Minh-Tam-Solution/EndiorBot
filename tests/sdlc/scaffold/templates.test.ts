@@ -9,7 +9,10 @@
  * @status ACTIVE - Sprint 61
  */
 
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, beforeEach, afterEach } from "vitest";
+import { mkdtempSync, rmSync, mkdirSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
+import { tmpdir } from "node:os";
 import {
   generateSdlcConfig,
   serializeSdlcConfig,
@@ -23,6 +26,33 @@ import {
 } from "../../../src/sdlc/scaffold/templates/index.js";
 import type { ProjectConfig } from "../../../src/sdlc/scaffold/types.js";
 import type { ProjectSnapshot } from "../../../src/sdlc/compliance/fix-types.js";
+
+function createTestProjectPath(): string {
+  return mkdtempSync(join(tmpdir(), "endiorbot-template-test-"));
+}
+
+function scaffoldDocsStages(projectPath: string, tier: ProjectConfig["tier"] = "STANDARD"): void {
+  const stages: Record<ProjectConfig["tier"], string[]> = {
+    LITE: ["00-foundation", "01-planning", "02-design", "04-build"],
+    STANDARD: [
+      "00-foundation", "01-planning", "02-design", "04-build",
+      "05-test", "06-deploy", "08-collaborate",
+    ],
+    PROFESSIONAL: [
+      "00-foundation", "01-planning", "02-design", "03-integrate",
+      "04-build", "05-test", "06-deploy", "07-operate",
+      "08-collaborate", "09-govern",
+    ],
+    ENTERPRISE: [
+      "00-foundation", "01-planning", "02-design", "03-integrate",
+      "04-build", "05-test", "06-deploy", "07-operate",
+      "08-collaborate", "09-govern", "10-archive",
+    ],
+  };
+  for (const stage of stages[tier]) {
+    mkdirSync(join(projectPath, "docs", stage), { recursive: true });
+  }
+}
 
 // ============================================================================
 // Test Data
@@ -184,31 +214,42 @@ describe("generateClaudeMd", () => {
 // ============================================================================
 
 describe("generateSubdirClaudeMd", () => {
+  let projectPath: string;
+
+  beforeEach(() => {
+    projectPath = createTestProjectPath();
+    scaffoldDocsStages(projectPath, testProject.tier);
+  });
+
+  afterEach(() => {
+    rmSync(projectPath, { recursive: true, force: true });
+  });
+
   it("should generate src/CLAUDE.md with code conventions", () => {
-    const content = generateSubdirClaudeMd("src", testProject);
+    const content = generateSubdirClaudeMd("src", testProject, projectPath);
     expect(content).toContain("# CLAUDE.md — src/");
     expect(content).toContain("## Code Conventions");
     expect(content).toContain("See root \`CLAUDE.md\`");
   });
 
   it("should generate tests/CLAUDE.md with testing conventions", () => {
-    const content = generateSubdirClaudeMd("tests", testProject);
+    const content = generateSubdirClaudeMd("tests", testProject, projectPath);
     expect(content).toContain("# CLAUDE.md — tests/");
     expect(content).toContain("## Testing Conventions");
     expect(content).toContain("Run all tests in this directory");
   });
 
   it("should generate docs/CLAUDE.md with documentation standards", () => {
-    const content = generateSubdirClaudeMd("docs", testProject);
+    const content = generateSubdirClaudeMd("docs", testProject, projectPath);
     expect(content).toContain("# CLAUDE.md — docs/");
     expect(content).toContain("## Documentation Standards");
     expect(content).toContain("00-foundation");
   });
 
   it("should be under 100 lines", () => {
-    const src = generateSubdirClaudeMd("src", testProject);
-    const tests = generateSubdirClaudeMd("tests", testProject);
-    const docs = generateSubdirClaudeMd("docs", testProject);
+    const src = generateSubdirClaudeMd("src", testProject, projectPath);
+    const tests = generateSubdirClaudeMd("tests", testProject, projectPath);
+    const docs = generateSubdirClaudeMd("docs", testProject, projectPath);
     expect(src.split("\n").length).toBeLessThan(100);
     expect(tests.split("\n").length).toBeLessThan(100);
     expect(docs.split("\n").length).toBeLessThan(100);
@@ -223,9 +264,41 @@ describe("generateSubdirClaudeMd", () => {
         scripts: {},
       },
     } as ProjectSnapshot;
-    const content = generateSubdirClaudeMd("src", testProject, snapshot);
+    const content = generateSubdirClaudeMd("src", testProject, projectPath, snapshot);
     expect(content).toContain("Python");
     expect(content).toContain("Flask");
+  });
+
+  it("docs/CLAUDE.md only references existing stage dirs", () => {
+    // Use a fresh project with no docs/ folder
+    const emptyPath = createTestProjectPath();
+    try {
+      const content = generateSubdirClaudeMd("docs", testProject, emptyPath);
+      expect(content).toContain("## Documentation Standards");
+      expect(content).not.toContain("- \`00-foundation/\`");
+    } finally {
+      rmSync(emptyPath, { recursive: true, force: true });
+    }
+  });
+
+  it("docs/CLAUDE.md with all stages present → all listed", () => {
+    const content = generateSubdirClaudeMd("docs", testProject, projectPath);
+    expect(content).toContain("- \`00-foundation/\`");
+    expect(content).toContain("- \`01-planning/\`");
+    expect(content).toContain("- \`02-design/\`");
+    expect(content).toContain("- \`04-build/\`");
+    expect(content).toContain("- \`05-test/\`");
+    expect(content).toContain("- \`06-deploy/\`");
+    expect(content).toContain("- \`08-collaborate/\`");
+  });
+
+  it("ADR path exists → referenced; ADR path missing → not referenced", () => {
+    const content = generateSubdirClaudeMd("docs", testProject, projectPath);
+    expect(content).not.toContain("docs/02-design/01-ADRs/");
+
+    mkdirSync(join(projectPath, "docs", "02-design", "01-ADRs"), { recursive: true });
+    const withAdr = generateSubdirClaudeMd("docs", testProject, projectPath);
+    expect(withAdr).toContain("docs/02-design/01-ADRs/");
   });
 });
 
@@ -504,6 +577,75 @@ describe("generateClaudeMd with snapshot", () => {
   it("falls back to pnpm commands when no snapshot", () => {
     const content = generateClaudeMd(testProject);
     expect(content).toContain("pnpm install");
+  });
+});
+
+describe("generateClaudeMd ecosystem-aware commands", () => {
+  function makeSnapshot(ecosystem: ProjectSnapshot["techStack"]["ecosystem"], pm?: string): ProjectSnapshot {
+    return {
+      name: "eco-project",
+      description: "Eco project",
+      tier: "STANDARD",
+      techStack: {
+        language: "Generic",
+        packageManager: pm,
+        ecosystem,
+        hasTypeScript: false,
+        hasDocker: ecosystem === "docker",
+        hasCI: false,
+        dependencies: [],
+        devDependencies: [],
+        scripts: {},
+      },
+      codeModules: [],
+      testFiles: [],
+      existingDocs: [],
+      projectPath: "/tmp/eco-project",
+    };
+  }
+
+  it("Python project → CLAUDE.md shows pip/pytest commands", () => {
+    const content = generateClaudeMd(testProject, makeSnapshot("python"));
+    expect(content).toContain("pip install -r requirements.txt");
+    expect(content).toContain("pytest");
+    expect(content).not.toContain("pnpm install");
+  });
+
+  it("Python (poetry) project → CLAUDE.md shows poetry commands", () => {
+    const content = generateClaudeMd(testProject, makeSnapshot("python", "poetry"));
+    expect(content).toContain("poetry install");
+    expect(content).toContain("poetry run pytest");
+  });
+
+  it("Docker project → CLAUDE.md shows docker compose commands", () => {
+    const content = generateClaudeMd(testProject, makeSnapshot("docker"));
+    expect(content).toContain("docker compose build");
+    expect(content).toContain("docker compose up");
+    expect(content).toContain("docker compose down");
+    expect(content).not.toContain("pnpm install");
+  });
+
+  it("Rust project → CLAUDE.md shows cargo commands", () => {
+    const content = generateClaudeMd(testProject, makeSnapshot("rust"));
+    expect(content).toContain("cargo build");
+    expect(content).toContain("cargo test");
+    expect(content).toContain("cargo clippy");
+    expect(content).not.toContain("pnpm install");
+  });
+
+  it("Node.js project → existing pnpm behavior preserved", () => {
+    const snapshot = makeSnapshot("node", "pnpm");
+    snapshot.techStack.scripts = { dev: "vite", test: "vitest run" };
+    const content = generateClaudeMd(testProject, snapshot);
+    expect(content).toContain("pnpm install");
+    expect(content).toContain("pnpm run dev");
+    expect(content).toContain("pnpm run test");
+  });
+
+  it("No snapshot → generic fallback (backward compat)", () => {
+    const content = generateClaudeMd(testProject);
+    expect(content).toContain("pnpm install");
+    expect(content).toContain("pnpm build");
   });
 });
 

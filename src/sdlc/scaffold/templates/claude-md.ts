@@ -9,6 +9,8 @@
  * @status ACTIVE - Sprint 79
  */
 
+import { existsSync } from "node:fs";
+import { join } from "node:path";
 import type { ProjectConfig, ProjectTier } from "../types.js";
 import type { ProjectSnapshot } from "../../compliance/fix-types.js";
 
@@ -204,20 +206,67 @@ pnpm lint           # Check code style
 
 ### EndiorBot CLI
 \`\`\`bash
-./endiorbot.mjs --help           # Show help
-./endiorbot.mjs start <project>  # Start project
-./endiorbot.mjs switch <project> # Switch context
-./endiorbot.mjs gate status      # Show gate status
-./endiorbot.mjs consult <query>  # Multi-model query
+endiorbot --help           # Show help
+endiorbot start <project>  # Start project
+endiorbot switch <project> # Switch context
+endiorbot gate status      # Show gate status
+endiorbot consult <query>  # Multi-model query
 \`\`\`
 
 ### Claude Code Integration
 \`\`\`bash
 # Thin client pattern - CLI wrappers call EndiorBot core
-./endiorbot.mjs gate check G3
-./endiorbot.mjs consult "Redis vs PostgreSQL for sessions?"
-./endiorbot.mjs vibecoding check
+endiorbot gate check G3
+endiorbot consult "Redis vs PostgreSQL for sessions?"
+endiorbot vibecoding check
 \`\`\``;
+
+/**
+ * Ecosystem-specific fallback command lines for non-Node projects.
+ */
+function getEcosystemFallbackCommands(ecosystem: string, pm?: string): string[] {
+  switch (ecosystem) {
+    case "python":
+      if (pm === "poetry") {
+        return [
+          "poetry install      # Install dependencies",
+          "poetry run pytest    # Run tests",
+          "poetry run ruff check .  # Lint",
+        ];
+      }
+      return [
+        "pip install -r requirements.txt  # Install dependencies",
+        "pytest               # Run tests",
+        "ruff check .         # Lint (if configured)",
+      ];
+    case "rust":
+      return [
+        "cargo build          # Build project",
+        "cargo test           # Run tests",
+        "cargo clippy          # Lint",
+      ];
+    case "docker":
+      return [
+        "docker compose build  # Build containers",
+        "docker compose up     # Start services",
+        "docker compose down   # Stop services",
+      ];
+    case "go":
+      return [
+        "go build ./...       # Build",
+        "go test ./...        # Run tests",
+        "go vet ./...         # Lint",
+      ];
+    case "java":
+      return [
+        "mvn compile          # Build project",
+        "mvn test             # Run tests",
+        "mvn checkstyle:check # Lint (if configured)",
+      ];
+    default:
+      return []; // fall through to GENERIC_COMMANDS_SECTION
+  }
+}
 
 /**
  * Get commands section.
@@ -227,9 +276,40 @@ function getCommandsSection(snapshot?: ProjectSnapshot): string {
   if (!snapshot) return GENERIC_COMMANDS_SECTION;
 
   const pm = snapshot.techStack.packageManager ?? "pnpm";
+  const ecosystem = snapshot.techStack.ecosystem;
   const scripts = snapshot.techStack.scripts ?? {};
 
-  // Build dev commands from detected scripts in priority order
+  // For non-Node ecosystems, use ecosystem-specific commands
+  if (ecosystem && ecosystem !== "node") {
+    const ecoLines = getEcosystemFallbackCommands(ecosystem, pm);
+    if (ecoLines.length > 0) {
+      return `## Commands
+
+### Development
+\`\`\`bash
+${ecoLines.join("\n")}
+\`\`\`
+
+### EndiorBot CLI
+\`\`\`bash
+endiorbot --help           # Show help
+endiorbot start <project>  # Start project
+endiorbot switch <project> # Switch context
+endiorbot gate status      # Show gate status
+endiorbot consult <query>  # Multi-model query
+\`\`\`
+
+### Claude Code Integration
+\`\`\`bash
+# Thin client pattern - CLI wrappers call EndiorBot core
+endiorbot gate check G3
+endiorbot consult "Redis vs PostgreSQL for sessions?"
+endiorbot vibecoding check
+\`\`\``;
+    }
+  }
+
+  // Node.js: use detected scripts in priority order
   const scriptLines: string[] = [];
 
   // Install always comes first
@@ -256,19 +336,19 @@ ${scriptLines.join("\n")}
 
 ### EndiorBot CLI
 \`\`\`bash
-./endiorbot.mjs --help           # Show help
-./endiorbot.mjs start <project>  # Start project
-./endiorbot.mjs switch <project> # Switch context
-./endiorbot.mjs gate status      # Show gate status
-./endiorbot.mjs consult <query>  # Multi-model query
+endiorbot --help           # Show help
+endiorbot start <project>  # Start project
+endiorbot switch <project> # Switch context
+endiorbot gate status      # Show gate status
+endiorbot consult <query>  # Multi-model query
 \`\`\`
 
 ### Claude Code Integration
 \`\`\`bash
 # Thin client pattern - CLI wrappers call EndiorBot core
-./endiorbot.mjs gate check G3
-./endiorbot.mjs consult "Redis vs PostgreSQL for sessions?"
-./endiorbot.mjs vibecoding check
+endiorbot gate check G3
+endiorbot consult "Redis vs PostgreSQL for sessions?"
+endiorbot vibecoding check
 \`\`\``;
 }
 
@@ -331,6 +411,7 @@ function getScriptLabel(key: string): string {
 export function generateSubdirClaudeMd(
   subdir: string,
   project: ProjectConfig,
+  projectPath: string,
   snapshot?: ProjectSnapshot
 ): string {
   const lines: string[] = [
@@ -356,7 +437,7 @@ export function generateSubdirClaudeMd(
       break;
     }
     case "docs": {
-      lines.push(...getDocsSection(project));
+      lines.push(...getDocsSection(project, projectPath));
       break;
     }
     default: {
@@ -475,8 +556,8 @@ function getTestsSection(_project: ProjectConfig, snapshot?: ProjectSnapshot): s
   return lines;
 }
 
-function getDocsSection(_project: ProjectConfig): string[] {
-  return [
+function getDocsSection(_project: ProjectConfig, projectPath: string): string[] {
+  const lines: string[] = [
     "## Documentation Standards",
     "",
     "### Structure",
@@ -486,7 +567,15 @@ function getDocsSection(_project: ProjectConfig): string[] {
     "### ADRs",
     "- One ADR per major architectural decision.",
     "- Include YAML frontmatter with `authority` block.",
-    "- Reference: `docs/02-design/01-ADRs/`",
+  ];
+
+  // Only reference ADR path if it exists
+  const adrPath = join(projectPath, "docs", "02-design", "01-ADRs");
+  if (existsSync(adrPath)) {
+    lines.push("- Reference: `docs/02-design/01-ADRs/`");
+  }
+
+  lines.push(
     "",
     "### Markdown Style",
     "- Use ATX-style headings (`#`).",
@@ -494,9 +583,26 @@ function getDocsSection(_project: ProjectConfig): string[] {
     "- Link related docs with relative paths.",
     "",
     "### SDLC Stages (this project)",
-    ..._project.tier.split("").map(() => "").slice(0, 0), // no-op placeholder to satisfy type check
-    ...getTierStageList(_project.tier),
-  ];
+  );
+
+  // Only list stages that actually exist on disk
+  const stageList = getTierStageList(_project.tier);
+  const docsDir = join(projectPath, "docs");
+  for (const stageLine of stageList) {
+    // Extract folder name from "- `00-foundation/`" format
+    const match = stageLine.match(/`([^`]+)\/?`/);
+    if (match) {
+      const stageName = match[1];
+      if (stageName) {
+        const stageDir = join(docsDir, stageName);
+        if (existsSync(stageDir)) {
+          lines.push(stageLine);
+        }
+      }
+    }
+  }
+
+  return lines;
 }
 
 function getTierStageList(tier: ProjectTier): string[] {

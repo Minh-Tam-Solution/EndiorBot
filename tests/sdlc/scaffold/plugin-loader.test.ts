@@ -109,19 +109,30 @@ describe("discoverSkills", () => {
     expect(skills).toHaveLength(0);
   });
 
-  it("skips skills missing name in frontmatter", () => {
+  it("derives name from heading when frontmatter name missing", () => {
     writeSkill("skills/bad/SKILL.md", {
       description: "No name here",
     });
-
+    // The SKILL.md body has "# SKILL" heading from writeSkill, so name is derived
     const skills = discoverSkills(testDir);
-    expect(skills).toHaveLength(0);
+    expect(skills).toHaveLength(1);
+    expect(skills[0]?.description).toBe("No name here");
   });
 
-  it("handles file without frontmatter", () => {
+  it("derives name from heading when no frontmatter", () => {
     const path = join(testDir, "skills/no-fm.md");
     mkdirSync(join(testDir, "skills"), { recursive: true });
     writeFileSync(path, "# Just body\nNo frontmatter.");
+
+    const skills = discoverSkills(testDir);
+    expect(skills).toHaveLength(1);
+    expect(skills[0]?.name).toBe("just-body");
+  });
+
+  it("skips skill with no name AND no heading", () => {
+    const path = join(testDir, "skills/empty.md");
+    mkdirSync(join(testDir, "skills"), { recursive: true });
+    writeFileSync(path, "No heading, no frontmatter.");
 
     const skills = discoverSkills(testDir);
     expect(skills).toHaveLength(0);
@@ -137,6 +148,40 @@ describe("discoverSkills", () => {
   it("returns empty array when skills directory missing", () => {
     const skills = discoverSkills(testDir);
     expect(skills).toEqual([]);
+  });
+
+  it("discovers root SKILL.md with source: root", () => {
+    writeSkill("SKILL.md", { name: "root-skill", description: "Project-level skill" });
+
+    const skills = discoverSkills(testDir);
+    expect(skills).toHaveLength(1);
+    expect(skills[0]).toMatchObject({
+      name: "root-skill",
+      description: "Project-level skill",
+      source: "root",
+    });
+  });
+
+  it("gives skills/ priority over root SKILL.md for same name", () => {
+    writeSkill("SKILL.md", { name: "review", description: "Root version" });
+    writeSkill("skills/review/SKILL.md", { name: "review", description: "Folder version" });
+
+    const skills = discoverSkills(testDir);
+    expect(skills).toHaveLength(1);
+    expect(skills[0]).toMatchObject({
+      name: "review",
+      description: "Folder version",
+      source: "folder",
+    });
+  });
+
+  it("discovers root SKILL.md alongside skills/ with different names", () => {
+    writeSkill("SKILL.md", { name: "root-skill", description: "Root version" });
+    writeSkill("skills/folder-skill/SKILL.md", { name: "folder-skill", description: "Folder version" });
+
+    const skills = discoverSkills(testDir);
+    expect(skills).toHaveLength(2);
+    expect(skills.map((s) => s.name)).toEqual(["folder-skill", "root-skill"]);
   });
 
   it("sorts skills alphabetically", () => {

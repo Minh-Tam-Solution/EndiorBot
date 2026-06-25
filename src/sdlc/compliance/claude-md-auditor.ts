@@ -224,8 +224,10 @@ function checkFileReferences(
       // Skip relative parent refs
       if (ref.startsWith("..")) continue;
 
-      const fullPath = join(projectRoot, ref);
-      if (!existsSync(fullPath)) {
+      // Resolve relative to both project root AND the file's own directory
+      const fromRoot = join(projectRoot, ref);
+      const fromFileDir = join(projectRoot, dirname(claudeMdPath), ref);
+      if (!existsSync(fromRoot) && !existsSync(fromFileDir)) {
         warnings.push({
           id: `REF-${claudeMdPath}:${i + 1}`,
           severity: "warning",

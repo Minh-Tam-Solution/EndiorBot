@@ -209,6 +209,8 @@ export interface TechStackInfo {
   framework?: string;
   /** Package manager (e.g., "pnpm", "npm", "yarn") */
   packageManager?: string;
+  /** Detected ecosystem (e.g., "node", "python", "docker") */
+  ecosystem?: "node" | "python" | "rust" | "docker" | "go" | "java";
   /** Has TypeScript config */
   hasTypeScript: boolean;
   /** Has Docker */

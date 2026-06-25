@@ -2,13 +2,13 @@
 
 **Project**: EndiorBot
 **Framework**: SDLC 6.3.1
-**Last Updated**: 2026-05-27 (Sprint 153 COMPLETE, Sprint 154 NEXT)
+**Last Updated**: 2026-06-23 (Sprint 155 COMPLETE)
 
 ---
 
 ## Current Sprint
 
-No active sprint. Plugin Architecture plan (S149-S154) **COMPLETE**.
+No active sprint. Sprint 155 implementation complete.
 Next: cross-product packaging (MTClaw S124 dependency).
 
 ## Active Sprints
@@ -16,7 +16,13 @@ Next: cross-product packaging (MTClaw S124 dependency).
 | Sprint | Date | Goal | Status | Report |
 |--------|------|------|--------|--------|
 
-## Recently Completed — Plugin Architecture Upgrade (S149-S153)
+## Recently Completed — Init Ecosystem Accuracy (S155)
+
+| Sprint | Date | Goal | Status | Report |
+|--------|------|------|--------|--------|
+| Sprint 155 | Jun 23, 2026 | Init Ecosystem Accuracy — 4 detection & template fixes (ADR-057) | ✅ COMPLETE | [sprint-155](sprint-155-kimi-prompt.md) |
+
+## Recently Completed — Plugin Architecture Upgrade (S149-S154)
 
 | Sprint | Date | Goal | Status | Report |
 |--------|------|------|--------|--------|
@@ -170,6 +176,7 @@ Next: cross-product packaging (MTClaw S124 dependency).
 
 | Sprint | Tests | Cumulative |
 |--------|-------|------------|
+| Sprint 155 | +17 | 8,223 |
 | Sprint 154 | +8 | 8,206 |
 | Sprint 153 | +11 | 8,199 |
 | Sprint 152 | +13 | 8,188 |
@@ -233,6 +240,7 @@ Next: cross-product packaging (MTClaw S124 dependency).
 
 | ADR | Title | Sprints | Status |
 |-----|-------|---------|--------|
+| ADR-057 | Init Ecosystem Accuracy — 4 Detection & Template Fixes | 155 | ✅ ACCEPTED |
 | ADR-056 | Plugin Format Compatibility (Base Profile) | 151 | ✅ ACCEPTED |
 | ADR-055 | Layered CLAUDE.md Generation | 150 | ✅ ACCEPTED |
 | ADR-054 | Init Tier Auto-Recommendation | 149 | ✅ ACCEPTED |

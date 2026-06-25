@@ -100,7 +100,7 @@ export async function scaffoldProject(
         await executeStep(
           `Generate ${subdir}/CLAUDE.md`,
           join(subdirPath, "CLAUDE.md"),
-          () => generateSubdirClaudeMd(subdir, projectConfig, config.snapshot),
+          () => generateSubdirClaudeMd(subdir, projectConfig, config.targetPath, config.snapshot),
           config
         )
       );
@@ -114,7 +114,7 @@ export async function scaffoldProject(
           await executeStep(
             `Generate ${serviceDir}/CLAUDE.md`,
             join(config.targetPath, serviceDir, "CLAUDE.md"),
-            () => generateSubdirClaudeMd(serviceDir, projectConfig, config.snapshot),
+            () => generateSubdirClaudeMd(serviceDir, projectConfig, config.targetPath, config.snapshot),
             config
           )
         );

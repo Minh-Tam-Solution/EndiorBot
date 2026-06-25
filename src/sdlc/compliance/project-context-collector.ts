@@ -125,6 +125,7 @@ function detectTechStack(projectPath: string): TechStackInfo {
   };
 
   if (eco.packageManager) info.packageManager = eco.packageManager;
+  if (eco.ecosystem) info.ecosystem = eco.ecosystem;
 
   // Node.js framework enrichment (only when ecosystem is node)
   if (eco.ecosystem === "node") {

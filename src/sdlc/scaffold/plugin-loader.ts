@@ -33,8 +33,8 @@ export interface DiscoveredSkill {
   content: string;
   /** Resolved file path */
   filePath: string;
-  /** Discovery source: folder-per-skill or flat file */
-  source: "folder" | "flat";
+  /** Discovery source: root SKILL.md, folder-per-skill, or flat file */
+  source: "root" | "folder" | "flat";
 }
 
 // ============================================================================
@@ -42,56 +42,66 @@ export interface DiscoveredSkill {
 // ============================================================================
 
 /**
- * Discover all skills in a project's skills/ directory.
- * Scans recursively for SKILL.md (folder pattern) and *.md (flat fallback).
+ * Discover all skills in a project.
+ * Scans skills/ directory first (folder-per-skill, then flat fallback),
+ * then falls back to a root SKILL.md (Anthropic standard).
  */
 export function discoverSkills(projectPath: string): DiscoveredSkill[] {
-  const skillsDir = join(projectPath, "skills");
-  if (!existsSync(skillsDir) || !statSync(skillsDir).isDirectory()) {
-    logger.debug("No skills/ directory found", { projectPath });
-    return [];
-  }
-
   const skills: DiscoveredSkill[] = [];
   const seen = new Set<string>(); // dedup by name
 
-  // Pass 1: folder-per-skill pattern (skills/<name>/SKILL.md) — priority
-  try {
-    for (const entry of readdirSync(skillsDir)) {
-      const entryPath = join(skillsDir, entry);
-      if (!statSync(entryPath).isDirectory()) continue;
+  const skillsDir = join(projectPath, "skills");
+  const hasSkillsDir = existsSync(skillsDir) && statSync(skillsDir).isDirectory();
 
-      const skillFile = join(entryPath, "SKILL.md");
-      if (!existsSync(skillFile)) continue;
+  if (hasSkillsDir) {
+    // Pass 1: folder-per-skill pattern (skills/<name>/SKILL.md) — priority
+    try {
+      for (const entry of readdirSync(skillsDir)) {
+        const entryPath = join(skillsDir, entry);
+        if (!statSync(entryPath).isDirectory()) continue;
 
-      const skill = loadSkill(skillFile, "folder");
-      if (skill && !seen.has(skill.name)) {
-        skills.push(skill);
-        seen.add(skill.name);
-      }
-    }
-  } catch {
-    logger.debug("Error scanning skills/ subdirectories", { skillsDir });
-  }
+        const skillFile = join(entryPath, "SKILL.md");
+        if (!existsSync(skillFile)) continue;
 
-  // Pass 2: flat pattern (skills/*.md, excluding README.md) — fallback
-  try {
-    for (const entry of readdirSync(skillsDir)) {
-      const entryPath = join(skillsDir, entry);
-      if (
-        statSync(entryPath).isFile() &&
-        extname(entry).toLowerCase() === ".md" &&
-        entry.toUpperCase() !== "README.MD"
-      ) {
-        const skill = loadSkill(entryPath, "flat");
+        const skill = loadSkill(skillFile, "folder");
         if (skill && !seen.has(skill.name)) {
           skills.push(skill);
           seen.add(skill.name);
         }
       }
+    } catch {
+      logger.debug("Error scanning skills/ subdirectories", { skillsDir });
     }
-  } catch {
-    logger.debug("Error scanning flat skills/ files", { skillsDir });
+
+    // Pass 2: flat pattern (skills/*.md, excluding README.md) — fallback
+    try {
+      for (const entry of readdirSync(skillsDir)) {
+        const entryPath = join(skillsDir, entry);
+        if (
+          statSync(entryPath).isFile() &&
+          extname(entry).toLowerCase() === ".md" &&
+          entry.toUpperCase() !== "README.MD"
+        ) {
+          const skill = loadSkill(entryPath, "flat");
+          if (skill && !seen.has(skill.name)) {
+            skills.push(skill);
+            seen.add(skill.name);
+          }
+        }
+      }
+    } catch {
+      logger.debug("Error scanning flat skills/ files", { skillsDir });
+    }
+  }
+
+  // Pass 0 (last): root SKILL.md — only if no skills/ skill with same name
+  const rootSkillFile = join(projectPath, "SKILL.md");
+  if (existsSync(rootSkillFile)) {
+    const skill = loadSkill(rootSkillFile, "root");
+    if (skill && !seen.has(skill.name)) {
+      skills.push(skill);
+      seen.add(skill.name);
+    }
   }
 
   // Sort alphabetically by name (deterministic order for conflict resolution)
@@ -109,22 +119,29 @@ export function discoverSkills(projectPath: string): DiscoveredSkill[] {
  */
 export function loadSkill(
   filePath: string,
-  source: "folder" | "flat"
+  source: "root" | "folder" | "flat"
 ): DiscoveredSkill | null {
   try {
     const raw = readFileSync(filePath, "utf-8");
     const { frontmatter, body } = parseFrontmatter(raw);
 
-    if (!frontmatter.name) {
-      logger.debug("Skill missing 'name' in frontmatter, skipping", {
-        filePath,
-      });
+    // Derive name from frontmatter, or fall back to first heading
+    const headingMatch = body.match(/^#\s+(.+)/m);
+    let skillName = frontmatter.name;
+    if (!skillName && headingMatch?.[1]) {
+      skillName = headingMatch[1]
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-|-$/g, "");
+    }
+    if (!skillName) {
+      logger.debug("Skill has no name or heading, skipping", { filePath });
       return null;
     }
 
     const result: DiscoveredSkill = {
-      name: frontmatter.name,
-      description: frontmatter.description ?? "",
+      name: skillName,
+      description: frontmatter.description ?? (headingMatch?.[1] ?? ""),
       content: body,
       filePath,
       source,

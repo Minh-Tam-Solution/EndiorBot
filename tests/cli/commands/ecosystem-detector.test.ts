@@ -159,6 +159,41 @@ describe("detectEcosystem", () => {
     const result = detectEcosystem(tempDir, "rust");
     expect(result.ecosystem).toBe("rust");
   });
+
+  it("Docker project with root Python + sub TypeScript → language: Python + TypeScript", () => {
+    touch("docker-compose.yml", "services: {}");
+    touch("pyproject.toml", "[project]\nname = \"deeptutor\"");
+    touch("web/package.json", '{"name": "ui"}');
+    touch("web/tsconfig.json", "{}");
+    const result = detectEcosystem(tempDir);
+    expect(result.ecosystem).toBe("docker");
+    expect(result.language).toBe("Python + TypeScript");
+  });
+
+  it("Docker project with root Python + sub Python → language: Python (no duplicate)", () => {
+    touch("docker-compose.yml", "services: {}");
+    touch("pyproject.toml", "[project]\nname = \"deeptutor\"");
+    touch("backend/pyproject.toml", "[project]\nname = \"api\"");
+    const result = detectEcosystem(tempDir);
+    expect(result.ecosystem).toBe("docker");
+    expect(result.language).toBe("Python");
+  });
+
+  it("Docker project with no sub-ecosystems → language: Multi-language", () => {
+    touch("docker-compose.yml", "services: {}");
+    const result = detectEcosystem(tempDir);
+    expect(result.ecosystem).toBe("docker");
+    expect(result.language).toBe("Multi-language");
+  });
+
+  it("Non-Docker project → scanSubEcosystems not called (unchanged behavior)", () => {
+    touch("pyproject.toml", "[project]\nname = \"deeptutor\"");
+    touch("web/package.json", '{"name": "ui"}');
+    touch("web/tsconfig.json", "{}");
+    const result = detectEcosystem(tempDir);
+    expect(result.ecosystem).toBe("python");
+    expect(result.language).toBe("Python");
+  });
 });
 
 // ============================================================================

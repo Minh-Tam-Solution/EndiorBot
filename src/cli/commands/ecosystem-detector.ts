@@ -99,9 +99,7 @@ export function detectEcosystem(projectPath: string, override?: Ecosystem): Ecos
   const composeFile = detectDockerCompose(projectPath);
   if (composeFile) {
     const subEcosystems = scanSubEcosystems(projectPath);
-    const langLabel = subEcosystems.length > 0
-      ? subEcosystems.map(s => s.language).join(" + ")
-      : "Multi-language";
+    const langLabel = formatLanguageLabel(subEcosystems);
     return { ecosystem: "docker", language: langLabel, packageManager: "docker", support: "full", markerFile: composeFile };
   }
 
@@ -287,11 +285,38 @@ interface SubEcosystem {
 }
 
 /**
- * Scan common monorepo subdirs for ecosystem markers.
+ * Format a list of sub-ecosystems into a deduplicated language label.
+ */
+function formatLanguageLabel(subEcosystems: SubEcosystem[]): string {
+  if (subEcosystems.length === 0) return "Multi-language";
+  const uniqueLangs = [...new Set(subEcosystems.map((s) => s.language))];
+  return uniqueLangs.join(" + ");
+}
+
+/**
+ * Scan project root and common monorepo subdirs for ecosystem markers.
  */
 function scanSubEcosystems(projectPath: string): SubEcosystem[] {
-  const subdirs = ["backend", "frontend", "server", "client", "app", "api", "web", "service"];
   const results: SubEcosystem[] = [];
+
+  // Pass 0: root-level language markers (Docker projects often hide these)
+  if (existsSync(join(projectPath, "pyproject.toml"))) {
+    results.push({ dir: ".", language: "Python", markerFile: "pyproject.toml" });
+  } else if (existsSync(join(projectPath, "requirements.txt"))) {
+    results.push({ dir: ".", language: "Python", markerFile: "requirements.txt" });
+  }
+  if (existsSync(join(projectPath, "Cargo.toml"))) {
+    results.push({ dir: ".", language: "Rust", markerFile: "Cargo.toml" });
+  }
+  if (existsSync(join(projectPath, "go.mod"))) {
+    results.push({ dir: ".", language: "Go", markerFile: "go.mod" });
+  }
+  if (existsSync(join(projectPath, "package.json"))) {
+    const hasTS = existsSync(join(projectPath, "tsconfig.json"));
+    results.push({ dir: ".", language: hasTS ? "TypeScript" : "JavaScript", markerFile: "package.json" });
+  }
+
+  const subdirs = ["backend", "frontend", "server", "client", "app", "api", "web", "service"];
 
   for (const dir of subdirs) {
     const subPath = join(projectPath, dir);
@@ -332,8 +357,7 @@ function buildResult(ecosystem: Ecosystem, projectPath: string): EcosystemDetect
   const map: Record<Ecosystem, () => EcosystemDetectResult> = {
     docker: () => {
       const subs = scanSubEcosystems(projectPath);
-      const lang = subs.length > 0 ? subs.map(s => s.language).join(" + ") : "Multi-language";
-      return { ecosystem: "docker", language: lang, packageManager: "docker", support: "full", markerFile: "docker-compose.yml" };
+      return { ecosystem: "docker", language: formatLanguageLabel(subs), packageManager: "docker", support: "full", markerFile: "docker-compose.yml" };
     },
     rust:   () => ({ ecosystem: "rust", language: "Rust", packageManager: "cargo", support: "full", markerFile: "Cargo.toml" }),
     python: () => {
