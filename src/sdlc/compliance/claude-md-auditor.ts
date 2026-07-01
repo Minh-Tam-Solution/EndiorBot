@@ -223,6 +223,8 @@ function checkFileReferences(
       if (ref.includes("*") || ref.startsWith("-")) continue;
       // Skip relative parent refs
       if (ref.startsWith("..")) continue;
+      // Skip bare filenames without path separators — convention examples, not file refs
+      if (!ref.includes("/") && !ref.startsWith(".")) continue;
 
       // Resolve relative to both project root AND the file's own directory
       const fromRoot = join(projectRoot, ref);

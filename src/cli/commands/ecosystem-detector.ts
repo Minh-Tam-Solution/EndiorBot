@@ -14,7 +14,7 @@
  * @sdlc SDLC Framework 6.3.1
  */
 
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { execFile } from "node:child_process";
 import { join } from "node:path";
 
@@ -139,7 +139,7 @@ export function detectEcosystem(projectPath: string, override?: Ecosystem): Ecos
 
   // Node.js: detect PM from lock files
   const pm = detectNodePackageManager(projectPath);
-  const hasTypeScript = existsSync(join(projectPath, "tsconfig.json"));
+  const hasTypeScript = detectTypeScript(projectPath);
   return {
     ecosystem: "node",
     language: hasTypeScript ? "TypeScript" : "JavaScript",
@@ -312,7 +312,7 @@ function scanSubEcosystems(projectPath: string): SubEcosystem[] {
     results.push({ dir: ".", language: "Go", markerFile: "go.mod" });
   }
   if (existsSync(join(projectPath, "package.json"))) {
-    const hasTS = existsSync(join(projectPath, "tsconfig.json"));
+    const hasTS = detectTypeScript(projectPath);
     results.push({ dir: ".", language: hasTS ? "TypeScript" : "JavaScript", markerFile: "package.json" });
   }
 
@@ -327,7 +327,7 @@ function scanSubEcosystems(projectPath: string): SubEcosystem[] {
     else if (existsSync(join(subPath, "pyproject.toml"))) results.push({ dir, language: "Python", markerFile: "pyproject.toml" });
     else if (existsSync(join(subPath, "requirements.txt"))) results.push({ dir, language: "Python", markerFile: "requirements.txt" });
     else if (existsSync(join(subPath, "package.json"))) {
-      const hasTS = existsSync(join(subPath, "tsconfig.json"));
+      const hasTS = detectTypeScript(subPath);
       results.push({ dir, language: hasTS ? "TypeScript" : "JavaScript", markerFile: "package.json" });
     }
   }
@@ -369,7 +369,7 @@ function buildResult(ecosystem: Ecosystem, projectPath: string): EcosystemDetect
     java:   () => ({ ecosystem: "java", language: "Java", packageManager: "maven", support: "detect-only", markerFile: "pom.xml" }),
     node:   () => {
       const pm = detectNodePackageManager(projectPath);
-      const hasTS = existsSync(join(projectPath, "tsconfig.json"));
+      const hasTS = detectTypeScript(projectPath);
       return { ecosystem: "node", language: hasTS ? "TypeScript" : "JavaScript", packageManager: pm, support: "full", markerFile: "package.json" };
     },
   };
@@ -439,6 +439,19 @@ function detectPythonEntry(projectPath: string): string {
   if (existsSync(join(projectPath, "src", "__main__.py"))) return "-m src";
   // Fallback
   return "main.py";
+}
+
+/**
+ * Detect TypeScript — checks tsconfig.json AND tsconfig.*.json (monorepo pattern).
+ */
+export function detectTypeScript(dirPath: string): boolean {
+  if (existsSync(join(dirPath, "tsconfig.json"))) return true;
+  try {
+    const entries = readdirSync(dirPath);
+    return entries.some(e => e.startsWith("tsconfig.") && e.endsWith(".json"));
+  } catch {
+    return false;
+  }
 }
 
 function readNodeScripts(projectPath: string): Record<string, string> {

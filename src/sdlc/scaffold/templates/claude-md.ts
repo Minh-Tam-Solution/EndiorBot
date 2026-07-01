@@ -457,13 +457,23 @@ export function generateSubdirClaudeMd(
 }
 
 function getSrcSection(_project: ProjectConfig, snapshot?: ProjectSnapshot): string[] {
+  const lang = snapshot?.techStack.language ?? "";
+  const isTS = lang === "TypeScript" || lang === "JavaScript";
+  const isPython = lang === "Python" || lang.includes("Python");
+
+  const barrelLine = isPython
+    ? "- Use `__init__.py` to define package public APIs."
+    : isTS
+      ? "- Use barrel exports (`index.ts`) for clean public APIs."
+      : "- Keep public API surface explicit.";
+
   const lines: string[] = [
     "## Code Conventions",
     "",
     "### Structure",
     "- Keep modules focused (single responsibility).",
     "- Co-locate unit tests next to source files or under a dedicated `tests/` tree.",
-    "- Use barrel exports (`index.ts`) for clean public APIs.",
+    barrelLine,
   ];
 
   if (snapshot?.techStack.language) {

@@ -25,7 +25,7 @@ import type {
   TechStackInfo,
   TestFileInfo,
 } from "./fix-types.js";
-import { detectEcosystem } from "../../cli/commands/ecosystem-detector.js";
+import { detectEcosystem, detectTypeScript } from "../../cli/commands/ecosystem-detector.js";
 
 // ============================================================================
 // Public API
@@ -101,7 +101,7 @@ function detectTechStack(projectPath: string): TechStackInfo {
   const pkg = readPackageJson(projectPath);
   const allDeps = { ...pkg.dependencies, ...pkg.devDependencies };
 
-  const hasTypeScript = existsSync(join(projectPath, "tsconfig.json"));
+  const hasTypeScript = detectTypeScript(projectPath);
 
   // Detect Docker
   const hasDocker = existsSync(join(projectPath, "Dockerfile"))
