@@ -34,7 +34,7 @@ End-to-end SDLC execution for **LITE tier** projects. One agent wears all hats �
 
 ## Gates
 
-All gates are self-assessed but still required:
+All gates are **programmatically evaluated** (not self-assessed — honest-ceiling applies):
 
 | Gate | Stage | Criteria |
 |------|-------|----------|
@@ -83,7 +83,7 @@ The @fullstack agent handles everything directly. No delegation needed.
 ### Same Quality, Less Ceremony
 LITE tier means:
 - Brief ADRs instead of full technical specs
-- Self-review instead of separate reviewer
+- Model-diversity review instead of separate human reviewer (self-review diversity rule)
 - Bullet-point requirements instead of full user stories
 
 LITE tier does NOT mean:
@@ -91,6 +91,10 @@ LITE tier does NOT mean:
 - Skipping tests
 - Skipping gate checks
 - Using mocks or placeholders
+- Claiming gates pass without running `endiorbot gate check` (honest-ceiling)
+
+### Honest-Ceiling (applies to solo @fullstack)
+Since @fullstack handles all stages solo, the confabulation risk is highest here. The agent MUST run gate checks programmatically — "I already know it passes" is prohibited. Self-review uses model-diversity (ADR-010 evaluator-optimizer): a different model or prompt challenges the work before the gate evaluates.
 
 ### Post-Sprint Documentation Sync
 As LITE tier's sole team, @fullstack owns ALL post-sprint docs:

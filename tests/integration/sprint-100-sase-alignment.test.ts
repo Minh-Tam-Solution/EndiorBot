@@ -147,10 +147,10 @@ describe("Phase 3: Tier-Aware AGENT_MODEL_MAP", () => {
 describe("Phase 3: getAgentModel() (ADR-052 provider-aware)", () => {
   it("returns provider-aware model for LITE agent at LITE tier", async () => {
     const { getAgentModel } = await import("../../src/agents/channel-router.js");
-    // ADR-052 Amendment (Sprint 143): Tier 2 agents → CC primary (sonnet), not kimi
-    expect(getAgentModel("coder", "LITE")).toBe("sonnet");
-    expect(getAgentModel("assistant", "LITE")).toBe("qwen3.5:9b");
-    expect(getAgentModel("tester", "LITE")).toBe("sonnet");
+    // ADR-052 Amendment (Sprint 156): Tier 2 agents → Kimi primary (kimi-code)
+    expect(getAgentModel("coder", "LITE")).toBe("kimi-code");
+    expect(getAgentModel("assistant", "LITE")).toBe("kimi-code");
+    expect(getAgentModel("tester", "LITE")).toBe("kimi-code");
   });
 
   it("returns undefined for STANDARD agent at LITE tier (strict enforcement)", async () => {
@@ -161,17 +161,17 @@ describe("Phase 3: getAgentModel() (ADR-052 provider-aware)", () => {
 
   it("returns provider-aware model for STANDARD agents at STANDARD tier", async () => {
     const { getAgentModel } = await import("../../src/agents/channel-router.js");
-    // ADR-052 Amendment (Sprint 143): pm/reviewer → CC sonnet (not kimi)
-    expect(getAgentModel("pm", "STANDARD")).toBe("sonnet");
-    expect(getAgentModel("architect", "STANDARD")).toBe("claude-opus-4");
-    expect(getAgentModel("reviewer", "STANDARD")).toBe("sonnet");
+    // ADR-052 Amendment (Sprint 156): PM promoted to Tier 1 Opus; reviewer → Kimi
+    expect(getAgentModel("pm", "STANDARD")).toBe("opus");
+    expect(getAgentModel("architect", "STANDARD")).toBe("opus");
+    expect(getAgentModel("reviewer", "STANDARD")).toBe("kimi-code");
   });
 
   it("STANDARD tier includes LITE agents (inheritance)", async () => {
     const { getAgentModel } = await import("../../src/agents/channel-router.js");
-    // ADR-052 Amendment (Sprint 143): Tier 2 agents → CC sonnet
-    expect(getAgentModel("coder", "STANDARD")).toBe("sonnet");
-    expect(getAgentModel("tester", "STANDARD")).toBe("sonnet");
+    // ADR-052 Amendment (Sprint 156): Tier 2 agents → Kimi primary
+    expect(getAgentModel("coder", "STANDARD")).toBe("kimi-code");
+    expect(getAgentModel("tester", "STANDARD")).toBe("kimi-code");
   });
 
   it("returns undefined for ENTERPRISE agents at PROFESSIONAL tier", async () => {
@@ -182,23 +182,23 @@ describe("Phase 3: getAgentModel() (ADR-052 provider-aware)", () => {
 
   it("ENTERPRISE tier has all agents with provider-aware models", async () => {
     const { getAgentModel } = await import("../../src/agents/channel-router.js");
-    expect(getAgentModel("ceo", "ENTERPRISE")).toBe("claude-opus-4");
-    // ADR-052 Amendment (Sprint 143): devops/coder → CC sonnet (not kimi)
-    expect(getAgentModel("devops", "ENTERPRISE")).toBe("sonnet");
-    expect(getAgentModel("coder", "ENTERPRISE")).toBe("sonnet");
+    expect(getAgentModel("ceo", "ENTERPRISE")).toBe("opus");
+    // ADR-052 Amendment (Sprint 156): devops/coder → Kimi primary
+    expect(getAgentModel("devops", "ENTERPRISE")).toBe("kimi-code");
+    expect(getAgentModel("coder", "ENTERPRISE")).toBe("kimi-code");
   });
 
   it("defaults to ENTERPRISE when no tier provided", async () => {
     const { getAgentModel } = await import("../../src/agents/channel-router.js");
-    expect(getAgentModel("ceo")).toBe("claude-opus-4");
-    // ADR-052 Amendment (Sprint 143): coder → CC sonnet (not kimi)
-    expect(getAgentModel("coder")).toBe("sonnet");
+    expect(getAgentModel("ceo")).toBe("opus");
+    // ADR-052 Amendment (Sprint 156): coder → Kimi primary
+    expect(getAgentModel("coder")).toBe("kimi-code");
   });
 
   it("unknown tier falls back to flat map", async () => {
     const { getAgentModel } = await import("../../src/agents/channel-router.js");
-    // ADR-052 Amendment (Sprint 143): flat map returns provider-aware model → sonnet
-    expect(getAgentModel("coder", "UNKNOWN")).toBe("sonnet");
+    // ADR-052 Amendment (Sprint 156): flat map returns provider-aware model → kimi-code
+    expect(getAgentModel("coder", "UNKNOWN")).toBe("kimi-code");
   });
 
   it("unknown agent returns undefined", async () => {

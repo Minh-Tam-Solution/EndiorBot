@@ -186,15 +186,13 @@ After a sprint tier / phase is completed, you:
 
 ## Model Fallback Policy (ADR-052 Tier 1)
 
-**Primary:** Claude Code Bridge (`claude-opus-4`) — critical reasoning cannot be compromised.
+**Primary:** Claude Code Bridge (`opus` (latest Opus)) — strategic reasoning cannot be compromised.
 
 When Claude Code Bridge is unavailable, this agent falls back to:
 
-1. **Kimi OAuth** (`kimi-proxy`) — local `claude-code-proxy` subprocess
-2. **Kimi API** (`kimi-api`) — direct Moonshot API (OpenAI-compatible, API key)
-3. **OpenAI** (`openai`) — Codex / GPT
-4. **Remote Ollama** (`ai-platform`) — AI Platform (last resort)
+1. **Kimi** (`kimi-coding` → `kimi-api`) — Kimi Code (latest), 256K context
+2. **AI-Platform** (`ai-platform`) — Remote Ollama (last resort)
 
 **Removed from chain:** Gemini (CEO directive). Anthropic API key (expensive) also removed.
 
-References: [ADR-051](../../../02-design/01-ADRs/ADR-051-kimi-proxy-subprocess-orchestrator.md), [ADR-052](../../../02-design/01-ADRs/ADR-052-agent-model-tier-mapping.md)
+References: [ADR-052](../../../02-design/01-ADRs/ADR-052-agent-model-tier-mapping.md)

@@ -80,15 +80,17 @@ Every feature entering Stage 04 (Build) MUST have:
 ### No Design-by-Implementation
 Design documents come FIRST. Implementation follows design, not the other way around. If a coder discovers the design is incomplete mid-implementation, they must STOP and escalate back to the design team.
 
-### Handoff to Dev
-When G2 passes, design hands off to the Development team:
+### Auto-Handoff to Dev (agent-to-agent)
+When G2 passes (programmatic evidence confirmed by gate engine), design **automatically** hands off to the Development team. No human trigger required.
 ```
-[@dev: Design complete for <feature>. G2 passed.
+[@dev: Design complete for <feature>. G2 PASS (evidence: gate-engine).
 Key docs:
 - ADR: docs/02-design/01-ADRs/ADR-XXX.md
 - Spec: docs/02-design/TS-XXX.md
-Ready for implementation.]
+Cite-path: <path-to-deliverable>
+→ @coder: implement per ADR + spec.]
 ```
+**Honest-ceiling:** If G2 evidence is incomplete (no ADR, no spec), the agent MUST block and cite what's missing — never claim G2 passed without programmatic gate evaluation.
 
 ## EndiorBot commands (team context)
 

@@ -283,14 +283,13 @@ Reference: [Long-Running Agent Protocol](../../../.sdlc-framework/03-AI-GOVERNAN
 
 ## Model Fallback Policy (ADR-052 Tier 2)
 
-**Primary:** Kimi k2.6 (`kimi-proxy` → `kimi-api`) — primary workhorse for this agent.
+**Primary:** Kimi Code (latest) — high-quality code execution at lower cost.
 
-When Kimi is unavailable, this agent falls back to:
+When Kimi Code is rate-limited or unavailable, this agent falls back to:
 
-1. **Claude Code Bridge** (`claude-opus-4` → `claude-sonnet-4`) — Opus-level reasoning
-2. **OpenAI** (`openai`) — Codex / GPT
-3. **Remote Ollama** (`ai-platform`) — AI Platform (last resort)
+1. **Claude Code Sonnet** (`sonnet` (latest Sonnet)) — CC bridge codebase access
+2. **AI-Platform** (`ai-platform`) — Remote Ollama (last resort)
 
 **Removed from chain:** Gemini (CEO directive). Anthropic API key (expensive) also removed.
 
-References: [ADR-051](../../../02-design/01-ADRs/ADR-051-kimi-proxy-subprocess-orchestrator.md), [ADR-052](../../../02-design/01-ADRs/ADR-052-agent-model-tier-mapping.md)
+References: [ADR-052](../../../02-design/01-ADRs/ADR-052-agent-model-tier-mapping.md)

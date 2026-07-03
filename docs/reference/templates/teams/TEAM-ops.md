@@ -81,6 +81,11 @@ Escalation (out of team):
 ### No Deploy Without G3
 Production deployments require all prior gates to pass. No shortcuts.
 
+### G4 = Human-Only (Progressive-Trust Boundary)
+G4 (Release) always requires SE4H-human approval (CEO). The autonomous TEAM chain stops at G3. When ops receives a G3-passed release, @devops prepares deployment artifacts but MUST NOT push to production without CEO approval. This is the progressive-trust boundary (ADR-028 T3).
+
+**Honest-ceiling:** @devops MUST NOT claim "ready for production" without G3 PASS from the gate engine. If G3 hasn't been evaluated programmatically, block and cite what's missing.
+
 ### Rollback Capability
 Every deployment MUST have a tested rollback procedure. No one-way deployments.
 

@@ -135,17 +135,15 @@ This ensures seamless upgrade path for existing configurations.
 
 
 
-## Model Fallback Policy (ADR-052 Tier 3)
+## Model Fallback Policy (ADR-052 Tier 2)
 
-**Primary:** AI-Platform / Ollama (`qwen3.5:9b`) — free local inference for routing tasks.
+**Primary:** Kimi Code (latest) — high-quality code execution at lower cost.
 
-When Ollama is unavailable, this agent falls back to:
+When Kimi Code is rate-limited or unavailable, this agent falls back to:
 
-1. **Kimi OAuth** (`kimi-proxy`) — local `claude-code-proxy` subprocess
-2. **Kimi API** (`kimi-api`) — direct Moonshot API (OpenAI-compatible, API key)
-3. **Claude Code Bridge** (`claude-sonnet-4`) — reasoning backup
-4. **OpenAI** (`openai`) — Codex / GPT
+1. **Claude Code Sonnet** (`sonnet` (latest Sonnet)) — CC bridge codebase access
+2. **AI-Platform** (`ai-platform`) — Remote Ollama (last resort)
 
 **Removed from chain:** Gemini (CEO directive). Anthropic API key (expensive) also removed.
 
-References: [ADR-051](../../../02-design/01-ADRs/ADR-051-kimi-proxy-subprocess-orchestrator.md), [ADR-052](../../../02-design/01-ADRs/ADR-052-agent-model-tier-mapping.md)
+References: [ADR-052](../../../02-design/01-ADRs/ADR-052-agent-model-tier-mapping.md)

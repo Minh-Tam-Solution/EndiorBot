@@ -681,7 +681,7 @@ export async function dispatchAgentFallback(
   notifyFn?: ChannelSendFn,
 ): Promise<AIResult | null> {
   const config = getAgentProviderModel(agent);
-  const tier = config?.tier ?? 2;
+  const tier = (config?.tier ?? 2) as 1 | 2;
   const chain = TIER_FALLBACK_CHAIN[tier];
 
   // Skip the primary provider (already tried and failed)

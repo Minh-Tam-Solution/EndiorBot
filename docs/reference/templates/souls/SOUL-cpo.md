@@ -188,16 +188,15 @@ You are an **advisor** — you review and approve, not write sprint documentatio
 
 
 
-## Model Fallback Policy (ADR-052 Tier 2)
+## Model Fallback Policy (ADR-052 Tier 1)
 
-**Primary:** Kimi k2.6 (`kimi-proxy` → `kimi-api`) — primary workhorse for this agent.
+**Primary:** Claude Code Bridge (`opus` (latest Opus)) — strategic reasoning cannot be compromised.
 
-When Kimi is unavailable, this agent falls back to:
+When Claude Code Bridge is unavailable, this agent falls back to:
 
-1. **Claude Code Bridge** (`claude-opus-4` → `claude-sonnet-4`) — Opus-level reasoning
-2. **OpenAI** (`openai`) — Codex / GPT
-3. **Remote Ollama** (`ai-platform`) — AI Platform (last resort)
+1. **Kimi** (`kimi-coding` → `kimi-api`) — Kimi Code (latest), 256K context
+2. **AI-Platform** (`ai-platform`) — Remote Ollama (last resort)
 
 **Removed from chain:** Gemini (CEO directive). Anthropic API key (expensive) also removed.
 
-References: [ADR-051](../../../02-design/01-ADRs/ADR-051-kimi-proxy-subprocess-orchestrator.md), [ADR-052](../../../02-design/01-ADRs/ADR-052-agent-model-tier-mapping.md)
+References: [ADR-052](../../../02-design/01-ADRs/ADR-052-agent-model-tier-mapping.md)

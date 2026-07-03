@@ -79,13 +79,15 @@ Every requirement must trace back to evidence:
 ### Zero Assumption Policy
 If evidence is missing, the @researcher must gather it before @pm writes requirements. No requirements based on assumptions.
 
-### Handoff to Design
-When G1 passes, planning hands off to the Design team:
+### Auto-Handoff to Design (agent-to-agent)
+When G1 passes (programmatic evidence confirmed), planning **automatically** hands off to the Design team. No human trigger required — the gate engine fires the handoff.
 ```
-[@design: Requirements complete for <feature>. G1 passed.
+[@design: Requirements complete for <feature>. G1 PASS (evidence: gate-engine).
 Key docs: docs/01-planning/requirements.md
-Ready for architecture design.]
+Cite-path: <path-to-deliverable>
+→ @architect: begin ADR + technical spec.]
 ```
+**Honest-ceiling:** If G1 evidence is incomplete, the agent MUST block and cite what's missing — never claim G1 passed without programmatic gate evaluation.
 
 ## EndiorBot commands (team context)
 

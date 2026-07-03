@@ -102,19 +102,19 @@ describe("Phase 1 — AGENT_MODEL_MAP", () => {
     });
   });
 
-  describe("architecture + quality agents map to opus", () => {
+  describe("architecture agents map to opus", () => {
     it("architect → opus", () => {
       expect(AGENT_MODEL_MAP["architect"]).toBe("opus");
     });
 
-    it("reviewer → opus", () => {
-      expect(AGENT_MODEL_MAP["reviewer"]).toBe("opus");
+    it("cso → opus", () => {
+      expect(AGENT_MODEL_MAP["cso"]).toBe("opus");
     });
   });
 
-  describe("planning / dev / test agents map to sonnet", () => {
-    it("pm → sonnet", () => {
-      expect(AGENT_MODEL_MAP["pm"]).toBe("sonnet");
+  describe("dev / test agents map to sonnet (legacy flat map)", () => {
+    it("reviewer → sonnet", () => {
+      expect(AGENT_MODEL_MAP["reviewer"]).toBe("sonnet");
     });
 
     it("coder → sonnet", () => {
@@ -195,12 +195,12 @@ describe("Phase 1 — AGENT_MODEL_MAP", () => {
   });
 
   describe("model tier invariants (CEO power tool budget control)", () => {
-    it("only executive and architecture agents use opus", () => {
+    it("only strategic and architecture agents use opus (Sprint 156: PM promoted)", () => {
       const opusAgents = Object.entries(AGENT_MODEL_MAP)
         .filter(([, tier]) => tier === "opus")
         .map(([agent]) => agent);
 
-      const expectedOpusAgents = ["ceo", "cpo", "cso", "cto", "architect", "reviewer"];
+      const expectedOpusAgents = ["ceo", "cpo", "cso", "cto", "architect", "pm"];
       expect(opusAgents.sort()).toEqual(expectedOpusAgents.sort());
     });
 
@@ -1053,12 +1053,10 @@ describe("AGENT_MODEL_MAP × VALID_AGENTS cross-reference", () => {
   });
 
   it("model routing follows the documented cost strategy (opus > sonnet)", () => {
-    // Opus: executive + architecture agents (incl. cso added Sprint 100).
-    const opusTier: AgentName[] = ["ceo", "cpo", "cso", "cto", "architect", "reviewer"];
-    // Sonnet: everything else. Sprint 136 (1cbe357 + 9423ae7) promoted
-    // @devops and @pjm haiku → sonnet to match executor-class cadence.
+    // Sprint 156: PM promoted to opus (Tier 1 strategic). Reviewer stays sonnet in legacy map.
+    const opusTier: AgentName[] = ["ceo", "cpo", "cso", "cto", "architect", "pm"];
     const sonnetTier: AgentName[] = [
-      "pm", "coder", "tester", "researcher", "fullstack", "assistant", "devops", "pjm",
+      "reviewer", "coder", "tester", "researcher", "fullstack", "assistant", "devops", "pjm",
     ];
 
     for (const agent of opusTier) {

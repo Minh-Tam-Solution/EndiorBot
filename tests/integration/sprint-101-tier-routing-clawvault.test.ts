@@ -114,16 +114,16 @@ describe("Phase 1: Workspace Tier Resolver", () => {
 describe("Phase 2: getAgentModel() wiring verification (ADR-052)", () => {
   it("getAgentModel() returns provider-aware model with ENTERPRISE default", async () => {
     const { getAgentModel } = await import("../../src/agents/channel-router.js");
-    // ADR-052 Amendment (Sprint 143): coder is Tier 2 → CC sonnet (not Kimi)
-    expect(getAgentModel("coder")).toBe("sonnet");
+    // ADR-052 Amendment (Sprint 156): coder is Tier 2 → Kimi primary
+    expect(getAgentModel("coder")).toBe("kimi-code");
     // ADR-052: ceo is Tier 1 → Claude Opus
-    expect(getAgentModel("ceo")).toBe("claude-opus-4");
+    expect(getAgentModel("ceo")).toBe("opus");
   });
 
   it("getAgentModel() with LITE tier returns provider-aware models for available agents", async () => {
     const { getAgentModel } = await import("../../src/agents/channel-router.js");
-    // ADR-052 Amendment (Sprint 143): coder is Tier 2 → CC sonnet (available at all tiers)
-    expect(getAgentModel("coder", "LITE")).toBe("sonnet");
+    // ADR-052 Amendment (Sprint 156): coder is Tier 2 → Kimi primary
+    expect(getAgentModel("coder", "LITE")).toBe("kimi-code");
     expect(getAgentModel("pm", "LITE")).toBeUndefined();
     expect(getAgentModel("ceo", "LITE")).toBeUndefined();
   });
@@ -131,9 +131,9 @@ describe("Phase 2: getAgentModel() wiring verification (ADR-052)", () => {
   it("getAgentModel() with STANDARD tier includes LITE + STANDARD agents", async () => {
     const { getAgentModel } = await import("../../src/agents/channel-router.js");
     // ADR-052 Amendment (Sprint 143): CC-first for all Tier 2 agents
-    expect(getAgentModel("coder", "STANDARD")).toBe("sonnet");
-    expect(getAgentModel("pm", "STANDARD")).toBe("sonnet");
-    expect(getAgentModel("architect", "STANDARD")).toBe("claude-opus-4");
+    expect(getAgentModel("coder", "STANDARD")).toBe("kimi-code");
+    expect(getAgentModel("pm", "STANDARD")).toBe("opus");
+    expect(getAgentModel("architect", "STANDARD")).toBe("opus");
     expect(getAgentModel("ceo", "STANDARD")).toBeUndefined();
   });
 

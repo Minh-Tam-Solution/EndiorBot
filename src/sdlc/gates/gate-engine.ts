@@ -56,6 +56,16 @@ export interface Evidence {
   hash: string;
   description: string;
   collectedAt: string;
+  /**
+   * How this evidence was produced.
+   * - "programmatic": gate engine ran a checker (file hash, command exit code, coverage report)
+   * - "agent_assertion": an agent claimed this without running a checker — REJECTED by auto-gate
+   *
+   * Honest-ceiling clause (Sprint 156): auto-gate evaluation ONLY accepts
+   * programmatic evidence. Agent assertions are logged but never count toward
+   * gate PASS. This is the code-level enforcement of the anti-confabulation rule.
+   */
+  source?: "programmatic" | "agent_assertion";
 }
 
 /**
@@ -193,6 +203,7 @@ export class GateEngine {
         const result = await this.runAutoCheck(item.checker);
         item.status = result.status;
         if (result.evidence) {
+          result.evidence.source = "programmatic";
           evidence.push(result.evidence);
         }
       } else if (!item.autoCheck) {
@@ -270,6 +281,17 @@ export class GateEngine {
 
     if (!evaluation) {
       throw new Error(`No evaluation found for ${key}`);
+    }
+
+    // Honest-ceiling guard (Sprint 156): SE4A agents cannot override gates.
+    // Only SE4H roles (ceo, cto, cpo, cso) may apply manual overrides.
+    const SE4H_ROLES = new Set(["ceo", "cto", "cpo", "cso"]);
+    if (!SE4H_ROLES.has(approvedBy.toLowerCase())) {
+      throw new Error(
+        `HONEST-CEILING: Gate override rejected — "${approvedBy}" is not an SE4H role. ` +
+        `Only SE4H (${[...SE4H_ROLES].join(", ")}) may override gate results. ` +
+        `SE4A agents must produce programmatic evidence, not override gates.`,
+      );
     }
 
     evaluation.manualOverride = {

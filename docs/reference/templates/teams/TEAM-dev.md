@@ -110,13 +110,16 @@ After sprint completion, @coder updates ONLY:
 
 After updating, @coder notifies: `[@tester: Sprint <N> complete — update MASTER-TEST-PLAN]` and `[@pm: Sprint <N> complete — update roadmap]`.
 
-### Handoff to QA
-When sprint tasks are complete and reviewed:
+### Auto-Handoff to QA (agent-to-agent)
+When sprint tasks are complete and review passes (G-Sprint evidence confirmed by gate engine), dev **automatically** hands off to the QA team. No human trigger required.
 ```
-[@qa: Sprint <N> implementation complete. All reviews passed.
-Test coverage: <X>%. Ready for QA verification.
-Key changes: <summary>]
+[@qa: Sprint <N> implementation complete. G-Sprint PASS (evidence: gate-engine).
+Test coverage: <X>% (from coverage report). Zero-Mock scan: clean.
+Key changes: <summary>
+Cite-path: <path-to-deliverable>
+→ @tester: verify per MASTER-TEST-PLAN.]
 ```
+**Honest-ceiling:** If tests fail, coverage is below threshold, or Zero-Mock scan finds violations, the agent MUST block and cite the failure — never claim "all reviews passed" without programmatic evidence.
 
 ## EndiorBot commands (team context)
 

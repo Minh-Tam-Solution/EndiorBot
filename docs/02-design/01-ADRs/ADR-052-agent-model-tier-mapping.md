@@ -14,61 +14,58 @@ authority:
 # ADR-052: Agent-Model Tier Mapping Strategy
 
 ## Status
-ACCEPTED (2026-04-23, CTO G2). Amended 2026-05-06 by ADR-053 (kimi-coding primary / kimi-api backup).
+ACCEPTED (2026-04-23, CTO G2). Amended 2026-05-06 by ADR-053 (kimi-coding primary / kimi-api backup). Amended 2026-07-03 Sprint 156: 3-tier → 2-tier; Tier 1 = CC Opus (strategic), Tier 2 = Kimi Code primary (executor, CC Sonnet fallback).
 
 ## Context
 
-Kimi k2.6 has demonstrated quality comparable to Claude Sonnet (and near-Opus for coding tasks) at significantly lower cost. CEO's AI-Platform (Ollama) provides free inference for non-critical workloads.
+Kimi Code (latest) has demonstrated quality comparable to Claude Sonnet (and near-Opus for coding tasks) at significantly lower cost. CEO's AI-Platform (Ollama) provides free inference for non-critical workloads.
 
 The current architecture assigns **Claude Code Bridge** as the primary provider for **all 14 agents**, with a uniform fallback chain. This is cost-inefficient because:
-- `@coder`, `@reviewer`, `@tester` spend most tokens on coding tasks where Kimi k2.6 is equally capable.
+- `@coder`, `@reviewer`, `@tester` spend most tokens on coding tasks where Kimi Code (latest) is equally capable.
 - `@assistant` only routes messages — Ollama is sufficient.
 - Only `@architect`, `@cso`, and `@ceo` truly require Opus-level reasoning.
 
 ## Decision
 
-We will implement a **three-tier agent-model mapping** where each agent has a **designated primary provider** based on its typical workload complexity:
+We will implement a **two-tier agent-model mapping**:
+- **Tier 1** (strategic agents): CC Opus primary, Kimi fallback, AI-Platform last resort.
+- **Tier 2** (executor agents): Kimi Code primary, CC Sonnet fallback on rate-limit, AI-Platform last resort.
 
-### Tier 1 — Claude Opus (Critical Reasoning)
-Reserved for tasks where reasoning depth cannot be compromised.
+> **Sprint 156 Amendment (2026-07-03)**: CEO directive — CC Opus for complex tasks, Kimi Code for routine execution, CC Sonnet when Kimi rate-limited. AI-Platform only when both CC and Kimi unavailable. 3-tier collapsed to 2-tier. PM/CPO/CTO promoted to Tier 1 (Opus). Tier 3 (Ollama-primary) eliminated.
+
+### Tier 1 — Claude Opus (Strategic + Critical Reasoning)
+Reserved for agents where reasoning depth and strategic quality cannot be compromised.
 
 | Agent | Primary | Rationale |
 |-------|---------|-----------|
 | `@architect` | Claude Opus | ADR writing, system design, G2 gate |
 | `@cso` | Claude Opus | Security review, threat modeling, ASVS L2 |
 | `@ceo` | Claude Opus | Strategic decisions, Go/No-Go |
+| `@pm` | Claude Opus | PRDs, requirements, G0 gate — high-quality output |
+| `@cpo` | Claude Opus | Product-market fit, validation — strategic advisory |
+| `@cto` | Claude Opus | Architecture oversight, framework decisions |
 
-### Tier 2 — Kimi k2.6 (Primary Workhorse)
-The default for most agents. Kimi's 256K context and coding strength match Sonnet at lower cost.
-
-| Agent | Primary | Rationale |
-|-------|---------|-----------|
-| `@coder` | Kimi k2.6 | Code generation, TDD, implementation |
-| `@reviewer` | Kimi k2.6 | Code review, blast-radius analysis |
-| `@tester` | Kimi k2.6 | Test plans, E2E, coverage |
-| `@pm` | Kimi k2.6 | PRDs, requirements, backlog |
-| `@cpo` | Kimi k2.6 | Product-market fit, validation |
-| `@cto` | Kimi k2.6 | Architecture oversight (advisory) |
-| `@fullstack` | Kimi k2.6 | Solo loop, all stages |
-| `@pjm` | Kimi k2.6 | Sprint planning, velocity |
-| `@researcher` | Kimi k2.6 | Evidence gathering, analysis |
-| `@devops` | Kimi k2.6 | Deploy scripts, runbooks |
-
-### Tier 3 — AI-Platform / Ollama (Free Tier)
-For lightweight, non-coding tasks where quality tolerance is highest.
+### Tier 2 — Kimi Code (Executor Agents)
+The default for execution-focused agents. Kimi Code (latest) as primary workhorse; CC Sonnet fallback on rate-limit.
 
 | Agent | Primary | Rationale |
 |-------|---------|-----------|
-| `@assistant` | Ollama qwen3.5:9b | Routing, delegation tracking |
+| `@coder` | Kimi Code | Code generation, TDD, implementation |
+| `@reviewer` | Kimi Code | Code review, blast-radius analysis |
+| `@tester` | Kimi Code | Test plans, E2E, coverage |
+| `@fullstack` | Kimi Code | Solo loop, all stages |
+| `@pjm` | Kimi Code | Sprint planning, velocity |
+| `@researcher` | Kimi Code | Evidence gathering, analysis |
+| `@devops` | Kimi Code | Deploy scripts, runbooks |
+| `@assistant` | Kimi Code | Routing, delegation tracking |
 
 ### Fallback Chain per Tier
 
-> **Amended by [ADR-053](./ADR-053-kimi-coding-api-direct.md) (2026-05-06)**: the abstract `kimi` slot in each chain now resolves at runtime as `kimi-coding` (primary, `api.kimi.com/coding/v1`) → `kimi-api` (backup, `api.moonshot.ai/v1`). The legacy `kimi-proxy` (subprocess) has been removed.
+> **Amended by [ADR-053](./ADR-053-kimi-coding-api-direct.md) (2026-05-06)**: the abstract `kimi` slot resolves at runtime as `kimi-coding` (primary) → `kimi-api` (backup). Legacy `kimi-proxy` removed.
 
 ```
-Tier 1 (Opus):   claude-code → kimi → ollama
-Tier 2 (Kimi):   kimi → claude-code → ollama
-Tier 3 (Ollama): ollama → kimi → claude-code
+Tier 1 (CC Opus):   claude-code → kimi → ai-platform (last resort)
+Tier 2 (Kimi Code): kimi → claude-code (sonnet) → ai-platform (last resort)
 ```
 
 ## Consequences

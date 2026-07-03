@@ -122,13 +122,17 @@ After sprint testing is complete, @tester updates ONLY:
 
 After updating, @tester notifies: `[@pm: Sprint <N> QA complete — update roadmap]` and `[@pjm: Sprint <N> QA complete — update SPRINT-INDEX, test count: +<N>]`.
 
-### Handoff to Ops
-When G3 passes:
+### Auto-Handoff to Ops (agent-to-agent)
+When G3 passes (programmatic evidence confirmed by gate engine), QA **automatically** hands off to the Ops team. No human trigger required.
 ```
-[@ops: G3 passed for <release>. Quality verified.
-Coverage: <X>%. All acceptance criteria met.
-Ready for deployment.]
+[@ops: G3 PASS for <release> (evidence: gate-engine). Quality verified.
+Coverage: <X>% (from coverage report). All acceptance criteria met.
+Cite-path: docs/05-test/SPRINT-<N>-execution-report.md
+→ @devops: prepare deployment artifacts.]
 ```
+**Honest-ceiling:** If G3 evidence is incomplete (test failures, coverage below threshold), the agent MUST block and cite failures — never claim "quality verified" without the gate engine returning PASS.
+
+**Note on G4 (Release):** G4 requires SE4H-human approval (CEO). Auto-handoff stops at G3 for solo-local scope. G4+ and external gating = human-only (Progressive-Trust ADR-028 T3 boundary).
 
 ## EndiorBot commands (team context)
 

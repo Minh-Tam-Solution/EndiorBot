@@ -31,7 +31,7 @@ export type AgentName = (typeof VALID_AGENTS)[number];
  * Provider identifiers for agent routing.
  * @since Sprint 140 — ADR-052 Agent-Model Tier Mapping
  */
-export type AgentProviderId = "claude-code" | "kimi" | "ollama";
+export type AgentProviderId = "claude-code" | "kimi" | "openai" | "ollama";
 
 /**
  * Per-agent model configuration with provider.
@@ -48,47 +48,45 @@ export interface AgentModelConfig {
 }
 
 /**
- * Agent-Model Tier Mapping (ADR-052).
+ * Agent-Model Tier Mapping (ADR-052, amended Sprint 156).
  *
- * Three-tier strategy:
- *   Tier 1 (claude-code/opus): Critical reasoning — ADR, security, CEO strategy
- *   Tier 2 (kimi/kimi-k2-6): Primary workhorse — coding, review, PM, research
- *   Tier 3 (ollama/qwen3.5:9b): Free tier — routing, lightweight tasks
+ * Two-tier strategy (CEO directive 2026-07-03):
+ *   Tier 1 (claude-code/opus): Strategic + critical reasoning
+ *   Tier 2 (kimi/kimi-code): Executor agents — CC Sonnet fallback on rate-limit
+ *
+ * Tier-specific fallback:
+ *   Tier 1: CC Opus → Kimi → AI-Platform (last resort)
+ *   Tier 2: Kimi Code → CC Sonnet → AI-Platform (last resort)
  *
  * @see docs/02-design/01-ADRs/ADR-052-agent-model-tier-mapping.md
  */
 export const AGENT_PROVIDER_MODEL_MAP: Record<AgentName, AgentModelConfig> = {
-  // ─── Tier 1: Claude Opus — Critical Reasoning ───
-  architect:   { provider: "claude-code", model: "claude-opus-4",     tier: 1, rationale: "ADR writing, system design, G2 gate — deepest reasoning required" },
-  cso:         { provider: "claude-code", model: "claude-opus-4",     tier: 1, rationale: "Security review, threat modeling, ASVS L2 — must not compromise" },
-  ceo:         { provider: "claude-code", model: "claude-opus-4",     tier: 1, rationale: "Strategic decisions, Go/No-Go, resource allocation" },
+  // ─── Tier 1: Claude Opus — Strategic + Critical Reasoning ───
+  architect:   { provider: "claude-code", model: "opus",     tier: 1, rationale: "ADR writing, system design, G2 gate — deepest reasoning required" },
+  cso:         { provider: "claude-code", model: "opus",     tier: 1, rationale: "Security review, threat modeling, ASVS L2 — must not compromise" },
+  ceo:         { provider: "claude-code", model: "opus",     tier: 1, rationale: "Strategic decisions, Go/No-Go, resource allocation" },
+  pm:          { provider: "claude-code", model: "opus",     tier: 1, rationale: "PRDs, requirements, G0 gate — high-quality output (CEO directive)" },
+  cpo:         { provider: "claude-code", model: "opus",     tier: 1, rationale: "Product-market fit, validation — strategic advisory" },
+  cto:         { provider: "claude-code", model: "opus",     tier: 1, rationale: "Architecture oversight, framework decisions — strategic advisory" },
 
-  // ─── Tier 2: CC primary, Kimi fallback — CEO directive 2026-04-26 ───
-  // All agents use CC bridge first (codebase access). Kimi only when CC rate-limited.
-  // ADR-052 Amendment: reversed from kimi-primary to claude-code-primary.
-  coder:       { provider: "claude-code", model: "sonnet",             tier: 2, rationale: "CC first for codebase access; Kimi fallback on rate-limit" },
-  reviewer:    { provider: "claude-code", model: "sonnet",             tier: 2, rationale: "CC first for codebase access; Kimi fallback on rate-limit" },
-  tester:      { provider: "claude-code", model: "sonnet",             tier: 2, rationale: "CC first for codebase access; Kimi fallback on rate-limit" },
-  pm:          { provider: "claude-code", model: "sonnet",             tier: 2, rationale: "CC first for codebase access; Kimi fallback on rate-limit" },
-  cpo:         { provider: "claude-code", model: "sonnet",             tier: 2, rationale: "CC first for codebase access; Kimi fallback on rate-limit" },
-  cto:         { provider: "claude-code", model: "sonnet",             tier: 2, rationale: "CC first for codebase access; Kimi fallback on rate-limit" },
-  fullstack:   { provider: "claude-code", model: "sonnet",             tier: 2, rationale: "CC first for codebase access; Kimi fallback on rate-limit" },
-  pjm:         { provider: "claude-code", model: "sonnet",             tier: 2, rationale: "CC first for codebase access; Kimi fallback on rate-limit" },
-  researcher:  { provider: "claude-code", model: "sonnet",             tier: 2, rationale: "CC first for codebase access; Kimi fallback on rate-limit" },
-  devops:      { provider: "claude-code", model: "sonnet",             tier: 2, rationale: "CC first for codebase access; Kimi fallback on rate-limit" },
-
-  // ─── Tier 3: AI-Platform / Ollama — Free Tier ───
-  assistant:   { provider: "ollama",      model: "qwen3.5:9b",        tier: 3, rationale: "Routing, delegation tracking — qwen3.5:9b router model sufficient" },
+  // ─── Tier 2: Kimi Code — Executor Agents (CC Sonnet fallback on rate-limit) ───
+  coder:       { provider: "kimi",        model: "kimi-code",           tier: 2, rationale: "Code generation, TDD — Kimi primary, CC Sonnet on rate-limit" },
+  reviewer:    { provider: "kimi",        model: "kimi-code",           tier: 2, rationale: "Code review, blast-radius — Kimi primary, CC Sonnet on rate-limit" },
+  tester:      { provider: "kimi",        model: "kimi-code",           tier: 2, rationale: "Test plans, E2E, coverage — Kimi primary, CC Sonnet on rate-limit" },
+  fullstack:   { provider: "kimi",        model: "kimi-code",           tier: 2, rationale: "Solo loop, all stages — Kimi primary, CC Sonnet on rate-limit" },
+  pjm:         { provider: "kimi",        model: "kimi-code",           tier: 2, rationale: "Sprint planning, velocity — Kimi primary, CC Sonnet on rate-limit" },
+  researcher:  { provider: "kimi",        model: "kimi-code",           tier: 2, rationale: "Evidence gathering, analysis — Kimi primary, CC Sonnet on rate-limit" },
+  devops:      { provider: "kimi",        model: "kimi-code",           tier: 2, rationale: "Deploy scripts, runbooks — Kimi primary, CC Sonnet on rate-limit" },
+  assistant:   { provider: "kimi",        model: "kimi-code",           tier: 2, rationale: "Routing, delegation tracking — Kimi primary, CC Sonnet on rate-limit" },
 };
 
 /**
  * Fallback chain per tier (ordered by preference).
  * @since Sprint 140 — ADR-052
  */
-export const TIER_FALLBACK_CHAIN: Record<1 | 2 | 3, AgentProviderId[]> = {
-  1: ["claude-code", "kimi", "ollama"],   // Tier 1: Opus → Kimi → Ollama
-  2: ["claude-code", "kimi", "ollama"],   // Tier 2: CC Sonnet → Kimi → Ollama (CEO 2026-04-26: CC first)
-  3: ["ollama", "kimi", "claude-code"],   // Tier 3: Ollama → Kimi → CC
+export const TIER_FALLBACK_CHAIN: Record<1 | 2, AgentProviderId[]> = {
+  1: ["claude-code", "kimi", "ollama"],              // Tier 1: CC Opus → Kimi → AI-Platform
+  2: ["kimi", "claude-code", "ollama"],              // Tier 2: Kimi → CC Sonnet → AI-Platform
 };
 
 // ============================================================================
@@ -100,7 +98,7 @@ export const TIER_FALLBACK_CHAIN: Record<1 | 2 | 3, AgentProviderId[]> = {
  */
 export const TIER_AGENT_MODEL_MAP: Record<string, Record<string, string>> = {
   LITE: { assistant: "sonnet", coder: "sonnet", tester: "sonnet" },
-  STANDARD: { pm: "sonnet", architect: "opus", reviewer: "opus" },
+  STANDARD: { pm: "opus", architect: "opus", reviewer: "sonnet" },
   PROFESSIONAL: { devops: "sonnet", fullstack: "sonnet", pjm: "sonnet", researcher: "sonnet", cso: "opus" },
   ENTERPRISE: { ceo: "opus", cto: "opus", cpo: "opus" },
 };

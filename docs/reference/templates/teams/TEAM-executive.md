@@ -74,6 +74,14 @@ Executives set direction and approve gates. They do NOT:
 ### Gate Approval Authority
 Each executive has specific gate authority (see table above). No executive can approve gates outside their domain.
 
+### Progressive-Trust Auto-Gate (ADR-028 T3 — Solo-Local)
+For solo-dev context, gates G-Sprint/G0.1/G1/G2/G3 may auto-approve when:
+- The gate engine returns PASS with **programmatic evidence only** (test exit codes, file hashes, coverage numbers)
+- No agent assertions count as evidence (honest-ceiling clause)
+- **G4 (Release) and external gates always require SE4H-human approval**
+
+This is the code-level boundary: maximum autonomy = local scaffold through G3, then human for release.
+
 ### Post-Sprint Review Workflow
 
 After a sprint is completed by operational teams:

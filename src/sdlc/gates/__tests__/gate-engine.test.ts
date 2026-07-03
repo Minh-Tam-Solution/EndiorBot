@@ -91,6 +91,15 @@ describe("GateEngine", () => {
           evaluation.summary.skipped
       ).toBe(evaluation.summary.total);
     });
+
+    it("should mark auto-check evidence as programmatic (honest-ceiling)", async () => {
+      const engine = new GateEngine({ projectRoot: tempDir });
+      const evaluation = await engine.evaluate("G0", "feature-1", "project-1");
+
+      for (const ev of evaluation.evidence) {
+        expect(ev.source).toBe("programmatic");
+      }
+    });
   });
 
   describe("hasGatePassed", () => {
@@ -139,6 +148,36 @@ describe("GateEngine", () => {
           "reason"
         )
       ).toThrow("No evaluation found");
+    });
+
+    it("should reject override from SE4A agent (honest-ceiling guard)", async () => {
+      const engine = new GateEngine({ projectRoot: tempDir });
+      await engine.evaluate("G0", "feature-1", "project-1");
+
+      expect(() =>
+        engine.applyOverride(
+          "G0",
+          "feature-1",
+          "project-1",
+          "coder",
+          "I checked and it looks good"
+        )
+      ).toThrow("HONEST-CEILING");
+    });
+
+    it("should allow override from SE4H roles (case-insensitive)", async () => {
+      const engine = new GateEngine({ projectRoot: tempDir });
+      await engine.evaluate("G0", "feature-1", "project-1");
+
+      const result = engine.applyOverride(
+        "G0",
+        "feature-1",
+        "project-1",
+        "CTO",
+        "Architecture exception approved"
+      );
+      expect(result.result).toBe("PASS");
+      expect(result.manualOverride?.approvedBy).toBe("CTO");
     });
   });
 
