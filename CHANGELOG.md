@@ -6,25 +6,35 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
-## [v0.1.0-beta.4] - 2026-07-03
+## [v0.1.0-beta.4] - 2026-07-04
 
 ### Added — SDLC 6.4.0 Alignment + Agent Upgrades (Sprint 156)
 - **SDLC Framework 6.4.0 alignment** — 257 files bumped from 6.3.1 → 6.4.0 (Amendment C, Drift-Lessons Absorb). Convention A applied: historical test artifacts kept at original version (honest staleness > inflated freshness).
 - **Agent PATCH mode default** — SDLC agents now default to PATCH mode (was READ). Agents can write files via Edit tool without explicit `--patch` flag. New `--read` flag for read-only mode.
-- **PM + Architect → Opus model** — CEO directive: PM and Architect agents route to Opus for higher-quality output. All other agents remain on Sonnet (budget guard).
 - **Auto-approve flag** (`--yes` / `-y`) — PATCH mode auto-approves without diff/confirm cycle when `--yes` or non-TTY. Enables background agent pipelines (SE4A workflow).
 - **PM fallback for unavailable package managers** — `isPmAvailable()` checks if detected PM (e.g. bun) exists on PATH; falls back to npm if not. Prevents bootstrap failures on machines without exotic PMs.
 - **pnpm non-TTY fix** — `confirmModulesPurge: false` in `pnpm-workspace.yaml` prevents interactive prompt in CI/background contexts.
 
+### Added — CEO Directive: Federated-SDLC Autonomous Agent-Team (Sprint 156 cont.)
+- **Honest-ceiling clause (P0 safety valve)** — Anti-confabulation rule in PREAMBLE: agents MUST NOT claim gates pass without running programmatic checks. Code-level enforcement: `Evidence.source` field in gate-engine, SE4H-only override guard (SE4A agents blocked with HONEST-CEILING error). 3 new gate-engine tests.
+- **2-tier model strategy** — Tier 1 (CC Opus): architect, cso, ceo, pm, cpo, cto. Tier 2 (Kimi Code primary, CC Sonnet fallback): coder, reviewer, tester, fullstack, pjm, researcher, devops, assistant. ADR-052 amended with tier-specific fallback chains.
+- **HEARTBEAT autonomous work-driver** — Beat-loop template: pick-next-unblocked-task → classify → execute via TEAM chain → gate-check → cite-path → next beat. Dormant-by-default (safe default). Constrained to sprint-plan tasks (Design-First Gate).
+- **TEAM auto-handoff chain** — 4 TEAM handoffs updated to agent-to-agent auto-handoff (planning→design→dev→qa→ops) with honest-ceiling coupling at each gate transition. G4 = human-only boundary.
+- **Progressive-trust auto-gate** — G-Sprint/G0.1/G1/G2/G3 auto-approve with programmatic evidence. G4 + external = SE4H-human only (ADR-028 T3).
+
 ### Changed
 - SDLC Framework version 6.3.1 → 6.4.0 across entire codebase (src/, docs/, tests/, templates, config)
+- 14 SOUL Model Fallback Policy sections rewritten (Tier 1: CC Opus, Tier 2: Kimi Code primary)
 - 14 SOUL templates frontmatter bumped to `sdlc_framework: "6.4.0"`
+- 7 TEAM charters updated: agent-to-agent semantics, honest-ceiling coupling, G4 boundary
 - Agent CLI default mode: READ → PATCH
+- ADR-052 amended: 3-tier → 2-tier, PM/CPO/CTO promoted to Tier 1, removed openai from fallback chains
 - Sprint-99 integration test: version regex relaxed to `6.x` for resilience across future bumps
 
 ### Stats
-- 8,220+ tests passing (2 pre-existing unrelated failures)
+- 8,221+ tests passing (3 new honest-ceiling tests, 2 pre-existing unrelated failures)
 - 42 unified commands
+- 32 files changed in governance upgrade
 - Build: clean, 0 errors
 
 ## [v0.1.0-beta.3] - 2026-05-27

@@ -1,11 +1,11 @@
 # EndiorBot Product Vision
 
 ---
-version: 4.0
+version: 4.1
 status: APPROVED
-updated: 2026-05-27
+updated: 2026-07-04
 author: CEO + CTO + CPO
-sprint: 154
+sprint: 156
 ---
 
 ## Vision Statement
@@ -26,18 +26,18 @@ Full stage index: [`docs/README.md`](../README.md).
 
 ---
 
-## Autonomy Levels — What's Implemented (Sprint 144)
+## Autonomy Levels — What's Implemented (Sprint 156)
 
 | Level | Name | Status | How It Works |
 |-------|------|--------|-------------|
 | **L1** | Assisted | **SHIPPED** | CEO invokes @agent, reviews output, decides next step |
 | **L2** | Supervised | **SHIPPED** | Context anchoring, checkpoints, session persistence, per-chat workspace |
 | **L3** | Semi-Autonomous | **SHIPPED** | `ENDIORBOT_AUTO_HANDOFF=true` + exec-policy presets. PM→Architect→Coder→Reviewer→Tester chain. CEO approves at gate boundaries only |
-| **L4** | Autonomous | **PARTIAL** | AutonomousSessionManager exists (Sprint 72). Gate A/B/C scaffolded. Full 120min+ unattended sessions not yet production-tested |
+| **L4** | Autonomous | **POLICY READY** | Honest-ceiling clause (anti-confabulation P0), HEARTBEAT beat-loop template, TEAM auto-handoff chain (planning→design→dev→qa→ops), progressive-trust G4-human boundary. AutonomousSessionManager exists (Sprint 72). Runtime wiring + soak pending |
 
 ---
 
-## What's Built (Sprint 154 — verified against code)
+## What's Built (Sprint 156 — verified against code)
 
 ### Plugin Architecture (Sprint 149-154, NEW)
 
@@ -55,8 +55,8 @@ Full stage index: [`docs/README.md`](../README.md).
 | Feature | Status | Evidence |
 |---------|--------|----------|
 | 14 SOUL agents (9 executors + 4 advisors + 1 router) | SHIPPED | `src/agents/router/agent-constants.ts` — `VALID_AGENTS` |
-| 3-tier model routing (Opus / Sonnet / Ollama) | SHIPPED | ADR-052, `AGENT_PROVIDER_MODEL_MAP` |
-| CC-first, Kimi-fallback (Sprint 143 amendment) | SHIPPED | `TIER_FALLBACK_CHAIN[2] = ["claude-code", "kimi", "ollama"]` |
+| 2-tier model routing (Opus / Kimi Code) | SHIPPED | ADR-052 Sprint 156 amendment, `AGENT_PROVIDER_MODEL_MAP` |
+| Tier 1: CC Opus (strategic), Tier 2: Kimi Code → CC Sonnet fallback | SHIPPED | `TIER_FALLBACK_CHAIN[1] = ["claude-code", "kimi", "ollama"]`, `[2] = ["kimi", "claude-code", "ollama"]` |
 | Provider circuit breaker (Sprint 144) | SHIPPED | `src/agents/router/provider-circuit-breaker.ts` — 2 failures → skip → 60s cooldown |
 | Multi-model consultation (@consult) | SHIPPED | `src/cli/commands/consult.ts` — OpenAI + Gemini + Kimi in parallel |
 | Claude Code Bridge (tmux sessions) | SHIPPED | `src/agents/invoke/claude-code-bridge.ts` |
@@ -156,20 +156,26 @@ All channels route through `GatewayIngress → CommandDispatcher` (39 commands).
 | PID lockfile (no duplicate serve) | SHIPPED | Sprint 144 |
 | gitleaks pre-commit hook | SHIPPED | `.gitleaks.toml` + `.githooks/` |
 | Handoff depth limit (default 3) | SHIPPED | `HandoffGuardsConfig.maxDepth` |
+| Honest-ceiling clause (anti-confabulation P0) | SHIPPED | PREAMBLE.md, `gate-engine.ts` SE4H-only override guard |
+| Evidence.source tagging (programmatic vs assertion) | SHIPPED | `gate-engine.ts` — auto-check evidence marked `programmatic` |
+| HEARTBEAT autonomous work-driver (template) | SHIPPED | `HEARTBEAT.md` — beat-loop semantics, dormant-by-default |
+| TEAM auto-handoff chain (agent-to-agent) | SHIPPED | 7 TEAM-*.md — planning→design→dev→qa→ops with cite-path |
+| Progressive-trust G4-human boundary | SHIPPED | TEAM-executive, TEAM-ops, TEAM-qa — G4=SE4H-only |
 
 ---
 
-## Current Stats (Sprint 144, 2026-04-27)
+## Current Stats (Sprint 156, 2026-07-04)
 
 | Metric | Value |
 |--------|-------|
-| Tests | 8,124+ passing |
-| Commands | 39 unified (all 5 channels) |
-| SOUL agents | 14 |
+| Tests | 8,221+ passing |
+| Commands | 42 unified (all 5 channels) |
+| SOUL agents | 14 (2-tier: 6 Opus + 8 Kimi Code) |
+| TEAM charters | 7 (planning, design, dev, qa, ops, fullstack, executive) |
 | Channels | 5 (CLI, Web, Telegram, Zalo, Desktop) |
 | Active providers | 5 (Claude Code, Kimi, OpenAI, Ollama, MCP Gateway) |
-| ADRs | 49 |
-| Sprint plans | 90+ (Sprint 56-144) |
+| ADRs | 57 |
+| Sprint plans | 100+ (Sprint 56-156) |
 | Framework | SDLC 6.4.0 |
 | License | MIT |
 | Domain | endior.net |

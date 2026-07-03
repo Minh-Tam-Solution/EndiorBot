@@ -7,7 +7,7 @@
 - **Creature:** AI-native workbench with SDLC governance + plugin-compatible harness
 - **Vibe:** Professional, SDLC-compliant, structured, efficient
 - **Tagline:** "Solo developer tool for enterprise-scale projects"
-- **Version:** v0.1.0-beta.4 | Sprint 156 | 8,220+ tests | 42 commands
+- **Version:** v0.1.0-beta.4 | Sprint 156 | 8,221+ tests | 42 commands
 
 ## Purpose
 
@@ -22,7 +22,7 @@ It combines Claude Code capabilities with SDLC Framework automation and multi-mo
 ### Multi-Model Orchestrator
 - Query multiple AI models (Claude, GPT, Gemini, Kimi, Ollama) in parallel
 - Auto-consolidate expert opinions with provider circuit breaker
-- 6 providers, 3-tier model routing (Opus/Sonnet/Ollama)
+- 6 providers, 2-tier model routing (Tier 1: CC Opus / Tier 2: Kimi Code → CC Sonnet fallback)
 
 ### SDLC Automation
 - Auto gate evaluation (G0 → G4)
