@@ -9,8 +9,8 @@
  *   endiorbot @architect --interactive "design microservices"
  *
  * Modes:
- *   (default)      READ mode - no file changes
- *   --patch        PATCH mode - generate diff, confirm before apply
+ *   (default)      PATCH mode - generate diff, confirm before apply
+ *   --read         READ mode - no file changes
  *   --interactive  INTERACTIVE mode - human takes over
  *
  * @module cli/commands/agent
@@ -90,7 +90,9 @@ async function buildCRGContext(agent: AgentRole, workspace: string): Promise<str
  */
 interface AgentOptions {
   patch?: boolean;
+  read?: boolean;
   interactive?: boolean;
+  yes?: boolean;
   verbose?: boolean;
   dryRun?: boolean;
   tier?: "LITE" | "STANDARD" | "PROFESSIONAL" | "ENTERPRISE";
@@ -209,12 +211,12 @@ async function agentAction(
   const riskClassifier = getRiskClassifier();
   const verifier = getProjectVerifier();
 
-  // Determine mode
-  let mode: InvokeMode = "READ";
+  // Determine mode — SDLC agents default to PATCH (CEO: agents need write access)
+  let mode: InvokeMode = "PATCH";
   if (options.interactive) {
     mode = "INTERACTIVE";
-  } else if (options.patch) {
-    mode = "PATCH";
+  } else if (options.read) {
+    mode = "READ";
   }
 
   console.log("");
@@ -401,8 +403,12 @@ async function agentAction(
     { mode, workspace, taskType: decision.classification.taskType, complexity: decision.classification.complexity }
   );
 
+  // Model selection — PM + Architect use Opus for higher quality (CEO directive)
+  const OPUS_AGENTS = new Set(["pm", "architect"]);
+  const agentModel = OPUS_AGENTS.has(decision.agent) ? "opus" : undefined;
+
   // Invoke Claude Code
-  console.log(`\n⚡ Invoking Claude Code (${mode} mode)...`);
+  console.log(`\n⚡ Invoking Claude Code (${mode} mode, model: ${agentModel ?? "sonnet"})...`);
   const bridge = getClaudeCodeBridge({
     verbose: options.verbose ?? false,
     defaultTimeout: options.timeout ?? 300,
@@ -423,14 +429,43 @@ async function agentAction(
         userPrompt: injection.userPrompt,
         workspace,
         agent: decision.agent,
+        ...(agentModel ? { model: agentModel } : {}),
       });
       console.log("\n✅ Interactive session complete");
       process.exit(0);
     }
 
     if (mode === "PATCH") {
-      // Patch mode - generate diff, confirm, apply
-      // First, invoke without callback to get the diff
+      // PATCH mode — invoke Claude with Edit tool enabled (Write still blocked).
+      // When --yes or non-TTY, use direct invoke (no diff/confirm cycle).
+      const autoApprove = options.yes || !process.stdin.isTTY;
+
+      if (autoApprove) {
+        const response = await bridge.invoke({
+          systemPrompt: injection.systemPrompt,
+          userPrompt: injection.userPrompt,
+          workspace,
+          agent: decision.agent,
+          timeout: options.timeout ?? 300,
+          mode: "PATCH",
+          disallowedTools: ["NotebookEdit"],
+          ...(agentModel ? { model: agentModel } : {}),
+        });
+
+        console.log("\n" + "─".repeat(60));
+        if (response.success) {
+          console.log(response.output);
+        } else {
+          console.error(`❌ Error: ${response.error}`);
+        }
+        console.log("─".repeat(60));
+
+        const parsed = parseResponse(response.output);
+        displayHandoffs(parsed.handoffs);
+        process.exit(response.success ? 0 : 1);
+      }
+
+      // Interactive PATCH: generate diff, confirm, apply
       const initialResponse = await bridge.invokePatch(
         {
           systemPrompt: injection.systemPrompt,
@@ -438,6 +473,7 @@ async function agentAction(
           workspace,
           agent: decision.agent,
           timeout: options.timeout ?? 300,
+          ...(agentModel ? { model: agentModel } : {}),
         }
       );
 
@@ -471,6 +507,7 @@ async function agentAction(
               workspace,
               agent: decision.agent,
               timeout: options.timeout ?? 300,
+              ...(agentModel ? { model: agentModel } : {}),
             },
             async () => true // Already confirmed
           );
@@ -509,13 +546,14 @@ async function agentAction(
       process.exit(0);
     }
 
-    // READ mode (default)
+    // READ mode
     const response = await bridge.invokeRead({
       systemPrompt: injection.systemPrompt,
       userPrompt: injection.userPrompt,
       workspace,
       agent: decision.agent,
       timeout: options.timeout ?? 300,
+      ...(agentModel ? { model: agentModel } : {}),
     });
 
     // Display result
@@ -638,8 +676,10 @@ export function registerAgentCommand(program: Command): void {
     .command("agent <input...>")
     .alias("@")
     .description("Invoke an SDLC agent via Claude Code")
-    .option("--patch", "Enable PATCH mode (generate diff, confirm before apply)")
+    .option("--patch", "Enable PATCH mode (default — generate diff, confirm before apply)")
+    .option("--read", "Enable READ mode (no file changes)")
     .option("--interactive", "Enable INTERACTIVE mode (human takes over)")
+    .option("-y, --yes", "Auto-approve patches without confirmation")
     .option("-v, --verbose", "Show detailed context manifest and output")
     .option("--dry-run", "Show what would be done without executing")
     .option(
@@ -704,8 +744,10 @@ export function registerAgentCommand(program: Command): void {
     program
       .command(`${agent} <message...>`)
       .description(description)
-      .option("--patch", "Enable PATCH mode")
+      .option("--patch", "Enable PATCH mode (default)")
+      .option("--read", "Enable READ mode (no file changes)")
       .option("--interactive", "Enable INTERACTIVE mode")
+      .option("-y, --yes", "Auto-approve patches")
       .option("-v, --verbose", "Show detailed output")
       .option("--dry-run", "Show what would be done")
       .option("--tier <tier>", "Set tier", isSe4h ? "STANDARD" : "LITE")

@@ -15,7 +15,7 @@
  */
 
 import { existsSync, readFileSync, readdirSync } from "node:fs";
-import { execFile } from "node:child_process";
+import { execFile, execFileSync } from "node:child_process";
 import { join } from "node:path";
 
 // ============================================================================
@@ -385,13 +385,23 @@ function getLockFileName(pm: string): string {
   }
 }
 
+function isPmAvailable(pm: string): boolean {
+  try {
+    execFileSync(pm, ["--version"], { timeout: 3000, stdio: "ignore" });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 function getNodeCommands(pm: string, projectPath: string): EcosystemCommands {
+  const effectivePm = isPmAvailable(pm) ? pm : "npm";
   const scripts = readNodeScripts(projectPath);
   return {
-    install: [pm, "install"],
-    build: scripts.build ? [pm, "run", "build"] : null,
-    run: scripts.start ? [pm, "run", "start"] : [pm, "run", "dev"],
-    dev: scripts.dev ? [pm, "run", "dev"] : (scripts.start ? [pm, "run", "start"] : [pm, "run", "dev"]),
+    install: [effectivePm, "install"],
+    build: scripts.build ? [effectivePm, "run", "build"] : null,
+    run: scripts.start ? [effectivePm, "run", "start"] : [effectivePm, "run", "dev"],
+    dev: scripts.dev ? [effectivePm, "run", "dev"] : (scripts.start ? [effectivePm, "run", "start"] : [effectivePm, "run", "dev"]),
   };
 }
 
