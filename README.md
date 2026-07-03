@@ -53,7 +53,7 @@ npx endiorbot@beta serve
 npm install -g endiorbot@beta
 
 # Or pin a specific beta version
-npm install -g endiorbot@0.1.0-beta.3
+npm install -g endiorbot@0.1.0-beta.4
 
 # Or via Docker
 docker run -p 18790:18790 endiorbot/endiorbot serve
@@ -284,4 +284,4 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for development setup and guidelines.
 
 ---
 
-*EndiorBot v0.1.0-beta.3 | Solo Developer Power Tool | SDLC Framework v6.4.0 | Sprint 154 (2026-05-27)*
+*EndiorBot v0.1.0-beta.4 | Solo Developer Power Tool | SDLC Framework v6.4.0 | Sprint 156 (2026-07-03)*

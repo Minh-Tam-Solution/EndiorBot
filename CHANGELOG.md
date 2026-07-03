@@ -6,6 +6,27 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [v0.1.0-beta.4] - 2026-07-03
+
+### Added — SDLC 6.4.0 Alignment + Agent Upgrades (Sprint 156)
+- **SDLC Framework 6.4.0 alignment** — 257 files bumped from 6.3.1 → 6.4.0 (Amendment C, Drift-Lessons Absorb). Convention A applied: historical test artifacts kept at original version (honest staleness > inflated freshness).
+- **Agent PATCH mode default** — SDLC agents now default to PATCH mode (was READ). Agents can write files via Edit tool without explicit `--patch` flag. New `--read` flag for read-only mode.
+- **PM + Architect → Opus model** — CEO directive: PM and Architect agents route to Opus for higher-quality output. All other agents remain on Sonnet (budget guard).
+- **Auto-approve flag** (`--yes` / `-y`) — PATCH mode auto-approves without diff/confirm cycle when `--yes` or non-TTY. Enables background agent pipelines (SE4A workflow).
+- **PM fallback for unavailable package managers** — `isPmAvailable()` checks if detected PM (e.g. bun) exists on PATH; falls back to npm if not. Prevents bootstrap failures on machines without exotic PMs.
+- **pnpm non-TTY fix** — `confirmModulesPurge: false` in `pnpm-workspace.yaml` prevents interactive prompt in CI/background contexts.
+
+### Changed
+- SDLC Framework version 6.3.1 → 6.4.0 across entire codebase (src/, docs/, tests/, templates, config)
+- 14 SOUL templates frontmatter bumped to `sdlc_framework: "6.4.0"`
+- Agent CLI default mode: READ → PATCH
+- Sprint-99 integration test: version regex relaxed to `6.x` for resilience across future bumps
+
+### Stats
+- 8,220+ tests passing (2 pre-existing unrelated failures)
+- 42 unified commands
+- Build: clean, 0 errors
+
 ## [v0.1.0-beta.3] - 2026-05-27
 
 ### Added — Plugin Architecture (Sprint 149-154)
