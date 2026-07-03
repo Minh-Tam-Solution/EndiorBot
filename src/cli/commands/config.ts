@@ -17,7 +17,7 @@
  * @authority ADR-001 Multi-Model Orchestrator, ADR-002 Project Context Switching
  * @pillar 2 - Sprint Governance
  * @stage 04 - BUILD
- * @sdlc SDLC Framework 6.3.1
+ * @sdlc SDLC Framework 6.4.0
  */
 
 import { existsSync } from "node:fs";
@@ -84,7 +84,7 @@ function displayConfigSummary(result: LoadConfigResult): void {
   console.log("");
 
   console.log("SDLC:");
-  console.log(`  Framework: v${config.sdlc?.frameworkVersion ?? "6.3.1"}`);
+  console.log(`  Framework: v${config.sdlc?.frameworkVersion ?? "6.4.0"}`);
   console.log(`  Tier: ${config.sdlc?.tier ?? "STANDARD"}`);
   console.log(`  Strict: ${config.sdlc?.strict ?? true}`);
   console.log("");

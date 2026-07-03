@@ -4,7 +4,7 @@
  * Sprint 153 — Staleness detection coverage.
  *
  * @module tests/sdlc/compliance/claude-md-auditor
- * @sdlc SDLC Framework 6.3.1
+ * @sdlc SDLC Framework 6.4.0
  */
 
 import { describe, it, expect, beforeEach, afterEach } from "vitest";

@@ -10,7 +10,7 @@
  * @status ACTIVE - Sprint 76 (OTT Channel Enhancement)
  * @authority Master Plan v3.1
  * @stage 04 - BUILD
- * @sdlc SDLC Framework 6.3.1
+ * @sdlc SDLC Framework 6.4.0
  */
 
 import type { AgentRole, SE4ARole, SE4HRole } from "../../agents/types/handoff.js";

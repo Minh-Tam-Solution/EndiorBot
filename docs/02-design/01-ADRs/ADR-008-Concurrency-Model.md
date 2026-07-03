@@ -1139,4 +1139,4 @@ describe('DependencyScheduler', () => {
 ---
 
 *ADR-008 created for EndiorBot Concurrency Model*
-*SDLC Framework v6.3.1*
+*SDLC Framework v6.4.0*

@@ -74,7 +74,7 @@
   - Plan: [sprint-135-surface-parity.md](sprints/sprint-135-surface-parity.md)
   - Authority: CTO G2 APPROVED + CPO 9.4/10 APPROVED (original scope); CPO 9.5/10 + @cto countersign (P1 addition)
   - Original scope (items 1-8): shipped — `2959517`, `b6b192e`, `0da795a`, `9fcdfcb`, `835f5f4`
-  - P1 addition: SDLC 6.3.1 adoption, Layer 1.25 workspace-awareness injection — `9df591f` + `999c325`. ADR: [ADR-048](../02-design/01-ADRs/ADR-048-framework-6-3-1-workspace-awareness.md) (FULL expansion shipped Sprint 136).
+  - P1 addition: SDLC 6.4.0 adoption, Layer 1.25 workspace-awareness injection — `9df591f` + `999c325`. ADR: [ADR-048](../02-design/01-ADRs/ADR-048-framework-6-3-1-workspace-awareness.md) (FULL expansion shipped Sprint 136).
 
 - **Sprint 134** — Config Externalization + Webhooks Ingress — **✅ COMPLETE** (2026-04-11, CTO 9/10)
   - [sprint-134-config-webhooks.md](sprints/sprint-134-config-webhooks.md)
@@ -109,4 +109,4 @@ This file must be updated **on the same day** as each sprint kickoff / close. Pa
 
 ---
 
-*EndiorBot | Solo Developer Power Tool (LOCKED, LOCAL-ONLY) | SDLC 6.3.1 | Pointer updated 2026-04-27*
+*EndiorBot | Solo Developer Power Tool (LOCKED, LOCAL-ONLY) | SDLC 6.4.0 | Pointer updated 2026-04-27*

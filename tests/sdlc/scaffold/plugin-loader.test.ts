@@ -4,7 +4,7 @@
  * Sprint 152 — discoverSkills() and loadSkill() coverage.
  *
  * @module tests/sdlc/scaffold/plugin-loader
- * @sdlc SDLC Framework 6.3.1
+ * @sdlc SDLC Framework 6.4.0
  */
 
 import { describe, it, expect, beforeEach, afterEach } from "vitest";

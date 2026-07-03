@@ -11,7 +11,7 @@
  * @authority ADR-001 Multi-Model Orchestrator, ADR-002 Project Context Switching
  * @pillar 2 - Sprint Governance
  * @stage 04 - BUILD
- * @sdlc SDLC Framework 6.3.1
+ * @sdlc SDLC Framework 6.4.0
  */
 
 import { z } from "zod";
@@ -103,7 +103,7 @@ export type ProjectTier = z.infer<typeof ProjectTierSchema>;
  * SDLC configuration for framework integration.
  */
 export const SDLCConfigSchema = z.object({
-  frameworkVersion: z.string().default("6.3.1"),
+  frameworkVersion: z.string().default("6.4.0"),
   docsRoot: z.string().default("docs"),
   strict: z.boolean().default(true),
   tier: ProjectTierSchema.default("STANDARD"),
@@ -376,7 +376,7 @@ export const DEFAULT_CONFIG: EndiorBotConfig = {
     },
   },
   sdlc: {
-    frameworkVersion: "6.3.1",
+    frameworkVersion: "6.4.0",
     docsRoot: "docs",
     strict: true,
     tier: "STANDARD",

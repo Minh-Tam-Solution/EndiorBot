@@ -4,7 +4,7 @@ status: COMPLETE
 start_date: 2026-04-26
 end_date: 2026-04-26
 planned_duration: 2-3d
-framework: "6.3.1"
+framework: "6.4.0"
 authority:
   proposer: "@pm"
   countersigners: []
@@ -153,4 +153,4 @@ Failures discovered during E2E channel testing. Each fixed within Sprint 143 sco
 
 ---
 
-*EndiorBot | Solo Developer Power Tool (LOCKED, LOCAL-ONLY) | SDLC 6.3.1 | Sprint 143 — 2026-04-26*
+*EndiorBot | Solo Developer Power Tool (LOCKED, LOCAL-ONLY) | SDLC 6.4.0 | Sprint 143 — 2026-04-26*

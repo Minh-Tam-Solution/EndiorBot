@@ -3,7 +3,7 @@ sprint: 141
 status: G1 APPROVED — CTO countersigned 2026-04-23 with 6 conditions; CPO countersigned with 3 conditions
 start_date: 2026-04-24
 planned_duration: 3-5d
-framework: "6.3.1"
+framework: "6.4.0"
 authority:
   proposer: "@pm"
   countersigners:
@@ -284,4 +284,4 @@ These items remain architecturally valid. Sprint 139's evaluator optimizations (
 
 ---
 
-*EndiorBot | Solo Developer Power Tool (LOCKED, LOCAL-ONLY) | SDLC 6.3.1 | Sprint 141 G1 APPROVED — 2026-04-23*
+*EndiorBot | Solo Developer Power Tool (LOCKED, LOCAL-ONLY) | SDLC 6.4.0 | Sprint 141 G1 APPROVED — 2026-04-23*

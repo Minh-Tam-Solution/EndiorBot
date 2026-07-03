@@ -8,7 +8,7 @@
  * @version 1.0.0
  * @date 2026-02-27
  * @status ACTIVE - Sprint 53
- * @sdlc SDLC Framework 6.3.1
+ * @sdlc SDLC Framework 6.4.0
  */
 
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";

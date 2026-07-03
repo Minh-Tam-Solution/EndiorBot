@@ -127,4 +127,4 @@ EndiorBot's evaluator loop (`src/evaluator/loop.ts`) runs a fixed-depth optimiza
 
 ---
 
-*EndiorBot | Solo Developer Power Tool (LOCKED, LOCAL-ONLY) | SDLC 6.3.1 | Sprint 139 Requirements — 2026-04-20 | Status: COMPLETE*
+*EndiorBot | Solo Developer Power Tool (LOCKED, LOCAL-ONLY) | SDLC 6.4.0 | Sprint 139 Requirements — 2026-04-20 | Status: COMPLETE*

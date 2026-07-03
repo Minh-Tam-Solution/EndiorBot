@@ -30,7 +30,7 @@ CLAUDE.md files accumulate stale references, grow too large, and rules written f
 ## Acceptance Criteria
 
 - [ ] Detects stale file references in CLAUDE.md
-- [ ] Flags outdated framework version (e.g., 6.3.0 when current is 6.3.1)
+- [ ] Flags outdated framework version (e.g., 6.3.0 when current is 6.4.0)
 - [ ] Warns when root CLAUDE.md exceeds 300 lines
 - [ ] `--accept W001` suppresses warning, persists in baseline
 - [ ] Clean project (VatDownload) shows minimal/no issues

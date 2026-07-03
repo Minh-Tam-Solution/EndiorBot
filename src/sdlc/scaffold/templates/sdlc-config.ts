@@ -83,7 +83,7 @@ export function generateMinimalConfig(
 ): SdlcConfig {
   return {
     schema_version: "1.0.0",
-    framework_version: "6.3.1",
+    framework_version: "6.4.0",
     generator: "endiorbot",
     generated_at: new Date().toISOString(),
     migrated_from: migratedFrom,

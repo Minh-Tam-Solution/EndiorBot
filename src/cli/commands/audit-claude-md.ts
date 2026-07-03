@@ -4,7 +4,7 @@
  * Sprint 153, Plan U4.
  *
  * @module cli/commands/audit-claude-md
- * @sdlc SDLC Framework 6.3.1
+ * @sdlc SDLC Framework 6.4.0
  */
 
 import type { Command } from "commander";

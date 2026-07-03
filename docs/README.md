@@ -1,14 +1,14 @@
 # EndiorBot Documentation Index
 
-**Framework:** SDLC **6.3.1** · **Identity:** Solo Developer Power Tool
+**Framework:** SDLC **6.4.0** · **Identity:** Solo Developer Power Tool
 
 > Stage-shaped home for product and engineering docs. Command SSOT lives in code (`./endiorbot.mjs`); stage semantics (WHY → WHAT → HOW → …) defined in [`stage-command-workflow-spine.md`](00-foundation/stage-command-workflow-spine.md).
 
-**Documentation language:** Per SDLC 6.3.1, application docs under `docs/` are authored in **English**. Product-facing OTT strings may use other languages when explicitly scoped.
+**Documentation language:** Per SDLC 6.4.0, application docs under `docs/` are authored in **English**. Product-facing OTT strings may use other languages when explicitly scoped.
 
 ---
 
-## 10-Stage Lifecycle (SDLC 6.3.1 Pillar 1)
+## 10-Stage Lifecycle (SDLC 6.4.0 Pillar 1)
 
 ### Core Pipeline (00 → 05)
 
@@ -40,7 +40,7 @@ Design → build → test traceability is **mandatory**. Stage 03 is the integra
 
 ---
 
-## Quality Gates (SDLC 6.3.1 Pillar 4)
+## Quality Gates (SDLC 6.4.0 Pillar 4)
 
 | Gate | Stage | Evidence Required |
 |------|-------|-------------------|
@@ -95,7 +95,7 @@ Design → build → test traceability is **mandatory**. Stage 03 is the integra
 | Providers | 5 active (Claude Code, Kimi, OpenAI, Ollama, MCP Gateway) |
 | ADRs | 51 approved |
 | Sprint plans | 25 active (Sprint 126-146), 111 archived |
-| Framework | SDLC 6.3.1 (7-Pillar, 10-Stage, 4-Tier) |
+| Framework | SDLC 6.4.0 (7-Pillar, 10-Stage, 4-Tier) |
 
 ### Sprint 144-145 Highlights
 
@@ -110,4 +110,4 @@ Design → build → test traceability is **mandatory**. Stage 03 is the integra
 
 ---
 
-*EndiorBot | SDLC **6.3.1** — docs/ stage index | Updated Sprint 145 (2026-04-27)*
+*EndiorBot | SDLC **6.4.0** — docs/ stage index | Updated Sprint 145 (2026-04-27)*

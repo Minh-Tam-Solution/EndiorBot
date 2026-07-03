@@ -17,7 +17,7 @@
  *   "chúng ta chỉ fallback sang Gemini khi bị rate limit (5h, weekly rate limit) của CC"
  *
  * @module providers/claude-code/rate-limit-detector
- * @sdlc_framework 6.3.1
+ * @sdlc_framework 6.4.0
  */
 
 export type ClaudeCodeFailureKind =

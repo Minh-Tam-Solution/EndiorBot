@@ -11,7 +11,7 @@
  * @version 1.0.0
  * @date 2026-05-20
  * @status ACTIVE - Sprint 149
- * @sdlc SDLC Framework 6.3.1
+ * @sdlc SDLC Framework 6.4.0
  */
 
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";

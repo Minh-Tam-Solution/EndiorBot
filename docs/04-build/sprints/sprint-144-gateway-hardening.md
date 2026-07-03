@@ -4,7 +4,7 @@ status: COMPLETE
 start_date: 2026-04-27
 end_date: 2026-04-27
 planned_duration: 2-3d
-framework: "6.3.1"
+framework: "6.4.0"
 authority:
   proposer: "@pm + @architect"
   countersigners: ["@cto G2 pre-cleared 2026-04-27"]
@@ -200,4 +200,4 @@ ENDIORBOT_KIMI_PROXY_URL=http://127.0.0.1:18765 endiorbot serve
 
 ---
 
-*EndiorBot | Solo Developer Power Tool | SDLC 6.3.1 | Sprint 144 Draft — 2026-04-27*
+*EndiorBot | Solo Developer Power Tool | SDLC 6.4.0 | Sprint 144 Draft — 2026-04-27*

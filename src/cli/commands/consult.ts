@@ -20,7 +20,7 @@
  * @authority ADR-001 3-Model Consultation
  * @pillar 3 - Agent Personas
  * @stage 04 - BUILD
- * @sdlc SDLC Framework 6.3.1
+ * @sdlc SDLC Framework 6.4.0
  */
 
 import { createInterface } from "node:readline";

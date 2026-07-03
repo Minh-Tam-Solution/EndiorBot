@@ -9,7 +9,7 @@ authority:
       reference: "sprint-43-desktop-foundation"
   trigger: "Desktop app needs structured, secure communication with EndiorBot core"
   notes: "Retroactive ADR. Code shipped Sprint 43-144. Two-layer protocol (Electron IPC + WebSocket) documented from running implementation."
-sdlc_framework: "6.3.1"
+sdlc_framework: "6.4.0"
 ---
 
 # ADR-003: CLI-Desktop Protocol
@@ -262,4 +262,4 @@ The renderer's `gateway.safe.ts` store maintains a WebSocket to `ws://127.0.0.1:
 
 *ADR-003 v1.0.0 — ACCEPTED (retroactive)*
 *EndiorBot Desktop Foundation — Sprint 43-144*
-*SDLC Framework 6.3.1*
+*SDLC Framework 6.4.0*

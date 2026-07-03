@@ -79,7 +79,7 @@ export const STAGE_PROCESSING_ORDER: string[] = [
 ];
 
 // ============================================================================
-// Stage → Gate Mapping (Dual-Track per SDLC 6.3.1)
+// Stage → Gate Mapping (Dual-Track per SDLC 6.4.0)
 // ============================================================================
 
 /**
@@ -101,11 +101,11 @@ export const STAGE_GATE_MAP: Record<string, string[]> = {
 };
 
 // ============================================================================
-// SDLC 6.3.1 Stage Metadata
+// SDLC 6.4.0 Stage Metadata
 // ============================================================================
 
 /**
- * Stage guiding questions per SDLC 6.3.1 — 10-Stage Lifecycle (Pillar 1).
+ * Stage guiding questions per SDLC 6.4.0 — 10-Stage Lifecycle (Pillar 1).
  * Each stage is driven by a core question that all documentation must answer.
  */
 export const STAGE_QUESTIONS: Record<string, string> = {
@@ -124,7 +124,7 @@ export const STAGE_QUESTIONS: Record<string, string> = {
 
 /**
  * Upstream stages each stage must cite for cross-stage traceability.
- * SDLC 6.3.1 Design-First: each stage builds on evidence from prior stages.
+ * SDLC 6.4.0 Design-First: each stage builds on evidence from prior stages.
  */
 export const STAGE_UPSTREAM: Record<string, string[]> = {
   "01-planning":   ["00-foundation"],
@@ -139,7 +139,7 @@ export const STAGE_UPSTREAM: Record<string, string[]> = {
 };
 
 /**
- * Artifact types that require Section 8 YAML frontmatter per SDLC 6.3.1.
+ * Artifact types that require Section 8 YAML frontmatter per SDLC 6.4.0.
  * Specification documents must include spec_id, status, tier, stage, owner.
  */
 export const SECTION8_ARTIFACT_TYPES = new Set([
@@ -156,7 +156,7 @@ export const SECTION8_ARTIFACT_TYPES = new Set([
 
 /**
  * Stages where BDD (Given/When/Then) format is required in requirement docs.
- * SDLC 6.3.1 Section 8: all acceptance criteria must be expressed in BDD format.
+ * SDLC 6.4.0 Section 8: all acceptance criteria must be expressed in BDD format.
  */
 export const BDD_REQUIRED_STAGES = new Set(["01-planning", "00-foundation"]);
 
@@ -177,7 +177,7 @@ export const AGENT_SKILL_MAP: Partial<Record<AgentRole, string[]>> = {
 // ============================================================================
 
 /**
- * SDLC 6.3.1 document hierarchy levels.
+ * SDLC 6.4.0 document hierarchy levels.
  * Roadmap → Phases → Sprints → Backlog (4 levels).
  */
 export type DocHierarchyLevel = "roadmap" | "phase" | "sprint" | "backlog" | "gate";
@@ -308,7 +308,7 @@ export interface FixAction {
   artifactType: string;
   /** Description of what to generate */
   description: string;
-  /** Hierarchy level in SDLC 6.3.1 doc structure */
+  /** Hierarchy level in SDLC 6.4.0 doc structure */
   hierarchyLevel?: DocHierarchyLevel;
 }
 
@@ -445,7 +445,7 @@ export function getAgentForStage(stage: string, tier: ProjectTier): AgentRole {
 }
 
 // ============================================================================
-// Gate-Artifact-Tier Matrix (SDLC Framework 6.3.1 Authority)
+// Gate-Artifact-Tier Matrix (SDLC Framework 6.4.0 Authority)
 // ============================================================================
 // Sources:
 //   - Tier-Stage-Requirements: .sdlc-framework/02-Core-Methodology/Documentation-Standards/SDLC-Tier-Stage-Requirements.md
@@ -496,7 +496,7 @@ export const TIER_COVERAGE_TARGETS: Record<string, { unit: number; integration: 
 
 /**
  * Gate artifact requirements — maps each gate to required artifacts by tier.
- * Derived from SDLC Framework 6.3.1 authority documents.
+ * Derived from SDLC Framework 6.4.0 authority documents.
  */
 export const GATE_ARTIFACT_REQUIREMENTS: GateRequirement[] = [
   // ── G0: Problem Validation (Stage 00-foundation) ──
@@ -839,7 +839,7 @@ export function findArtifactSpec(stage: string, artifactType: string): GateArtif
 }
 
 // ============================================================================
-// Header Compliance Templates (SDLC 6.3.1)
+// Header Compliance Templates (SDLC 6.4.0)
 // ============================================================================
 // Authority:
 //   - Document headers: SDLC-Naming-Standards.md Part 5

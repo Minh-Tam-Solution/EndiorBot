@@ -5,7 +5,7 @@
 **Authority:** PM Audit 2026-05-04 — 5 commands exist in dispatcher but missing CLI wiring
 **Status:** DESIGN APPROVED — awaiting @coder handoff
 **Identity check:** Solo Developer Power Tool (LOCKED) — thin-client invariant preserved
-**Framework:** SDLC 6.3.1
+**Framework:** SDLC 6.4.0
 
 ---
 

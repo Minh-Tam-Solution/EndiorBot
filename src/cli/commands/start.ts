@@ -16,7 +16,7 @@
  * @authority ADR-002 Project Context Switching
  * @pillar 2 - Sprint Governance
  * @stage 04 - BUILD
- * @sdlc SDLC Framework 6.3.1
+ * @sdlc SDLC Framework 6.4.0
  */
 
 import { existsSync, readFileSync } from "node:fs";
@@ -199,7 +199,7 @@ async function startAction(
   }
 
   if (info.hasSDLCConfig && info.sdlcConfig) {
-    console.log(`│  SDLC: v${info.sdlcConfig.framework?.version ?? "6.3.1"}`.padEnd(62) + "│");
+    console.log(`│  SDLC: v${info.sdlcConfig.framework?.version ?? "6.4.0"}`.padEnd(62) + "│");
   } else {
     console.log("│  SDLC: Not configured (run: endiorbot init)".padEnd(62) + "│");
   }

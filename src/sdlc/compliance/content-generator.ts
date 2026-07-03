@@ -309,7 +309,7 @@ function buildSystemPrompt(
     parts.push(`Include a "## Quality Gates" section referencing these gates.`);
   }
 
-  // 6. SDLC 6.3.1 Stage Context (Pillar 1 — 10-Stage Lifecycle)
+  // 6. SDLC 6.4.0 Stage Context (Pillar 1 — 10-Stage Lifecycle)
   const stageQuestion = STAGE_QUESTIONS[task.stage];
   if (stageQuestion) {
     parts.push(
@@ -345,7 +345,7 @@ function buildSystemPrompt(
   // 8. BDD Requirements Format (01-planning + 00-foundation requirement docs)
   if (BDD_REQUIRED_STAGES.has(task.stage) && /requirement/i.test(action.artifactType)) {
     parts.push(
-      `\n## BDD Requirements Format (MANDATORY per SDLC 6.3.1 Section 8)\n` +
+      `\n## BDD Requirements Format (MANDATORY per SDLC 6.4.0 Section 8)\n` +
       `All acceptance criteria and feature requirements MUST use Given/When/Then format:\n` +
       `\`\`\`gherkin\nFeature: [Feature Name]\n\n` +
       `  Scenario: [Scenario description]\n` +
@@ -790,7 +790,7 @@ function buildDeterministicTemplate(
   const lines: string[] = [];
   const now = new Date().toISOString().split("T")[0];
 
-  // Section 8 YAML frontmatter for spec artifacts (SDLC 6.3.1)
+  // Section 8 YAML frontmatter for spec artifacts (SDLC 6.4.0)
   if (SECTION8_ARTIFACT_TYPES.has(action.artifactType)) {
     const specId = `SPEC-${task.stage.replace(/-/g, "").toUpperCase()}-001`;
     const titleWords = action.artifactType.replace(/\.(md|yaml)$/, "").replace(/-/g, " ");
@@ -846,11 +846,11 @@ function buildDeterministicTemplate(
     }
   }
 
-  // References section with upstream cross-stage traceability (SDLC 6.3.1)
+  // References section with upstream cross-stage traceability (SDLC 6.4.0)
   lines.push("");
   lines.push("## References");
   lines.push("");
-  lines.push(`- SDLC Framework 6.3.1`);
+  lines.push(`- SDLC Framework 6.4.0`);
   lines.push(`- Project: ${snapshot.name} (${snapshot.tier} tier)`);
   const upstream = STAGE_UPSTREAM[task.stage] ?? [];
   for (const up of upstream) {

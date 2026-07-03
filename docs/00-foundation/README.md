@@ -88,4 +88,4 @@ All triggers wired and operational:
 
 ---
 
-*EndiorBot | SDLC Framework **6.3.1** — Stage 00: Foundation — Updated Sprint 145 (2026-04-27)*
+*EndiorBot | SDLC Framework **6.4.0** — Stage 00: Foundation — Updated Sprint 145 (2026-04-27)*

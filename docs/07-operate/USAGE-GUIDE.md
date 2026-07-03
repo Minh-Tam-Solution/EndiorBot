@@ -4,7 +4,7 @@
 
 EndiorBot is a personal AI tool for solo developers. It integrates with Claude Code (and Codex) as an Agent Orchestrator, supporting CLI, Web, Telegram, and Zalo channels.
 
-**Last Updated:** Sprint 154 (2026-05-27) · SDLC 6.3.1
+**Last Updated:** Sprint 154 (2026-05-27) · SDLC 6.4.0
 
 ---
 
@@ -1321,11 +1321,11 @@ AI Routing (ADR-052, Sprint 143 CC-first amendment):
 
 ## Related Documentation
 
-- [AI Development Workflows](workflows-ai-development.md) — Use cases mapped to Sau Sheong's "From vibe coding to agentic engineering" + SDLC 6.3.1
+- [AI Development Workflows](workflows-ai-development.md) — Use cases mapped to Sau Sheong's "From vibe coding to agentic engineering" + SDLC 6.4.0
 - [CLI Reference](../04-build/cli-reference.md) — Full command reference
 - [Deploy Guide](../06-deploy/README.md) — Deployment options + exec-policy config
 - [ADR-046](../02-design/01-ADRs/ADR-046-Autonomous-Execution-Policy.md) — Binding policy for exec-policy + auto-handoff
 
 ---
 
-*EndiorBot v0.1.0-beta.1 | Solo Developer Power Tool | SDLC Framework v6.3.1 | Updated Sprint 144 (2026-04-27)*
+*EndiorBot v0.1.0-beta.1 | Solo Developer Power Tool | SDLC Framework v6.4.0 | Updated Sprint 144 (2026-04-27)*

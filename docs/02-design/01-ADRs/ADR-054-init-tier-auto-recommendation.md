@@ -9,7 +9,7 @@ authority:
       reference: "Sprint 149"
   trigger: "endiorbot init defaults to STANDARD tier for all projects, causing over/under-scaffolding"
   notes: "Tier recommender scans 7 project signals and recommends LITE/STANDARD/PROFESSIONAL/ENTERPRISE before scaffolding."
-sdlc_framework: "6.3.1"
+sdlc_framework: "6.4.0"
 ---
 
 # ADR-054: Init Tier Auto-Recommendation

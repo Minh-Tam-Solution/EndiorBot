@@ -12,7 +12,7 @@ authority:
       reference: "Session review — verified 15 files, approved P0+P1 items, conditions on Sprint 140-141"
   trigger: "CEO-directed research of kyegomez/OpenMythos (Recurrent-Depth Transformer). @devops/@architect/@cpo analysis identified 7 adoptable patterns; this ADR covers the Sprint 139 P0+P1 subset (4 items)."
   notes: "CTO waived separate STUB phase — this ADR ships FULL on first write because the adoption plan (.claude/plans/fuzzy-baking-pnueli.md) already went through multi-expert review."
-sdlc_framework: "6.3.1"
+sdlc_framework: "6.4.0"
 supersedes: []
 referenced_by: ["Sprint 139 plan", "sprint-139-requirements.md", "TS-050-Evaluator-OpenMythos-Integration.md", ".claude/plans/fuzzy-baking-pnueli.md"]
 ---
@@ -169,4 +169,4 @@ All rollback actions are localized to `src/evaluator/loop.ts` and `src/evaluator
 
 ---
 
-*EndiorBot | Solo Developer Power Tool (LOCKED, LOCAL-ONLY) | SDLC 6.3.1 | ADR-050 FULL — 2026-04-20*
+*EndiorBot | Solo Developer Power Tool (LOCKED, LOCAL-ONLY) | SDLC 6.4.0 | ADR-050 FULL — 2026-04-20*

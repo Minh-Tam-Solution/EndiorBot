@@ -237,5 +237,5 @@ See `src/logging/redaction.ts` for full pattern list.
 
 ---
 
-*SDLC Framework v6.3.1*
+*SDLC Framework v6.4.0*
 *Sprint 34 Day 7-8*

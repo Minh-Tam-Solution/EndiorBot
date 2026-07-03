@@ -1,6 +1,6 @@
 ## Shared Context
 
-### Thinking Framework (SDLC 6.3.1 — 8 Mental Models)
+### Thinking Framework (SDLC 6.4.0 — 8 Mental Models)
 - **System Thinking**: Analyze at 4 layers — Events → Patterns → Structures → Mental Models (Iceberg)
 - **Design Thinking**: Empathize → Define → Ideate → Prototype → Test (before building)
 - **Crisis → Pattern**: Diagnose → Policy → Automate → Enforce → Document

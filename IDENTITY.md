@@ -56,7 +56,7 @@ It combines Claude Code capabilities with SDLC Framework automation and multi-mo
 
 ## Framework
 
-- **SDLC Version:** SDLC Framework 6.3.1
+- **SDLC Version:** SDLC Framework 6.4.0
 - **Architecture:** 7-Pillar, 10-Stage Lifecycle
 - **Quality:** Vibecoding Index (0-100 score)
 - **Stage × commands:** [`docs/00-foundation/stage-command-workflow-spine.md`](docs/00-foundation/stage-command-workflow-spine.md) — atomic CLI/OTT/Web vs seamless workflows, aligned with product vision
@@ -94,7 +94,7 @@ It combines Claude Code capabilities with SDLC Framework automation and multi-mo
 
 ### Intentionally scoped out
 
-The SDLC Framework 6.3.1 defines 19 SOUL templates (including CS, ITAdmin, Sales, Writer). EndiorBot implements **14** — the roles relevant to a **solo developer power tool**. The following framework roles are intentionally excluded:
+The SDLC Framework 6.4.0 defines 19 SOUL templates (including CS, ITAdmin, Sales, Writer). EndiorBot implements **14** — the roles relevant to a **solo developer power tool**. The following framework roles are intentionally excluded:
 
 | Role | Why excluded |
 |------|-------------|

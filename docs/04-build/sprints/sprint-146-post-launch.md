@@ -3,7 +3,7 @@ sprint: 146
 status: DRAFT — blocked by Sprint 145 exit
 start_date: TBD
 planned_duration: 5d
-framework: "6.3.1"
+framework: "6.4.0"
 authority:
   proposer: "@pm"
   countersigners: ["@cto — gap analysis endorsed 2026-04-27"]
@@ -19,7 +19,7 @@ references:
 
 Sprint 145 launched both repos. Three audits during Sprint 145 identified quality gaps:
 
-1. **SDLC 6.3.1 Compliance Audit** — 92% → 94% (target 95%)
+1. **SDLC 6.4.0 Compliance Audit** — 92% → 94% (target 95%)
 2. **Code-Design Gap Analysis** — 2 missing ADRs, 4 modules without ADR
 3. **Frontend-Backend Gap Analysis** — 3 P0 blockers fixed, 8 backend features with no UI
 
@@ -289,4 +289,4 @@ Day 5: T9 (Desktop pages) + T10 (OTT verify) + T11 (test report footers)
 
 ---
 
-*EndiorBot | Solo Developer Power Tool | SDLC 6.3.1 | Sprint 146 Draft — 2026-04-27*
+*EndiorBot | Solo Developer Power Tool | SDLC 6.4.0 | Sprint 146 Draft — 2026-04-27*

@@ -13,7 +13,7 @@
  * @status ACTIVE - Sprint 73
  * @authority Sprint 73 Plan, BUG-011
  * @stage 04 - BUILD
- * @sdlc SDLC Framework 6.3.1
+ * @sdlc SDLC Framework 6.4.0
  */
 
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";

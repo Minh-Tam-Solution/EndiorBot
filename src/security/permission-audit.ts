@@ -9,7 +9,7 @@
  * @date 2026-04-02
  * @status ACTIVE — Sprint 125 (CTO C3 fix)
  * @authority ADR-041 Permission Audit Trail
- * @sdlc SDLC Framework 6.3.1
+ * @sdlc SDLC Framework 6.4.0
  */
 
 import { existsSync, readFileSync } from "node:fs";

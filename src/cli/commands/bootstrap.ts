@@ -8,7 +8,7 @@
  * @date 2026-03-29
  * @status ACTIVE — Sprint 123
  * @authority ADR-037 Polyglot Bootstrap
- * @sdlc SDLC Framework 6.3.1
+ * @sdlc SDLC Framework 6.4.0
  */
 
 import type { Command } from "commander";

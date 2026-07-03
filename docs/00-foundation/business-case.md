@@ -32,7 +32,7 @@ EndiorBot eliminates copy/paste between AI apps by querying multiple models and 
 | Write CRP/MRP/VCR documents | Auto-generate from git commits |
 | Calculate Vibecoding Index | Auto-calculate before commit |
 | Switch context between projects | `endiorbot switch bflow` |
-| Remember SDLC rules | Built-in SDLC 6.3.1 knowledge |
+| Remember SDLC rules | Built-in SDLC 6.4.0 knowledge |
 | Apply security checks | Auto-scan on file save |
 | Query multiple AI models | Auto-orchestrate in parallel |
 | Consolidate expert opinions | Auto-merge with consensus detection |
@@ -91,7 +91,7 @@ Assuming 5 architecture decisions + 10 gate evaluations + 20 context switches pe
 
 ## Strategic Alignment
 
-### With SDLC Framework v6.3.1
+### With SDLC Framework v6.4.0
 
 - Native SDLC compliance from day 1
 - Auto-detect stages and gates
@@ -156,5 +156,5 @@ Assuming 5 architecture decisions + 10 gate evaluations + 20 context switches pe
 
 ---
 
-*Solo Developer Power Tool | SDLC Framework v6.3.1 - Stage 00: Foundation*
+*Solo Developer Power Tool | SDLC Framework v6.4.0 - Stage 00: Foundation*
 *Identity: LOCKED (2026-02-28) — Updated Sprint 144 (2026-04-27)*

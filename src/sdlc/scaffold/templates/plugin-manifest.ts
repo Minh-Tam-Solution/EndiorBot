@@ -8,7 +8,7 @@
  * @version 1.0.0
  * @date 2026-05-27
  * @status ACTIVE - Sprint 151
- * @sdlc SDLC Framework 6.3.1
+ * @sdlc SDLC Framework 6.4.0
  */
 
 import type { ProjectConfig } from "../types.js";

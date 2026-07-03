@@ -11,7 +11,7 @@
  * @status ACTIVE - Sprint 73
  * @authority TS-011 CLI Session Mode, CTO Review (Blocking Issue #2)
  * @stage 04 - BUILD
- * @sdlc SDLC Framework 6.3.1
+ * @sdlc SDLC Framework 6.4.0
  */
 
 import type { ActiveProjectState } from "../../config/paths.js";

@@ -3,7 +3,7 @@ sprint: 142
 status: G1 APPROVED — CTO conditions C1+C2 resolved
 start_date: TBD
 planned_duration: 3-5d
-framework: "6.3.1"
+framework: "6.4.0"
 authority:
   proposer: "@pm"
   countersigners: []
@@ -161,4 +161,4 @@ Estimated: ~12-15 new tests. Full regression against 8,100+ tests.
 
 ---
 
-*EndiorBot | Solo Developer Power Tool (LOCKED, LOCAL-ONLY) | SDLC 6.3.1 | Sprint 142 Draft — 2026-04-26*
+*EndiorBot | Solo Developer Power Tool (LOCKED, LOCAL-ONLY) | SDLC 6.4.0 | Sprint 142 Draft — 2026-04-26*

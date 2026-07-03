@@ -18,7 +18,7 @@
  * @authority ADR-008 Multi-Provider Architecture
  * @pillar 3 - Resource Optimization
  * @stage 04 - BUILD
- * @sdlc SDLC Framework 6.3.1
+ * @sdlc SDLC Framework 6.4.0
  */
 
 import { createLogger, type Logger } from "../logging/index.js";

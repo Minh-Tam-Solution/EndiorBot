@@ -170,7 +170,7 @@ All channels route through `GatewayIngress → CommandDispatcher` (39 commands).
 | Active providers | 5 (Claude Code, Kimi, OpenAI, Ollama, MCP Gateway) |
 | ADRs | 49 |
 | Sprint plans | 90+ (Sprint 56-144) |
-| Framework | SDLC 6.3.1 |
+| Framework | SDLC 6.4.0 |
 | License | MIT |
 | Domain | endior.net |
 
@@ -198,4 +198,4 @@ All channels route through `GatewayIngress → CommandDispatcher` (39 commands).
 
 ---
 
-*EndiorBot Product Vision v3.0 | SDLC Framework 6.3.1 | Sprint 144 (2026-04-27)*
+*EndiorBot Product Vision v3.0 | SDLC Framework 6.4.0 | Sprint 144 (2026-04-27)*

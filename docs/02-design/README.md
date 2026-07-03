@@ -158,4 +158,4 @@ State is held in `Map<providerId, CircuitState>` inside ChannelRouter. Cleared o
 
 ---
 
-*EndiorBot | SDLC Framework **6.3.1** — Stage 02: Design — Updated Sprint 145 (2026-04-27)*
+*EndiorBot | SDLC Framework **6.4.0** — Stage 02: Design — Updated Sprint 145 (2026-04-27)*

@@ -11,7 +11,7 @@ authority:
       reference: "Sprint 138 P3-01 session review — noted safety discipline (private flip first, bare-mirror snapshot, two-pass filter-repo for blobs + messages, test-fixture restore, pre-rewrite tag deletion)"
   trigger: "Sprint 138 P3-01 rotation checklist authoring — `git log -S` on key prefixes returned non-zero matches on pre-Sprint-41 commits. Exposure surface identified before secrets reached wild-abuse state."
   notes: "CTO waived full expansion on countersign: the STUB content (context, decision, execution log with timestamps, consequences, preventive, back-compat, rollback) already meets full-ADR bar."
-sdlc_framework: "6.3.1"
+sdlc_framework: "6.4.0"
 supersedes: []
 referenced_by: ["Sprint 138 plan", "Sprint 138 P3-01 rotation checklist", "SECURITY.md incident section"]
 ---
@@ -100,4 +100,4 @@ If a critical path is missed and force-push turns out to be wrong:
 
 ---
 
-*EndiorBot | Solo Developer Power Tool (LOCKED, LOCAL-ONLY) | SDLC 6.3.1 | ADR-049 STUB — drafted 2026-04-19*
+*EndiorBot | Solo Developer Power Tool (LOCKED, LOCAL-ONLY) | SDLC 6.4.0 | ADR-049 STUB — drafted 2026-04-19*

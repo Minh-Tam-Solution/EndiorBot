@@ -145,4 +145,4 @@ If EndiorBot ever builds its own shell command execution layer (agents spawn `gi
 
 ---
 
-*EndiorBot | Research Note | SDLC 6.3.1*
+*EndiorBot | Research Note | SDLC 6.4.0*

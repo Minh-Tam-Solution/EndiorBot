@@ -4,7 +4,7 @@
  * Sprint 152, Plan U3.
  *
  * @module cli/commands/skills
- * @sdlc SDLC Framework 6.3.1
+ * @sdlc SDLC Framework 6.4.0
  */
 
 import type { Command } from "commander";

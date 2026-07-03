@@ -345,4 +345,4 @@ describe('ProjectContextManager', () => {
 ---
 
 *ADR-002 created for EndiorBot Project Context Switching*
-*SDLC Framework v6.3.1*
+*SDLC Framework v6.4.0*

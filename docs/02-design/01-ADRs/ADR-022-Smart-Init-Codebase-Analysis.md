@@ -127,4 +127,4 @@ Deferred — deterministic file scanning is faster, cheaper, offline-capable.
 ---
 
 *ADR-022 — Smart Init Codebase Analysis*
-*SDLC Framework v6.3.1 | Sprint 79*
+*SDLC Framework v6.4.0 | Sprint 79*

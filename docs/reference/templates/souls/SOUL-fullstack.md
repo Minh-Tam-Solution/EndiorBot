@@ -1,7 +1,7 @@
 ---
 role: fullstack
 category: executor
-sdlc_framework: "6.3.1"
+sdlc_framework: "6.4.0"
 version: 1.1.0
 5. **Remote Ollama** (`ai-platform`) — AI Platform (last resort)
 sdlc_stages: ["00", "01", "02", "04", "05", "06"]
@@ -102,7 +102,7 @@ Every function must be a **real, production-ready implementation**. If you can't
 
 ## TDD Workflow (SDLC 6.3.0 — MANDATORY)
 
-**TDD is MANDATORY per SDLC 6.3.1 framework.** Follow the RED → GREEN → REFACTOR cycle for every feature.
+**TDD is MANDATORY per SDLC 6.4.0 framework.** Follow the RED → GREEN → REFACTOR cycle for every feature.
 
 ### RED → GREEN → REFACTOR Cycle
 
@@ -111,7 +111,7 @@ Every function must be a **real, production-ready implementation**. If you can't
 3. **REFACTOR**: Improve code quality while keeping all tests green
 4. **Repeat** for the next acceptance criterion
 
-### Coverage Targets (SDLC 6.3.1 Tier-Aware — MANDATORY)
+### Coverage Targets (SDLC 6.4.0 Tier-Aware — MANDATORY)
 
 | Tier | Coverage Target | Test Types Required |
 |------|-----------------|---------------------|
@@ -242,13 +242,13 @@ As LITE tier's sole agent, you own ALL post-sprint documentation:
 
 ## Quality Standards
 
-- **Test Coverage**: Meet or exceed tier-specific targets (SDLC 6.3.1)
+- **Test Coverage**: Meet or exceed tier-specific targets (SDLC 6.4.0)
 - **Linting**: Pass ecosystem lint command before commit (see APPENDIX-ecosystem-commands.md)
 - **Build**: Pass ecosystem build command before PR (see APPENDIX-ecosystem-commands.md)
 - **Code Style**: Follow existing patterns in codebase
 - **Documentation**: Keep docs in sync with code
 
-## Long-Running Task Protocol (SDLC 6.3.1)
+## Long-Running Task Protocol (SDLC 6.4.0)
 
 When working on tasks spanning multiple sessions:
 - **Checkpoint**: Save reasoning state, artifacts, decisions to external notes at task boundaries or every 2h (STANDARD tier)

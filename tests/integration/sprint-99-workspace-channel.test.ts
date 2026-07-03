@@ -422,18 +422,15 @@ describe("Phase 5: SOUL version bump 6.1.1 → 6.1.2", () => {
     }
   });
 
-  it("updated SOUL files contain SDLC 6.3.x framework references", () => {
-    // Sprint 123 session bump: all SOULs got 6.3.0 frontmatter.
-    // Sprint 135 P1 (2026-04-17): 5 executor SOULs bumped 6.3.0 → 6.3.1 for
-    // Workspace Awareness adoption. Historical section markers (TDD, Long-
-    // Running Protocol) keep 6.3.0 as when-introduced. Test accepts either
-    // minor version to remain resilient across future addendum bumps.
+  it("updated SOUL files contain SDLC 6.x framework references", () => {
+    // All SOULs aligned to SDLC 6.4.0 (Amendment C, Drift-Lessons Absorb).
+    // Test accepts any 6.x version to remain resilient across future bumps.
     const filesWithVersion: string[] = [];
     for (const file of soulFiles) {
       const filePath = join(soulsDir, file);
       if (!existsSync(filePath)) continue;
       const content = readFileSync(filePath, "utf-8");
-      if (/6\.3\.\d+/.test(content)) {
+      if (/6\.\d+\.\d+/.test(content)) {
         filesWithVersion.push(file);
       }
     }

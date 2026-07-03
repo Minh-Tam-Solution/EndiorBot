@@ -9,7 +9,7 @@
  * @date 2026-04-06
  * @status ACTIVE — Sprint 130
  * @authority ADR-043-A1 Claude Code Chat Provider
- * @sdlc SDLC Framework 6.3.1
+ * @sdlc SDLC Framework 6.4.0
  */
 
 import { spawn } from "node:child_process";

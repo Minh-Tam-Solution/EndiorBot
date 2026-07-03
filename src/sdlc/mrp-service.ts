@@ -23,7 +23,7 @@
  * @authority ADR-004 SDLC Gate Engine
  * @pillar 2 - Sprint Governance
  * @stage 04 - BUILD
- * @sdlc SDLC Framework 6.3.1
+ * @sdlc SDLC Framework 6.4.0
  */
 
 import type { VibecodingResult } from "./vibecoding/vibecoding-index.js";
@@ -464,7 +464,7 @@ export class MRPService {
 
     lines.push("");
     lines.push("---");
-    lines.push("*SDLC Framework v6.3.1*");
+    lines.push("*SDLC Framework v6.4.0*");
 
     return lines.join("\n");
   }

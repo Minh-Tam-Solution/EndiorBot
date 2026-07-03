@@ -357,7 +357,7 @@ export function createCommandDispatcher(): CommandDispatcher {
         `🛡️ **Exec-Policy:** ${preset}`,
         `🔄 **Auto-Handoff:** ${process.env["ENDIORBOT_AUTO_HANDOFF"] === "true" ? "ON" : "OFF"}`,
         `🧠 **Active Memory:** ${isFeatureEnabled("ACTIVE_MEMORY_ENABLED") ? "ON" : "OFF"}`,
-        `⚙️ **Framework:** SDLC 6.3.1`,
+        `⚙️ **Framework:** SDLC 6.4.0`,
         "",
         "Use `/gate status` for gates, `/config` for full config, `/cost` for budget.",
       ].join("\n"),

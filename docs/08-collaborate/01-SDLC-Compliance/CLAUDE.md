@@ -88,7 +88,7 @@ When a new feature is shipped, update ALL of the following:
 
 - **Project:** EndiorBot
 - **Type:** Solo developer tool for enterprise-scale projects
-- **Framework:** SDLC Framework 6.3.1
+- **Framework:** SDLC Framework 6.4.0
 - **Primary Language:** TypeScript (ES2022, NodeNext)
 
 ## Quick Start
@@ -421,7 +421,7 @@ const mentalModels = await getBrain().getMentalModels();
 
 *Claude Code integration for EndiorBot v0.1.0-beta.3*
 *Identity: Solo Developer Power Tool*
-*SDLC Framework v6.3.1*
+*SDLC Framework v6.4.0*
 *Sprint 155 | 8,207+ tests | 42 commands | 42 unified commands | 14 SOUL agents | 6 providers*
 *Plugin Architecture: layered CLAUDE.md + Anthropic Base profile + skill loader + audit + self-improving hooks*
 

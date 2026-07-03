@@ -8,7 +8,7 @@
  * @date 2026-03-31
  * @status ACTIVE — Sprint 124a
  * @authority ADR-038 Autonomous Workflow Integration
- * @sdlc SDLC Framework 6.3.1
+ * @sdlc SDLC Framework 6.4.0
  */
 
 import type { Command } from "commander";

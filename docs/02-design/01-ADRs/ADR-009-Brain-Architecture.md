@@ -454,4 +454,4 @@ Without this SOUL-level directive, an agent launched via direct Claude Code CLI 
 ---
 
 *ADR-009 created for EndiorBot Brain Architecture*
-*SDLC Framework v6.3.1 — amended Sprint 143*
+*SDLC Framework v6.4.0 — amended Sprint 143*

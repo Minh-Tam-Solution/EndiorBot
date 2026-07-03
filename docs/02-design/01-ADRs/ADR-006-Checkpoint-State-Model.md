@@ -13,7 +13,7 @@ authority:
       reference: "sprint-69-71-session-resilience"
   trigger: "Long-running AI sessions need deterministic recovery from failures without human intervention"
   notes: "Retroactive ADR. Original interface defined Sprint 35; state machine + scheduler + failure classifier shipped Sprint 69-72. Written from running implementation."
-sdlc_framework: "6.3.1"
+sdlc_framework: "6.4.0"
 ---
 
 # ADR-006: Checkpoint State Model
@@ -336,4 +336,4 @@ Schema versioning: `schema_version` field (semver). Migrations are pure function
 
 *ADR-006 v1.1.0 — ACCEPTED (retroactive)*
 *EndiorBot Autonomy Epic — Sprint 35 interface + Sprint 69-72 implementation*
-*SDLC Framework 6.3.1*
+*SDLC Framework 6.4.0*

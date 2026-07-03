@@ -10,7 +10,7 @@
  * @authority ADR-006 CLI Architecture
  * @pillar 2 - Sprint Governance
  * @stage 04 - BUILD
- * @sdlc SDLC Framework 6.3.1
+ * @sdlc SDLC Framework 6.4.0
  */
 
 export { registerStartCommand } from "./start.js";

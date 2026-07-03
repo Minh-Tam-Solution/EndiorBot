@@ -3,7 +3,7 @@ sprint: 147
 status: DRAFT — queued after Sprint 146
 start_date: TBD
 planned_duration: 3-4d
-framework: "6.3.1"
+framework: "6.4.0"
 authority:
   proposer: "@pm"
   countersigners: []
@@ -244,4 +244,4 @@ Day 4: T6 (landing build) + T7/T8/T9 if capacity
 
 ---
 
-*EndiorBot | Solo Developer Power Tool | SDLC 6.3.1 | Sprint 147 Draft — 2026-04-27*
+*EndiorBot | Solo Developer Power Tool | SDLC 6.4.0 | Sprint 147 Draft — 2026-04-27*

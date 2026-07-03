@@ -7,7 +7,7 @@
  * @version 1.0.0
  * @date 2026-05-27
  * @status ACTIVE - Sprint 151
- * @sdlc SDLC Framework 6.3.1
+ * @sdlc SDLC Framework 6.4.0
  */
 
 import { describe, it, expect } from "vitest";
@@ -23,7 +23,7 @@ const testProject: ProjectConfig = {
   name: "Test Project",
   description: "A test project for unit testing",
   tier: "STANDARD",
-  frameworkVersion: "6.3.1",
+  frameworkVersion: "6.4.0",
 };
 
 // ============================================================================

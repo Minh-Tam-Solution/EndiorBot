@@ -9,7 +9,7 @@
  * @date 2026-04-07
  * @status ACTIVE — Sprint 131
  * @authority ADR-045 Code Knowledge Graph Client
- * @sdlc SDLC Framework 6.3.1
+ * @sdlc SDLC Framework 6.4.0
  */
 
 // ============================================================================

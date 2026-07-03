@@ -3,7 +3,7 @@ sprint: 136
 status: DRAFT — Scope partially TBD, awaiting CEO confirmation on Desktop + Web dashboard specifics
 start_date: TBD (after Sprint 135 formal close + CEO scope confirmation)
 planned_duration: TBD — ~1h verified trivia + Desktop/Web scope (@pm claim: 5.5d, unverified)
-framework: "6.3.1"
+framework: "6.4.0"
 authority: "@pm draft 2026-04-17 (structural). Desktop/Web scope requires CEO confirmation before binding."
 previous_sprint: "Sprint 135 — Surface Parity + P1 Workspace Awareness (IMPLEMENTATION COMPLETE 2026-04-17, awaiting formal close)"
 ---
@@ -79,14 +79,14 @@ Sprint 135 closed with P1 Workspace Awareness added on top of the original 8-ite
 
 - L3 Group History — deferred per Sprint 135 decision (identity lock)
 - Multi-user Desktop/Web — Solo Developer Power Tool identity lock prohibits
-- Methodology changes to SDLC 6.3.1 framework (ADR-048 full expansion is a **documentation** task, not a framework edit)
+- Methodology changes to SDLC 6.4.0 framework (ADR-048 full expansion is a **documentation** task, not a framework edit)
 
 ## Success criteria
 
-- Part A (5 items) shipped; all SOULs at 6.3.1 consistency; ADR-048 status FULL.
+- Part A (5 items) shipped; all SOULs at 6.4.0 consistency; ADR-048 status FULL.
 - Part B: either shipped with CEO-confirmed scope, or deferred to Sprint 137 if CEO scope pending at kickoff.
 - No scope bleed between A and B — separate commits per part.
 
 ---
 
-*EndiorBot | Solo Developer Power Tool (LOCKED) | SDLC 6.3.1 | Sprint 136 Draft Plan — structural; Part B pending CEO scope confirmation*
+*EndiorBot | Solo Developer Power Tool (LOCKED) | SDLC 6.4.0 | Sprint 136 Draft Plan — structural; Part B pending CEO scope confirmation*

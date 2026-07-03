@@ -1,7 +1,7 @@
 /**
  * Workspace Awareness - Static Module Constant
  *
- * Implements SDLC 6.3.1 "Agent Continuity Runtime Guidance" (SASE Artifact).
+ * Implements SDLC 6.4.0 "Agent Continuity Runtime Guidance" (SASE Artifact).
  * Injected at Layer 1.25 of the context-injector pipeline (between SOUL and
  * Brain L4) to guarantee agents discover project workspace context before
  * asking the user for information already present in the workspace.
@@ -21,12 +21,12 @@
  *   - Injection ordering: SOUL → workspace-awareness → Brain L4
  *
  * References:
- *   - SDLC Framework 6.3.1 addendum: .sdlc-framework/05-Templates-Tools/04-SASE-Artifacts/Agent-Continuity-Runtime-Guidance.md
+ *   - SDLC Framework 6.4.0 addendum: .sdlc-framework/05-Templates-Tools/04-SASE-Artifacts/Agent-Continuity-Runtime-Guidance.md
  *   - Upstream pattern (Go): MTClaw commit 5b1463e, buildWorkspaceAwarenessSection()
  *   - Upstream pattern (Python): SDLC Orchestrator Sprint 59, prompt_builder.py Layer 1.25
  *
  * @module agents/context/workspace-awareness
- * @sdlc_framework 6.3.1
+ * @sdlc_framework 6.4.0
  * @pattern "Pattern A — System Prompt Injection"
  */
 

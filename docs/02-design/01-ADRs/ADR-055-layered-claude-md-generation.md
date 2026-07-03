@@ -9,7 +9,7 @@ authority:
       reference: "Sprint 150"
   trigger: "Single root CLAUDE.md causes context bloat in large codebases"
   notes: "Anthropic blog: 'scope context hierarchically rather than loading everything globally'"
-sdlc_framework: "6.3.1"
+sdlc_framework: "6.4.0"
 ---
 
 # ADR-055: Layered CLAUDE.md Generation

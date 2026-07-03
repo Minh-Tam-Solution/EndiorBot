@@ -3,7 +3,7 @@ sprint: 145
 status: IN PROGRESS
 start_date: 2026-04-27
 planned_duration: 3-4d
-framework: "6.3.1"
+framework: "6.4.0"
 authority:
   proposer: "@pm"
   countersigners: ["@cto G2 approved 2026-04-27", "@cpo GO 2026-04-27"]
@@ -15,13 +15,13 @@ previous_sprint: "Sprint 144 — Gateway Hardening + Community Publish Cleanup"
 
 ## Context
 
-CEO directive: launch **SDLC Framework 6.3.1** (methodology) and **EndiorBot** (reference implementation) simultaneously as open-source projects.
+CEO directive: launch **SDLC Framework 6.4.0** (methodology) and **EndiorBot** (reference implementation) simultaneously as open-source projects.
 
 **3 domains, 3 products:**
 
 | Domain | Product | Type | GitHub Repo |
 |--------|---------|------|-------------|
-| **sdlcframework.org** | SDLC Framework 6.3.1 | OSS methodology (MIT) | Minh-Tam-Solution/SDLC-Enterprise-Framework |
+| **sdlcframework.org** | SDLC Framework 6.4.0 | OSS methodology (MIT) | Minh-Tam-Solution/SDLC-Enterprise-Framework |
 | **endior.net** | EndiorBot v0.1.0-beta.1 | OSS tool (MIT) | Minh-Tam-Solution/EndiorBot |
 | **sdlcframework.dev** | SDLC Orchestrator | Commercial (future) | Private |
 
@@ -93,7 +93,7 @@ Add to EndiorBot README.md:
 ```markdown
 ## Methodology
 
-EndiorBot implements [SDLC Framework 6.3.1](https://sdlcframework.org) — 
+EndiorBot implements [SDLC Framework 6.4.0](https://sdlcframework.org) — 
 a 7-Pillar, 10-Stage AI+Human development methodology.
 
 - [Framework GitHub](https://github.com/Minh-Tam-Solution/SDLC-Enterprise-Framework)
@@ -124,10 +124,10 @@ npm pack --dry-run   # Check what gets published
 
 **Submodule delta request (CTO C1):**
 
-Framework submodule is currently pinned at `cac8cdd` (v6.3.1, 2026-04-17).
+Framework submodule is currently pinned at `cac8cdd` (v6.4.0, 2026-04-17).
 EndiorBot needs:
 1. **Cross-link in README** — add "Reference Implementations" section (EndiorBot + Orchestrator)
-2. **No code/content changes needed** — EndiorBot uses 6.3.1 as-is (all 7 pillars, 10 stages, SASE)
+2. **No code/content changes needed** — EndiorBot uses 6.4.0 as-is (all 7 pillars, 10 stages, SASE)
 3. **Submodule pin stays at `cac8cdd`** — update only after Orchestrator team merges the README change
 
 **Handoff to SDLC Orchestrator PM:**
@@ -138,7 +138,7 @@ Request adding to SDLC Framework README.md:
 
 | Tool | Description | Link |
 |------|-------------|------|
-| **EndiorBot** | Solo developer AI orchestration tool — 14 SOUL agents, 5 channels, SDLC 6.3.1 compliance | [endior.net](https://endior.net) |
+| **EndiorBot** | Solo developer AI orchestration tool — 14 SOUL agents, 5 channels, SDLC 6.4.0 compliance | [endior.net](https://endior.net) |
 | **SDLC Orchestrator** | Enterprise platform (commercial, coming soon) | [sdlcframework.dev](https://sdlcframework.dev) |
 ```
 
@@ -194,8 +194,8 @@ npx endiorbot --help   # Verify works globally
 ### D3: GitHub Releases (~1h)
 
 **SDLC Framework Release:**
-- Tag: `v6.3.1`
-- Title: "SDLC Framework 6.3.1 — AI+Human Excellence"
+- Tag: `v6.4.0`
+- Title: "SDLC Framework 6.4.0 — AI+Human Excellence"
 - Body: 7 pillars, 10 stages, 11 training modules, 17 SOUL templates
 
 **EndiorBot Release:**
@@ -226,7 +226,7 @@ npx endiorbot --help   # Verify works globally
 
 **Channels:**
 - Twitter/X: Thread about dual launch
-- Dev.to: Article "Building an AI Agent Orchestrator with SDLC 6.3.1"
+- Dev.to: Article "Building an AI Agent Orchestrator with SDLC 6.4.0"
 - Reddit: r/programming, r/typescript, r/artificial
 
 **Key messages:**
@@ -283,4 +283,4 @@ Day 4: Track E (social + CHANGELOG) — buffer for issues
 
 ---
 
-*EndiorBot + SDLC Framework 6.3.1 | Dual-Launch Plan | Sprint 145 Draft — 2026-04-27*
+*EndiorBot + SDLC Framework 6.4.0 | Dual-Launch Plan | Sprint 145 Draft — 2026-04-27*

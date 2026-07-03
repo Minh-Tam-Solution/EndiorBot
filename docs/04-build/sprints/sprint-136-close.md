@@ -5,7 +5,7 @@ start_date: 2026-04-17 (kickoff overlapped with Sprint 135 P1 follow-up)
 close_date: 2026-04-18
 planned_duration: DRAFT — no binding duration (Part B deferred, see below)
 actual_duration: ~1 day (governance Phase 1+2) + 1 session (UX Phase 3)
-framework: "6.3.1"
+framework: "6.4.0"
 previous_sprint: Sprint 135 — Surface Parity + P1 Workspace Awareness
 next_sprint: TBD — CEO to confirm Desktop + Web dashboard scope (Part B) or new priority
 ---
@@ -96,4 +96,4 @@ d8a4c6d docs(sprint-136): draft plan — Part A verified, Part B scope TBD pendi
 
 ---
 
-*EndiorBot | Solo Developer Power Tool (LOCKED) | SDLC 6.3.1 | Sprint 136 Close — 2026-04-18*
+*EndiorBot | Solo Developer Power Tool (LOCKED) | SDLC 6.4.0 | Sprint 136 Close — 2026-04-18*

@@ -9,7 +9,7 @@ authority:
       reference: "Sprint 155"
   trigger: "endiorbot init on DeepTutor (Python+Docker+Next.js) produces wrong language, hardcoded pnpm commands, misses root SKILL.md, and references non-existent paths"
   notes: "4 accuracy bugs discovered by field-testing endiorbot against /Users/dttai/Documents/Research/DeepTutor/"
-sdlc_framework: "6.3.1"
+sdlc_framework: "6.4.0"
 ---
 
 # ADR-057: Init Ecosystem Accuracy — 4 Detection & Template Fixes

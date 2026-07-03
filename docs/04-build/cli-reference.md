@@ -1,7 +1,7 @@
 # EndiorBot CLI Reference
 
 **Last Updated**: Sprint 144 (2026-04-27)
-**Framework**: SDLC 6.3.1
+**Framework**: SDLC 6.4.0
 
 ## Quick Reference
 
@@ -407,4 +407,4 @@ endiorbot gateway status
 
 ---
 
-*EndiorBot CLI Reference v2.0 | Sprint 144 | SDLC Framework 6.3.1 | 39 total commands*
+*EndiorBot CLI Reference v2.0 | Sprint 144 | SDLC Framework 6.4.0 | 39 total commands*

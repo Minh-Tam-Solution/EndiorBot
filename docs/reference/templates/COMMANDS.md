@@ -9,7 +9,7 @@ read_when:
 
 **Pattern:** Thin client — business logic lives in `./endiorbot.mjs` (or `pnpm exec endiorbot`), not in markdown.
 
-**Framework:** SDLC **6.3.1** · **14 roles** (9 SE4A + 4 SE4H + assistant router).
+**Framework:** SDLC **6.4.0** · **14 roles** (9 SE4A + 4 SE4H + assistant router).
 
 ---
 

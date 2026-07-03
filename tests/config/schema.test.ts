@@ -445,7 +445,7 @@ describe("DEFAULT_CONFIG", () => {
   it("should have expected default values", () => {
     expect(DEFAULT_CONFIG.gateway?.port).toBe(18790);
     expect(DEFAULT_CONFIG.gateway?.host).toBe("127.0.0.1");
-    expect(DEFAULT_CONFIG.sdlc?.frameworkVersion).toBe("6.3.1");
+    expect(DEFAULT_CONFIG.sdlc?.frameworkVersion).toBe("6.4.0");
     expect(DEFAULT_CONFIG.sdlc?.tier).toBe("STANDARD");
     expect(DEFAULT_CONFIG.logging?.level).toBe("info");
     expect(DEFAULT_CONFIG.logging?.format).toBe("pretty");

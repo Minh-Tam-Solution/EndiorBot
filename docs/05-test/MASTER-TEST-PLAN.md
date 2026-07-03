@@ -2,7 +2,7 @@
 
 **Version:** 18.0
 **Date:** 2026-04-27 (Updated for Sprint 145)
-**Framework:** SDLC v6.3.1
+**Framework:** SDLC v6.4.0
 **Coverage:** Unit + Integration + E2E + Manual + Performance
 **Milestone:** v4.0 Brain L2 + Circuit Breaker + Expert Routing
 
@@ -1490,4 +1490,4 @@ pnpm test --coverage
 
 ---
 
-*Master Test Plan v18.1 | SDLC Framework v6.3.1 | Sprint 145*
+*Master Test Plan v18.1 | SDLC Framework v6.4.0 | Sprint 145*

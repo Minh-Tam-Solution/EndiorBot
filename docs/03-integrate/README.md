@@ -209,4 +209,4 @@ Request flow (post-Sprint 144):
 
 ---
 
-*Solo Developer Power Tool | SDLC Framework **6.3.1** — Stage 03: Integration — Updated Sprint 145 (2026-04-27)*
+*Solo Developer Power Tool | SDLC Framework **6.4.0** — Stage 03: Integration — Updated Sprint 145 (2026-04-27)*

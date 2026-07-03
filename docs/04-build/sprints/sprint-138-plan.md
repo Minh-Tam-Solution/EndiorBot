@@ -3,7 +3,7 @@ sprint: 138
 status: DRAFT — consolidated from Sprint 137 carry-forward (P2 spikes + P3 governance)
 start_date: 2026-04-19
 planned_duration: ~1-2d (governance P3 first, then spikes as appetite allows)
-framework: "6.3.1"
+framework: "6.4.0"
 authority: "@pm 2026-04-19 per CTO sequencing (Sprint 137 partial-close authorized carry-forward of P2 spikes + P3 governance)"
 previous_sprint: "Sprint 137 — Polish + Identity + E2E Quality (PARTIAL CLOSE 2026-04-19, CTO 9.5/10)"
 references:
@@ -65,4 +65,4 @@ If P3-01 surfaces a live leaked key that's been abused, escalate immediately —
 
 ---
 
-*EndiorBot | Solo Developer Power Tool (LOCKED, LOCAL-ONLY) | SDLC 6.3.1 | Sprint 138 Draft — 2026-04-19*
+*EndiorBot | Solo Developer Power Tool (LOCKED, LOCAL-ONLY) | SDLC 6.4.0 | Sprint 138 Draft — 2026-04-19*

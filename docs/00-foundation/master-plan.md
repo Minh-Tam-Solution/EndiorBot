@@ -604,4 +604,4 @@ See [Roadmap](../01-planning/roadmap.md) Tier 4 for full sprint breakdown.
 
 *EndiorBot Master Plan*
 *Identity: Solo Developer Power Tool (LOCKED)*
-*SDLC Framework v6.3.1 compliant — Updated Sprint 144 (2026-04-27)*
+*SDLC Framework v6.4.0 compliant — Updated Sprint 144 (2026-04-27)*

@@ -9,7 +9,7 @@
  * @date 2026-04-03
  * @status ACTIVE — Sprint 127
  * @authority ADR-043 Chat Mode
- * @sdlc SDLC Framework 6.3.1
+ * @sdlc SDLC Framework 6.4.0
  */
 
 import { createInterface } from "node:readline";

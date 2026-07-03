@@ -8,7 +8,7 @@
  * Sprint 152, Plan U3.
  *
  * @module sdlc/scaffold/plugin-loader
- * @sdlc SDLC Framework 6.3.1
+ * @sdlc SDLC Framework 6.4.0
  */
 
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";

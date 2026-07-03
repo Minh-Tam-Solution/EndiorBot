@@ -15,7 +15,7 @@
  * @authority ADR-009 Brain Architecture
  * @pillar 3 - Software Engineering 3.0
  * @stage 04 - BUILD
- * @sdlc SDLC Framework 6.3.1
+ * @sdlc SDLC Framework 6.4.0
  */
 
 import { writeFileSync } from 'fs';

@@ -3,7 +3,7 @@ sprint: 140
 status: RETROACTIVE — Work executed without approved plan; plan drafted post-hoc for SDLC compliance
 start_date: 2026-04-23
 planned_duration: ~1-2d (actual)
-framework: "6.3.1"
+framework: "6.4.0"
 authority:
   proposer: "@pm"
   countersigners:
@@ -160,4 +160,4 @@ $ npx tsc --noEmit
 
 ---
 
-*EndiorBot | Solo Developer Power Tool (LOCKED, LOCAL-ONLY) | SDLC 6.3.1 | Sprint 140 Retroactive Plan — 2026-04-23*
+*EndiorBot | Solo Developer Power Tool (LOCKED, LOCAL-ONLY) | SDLC 6.4.0 | Sprint 140 Retroactive Plan — 2026-04-23*

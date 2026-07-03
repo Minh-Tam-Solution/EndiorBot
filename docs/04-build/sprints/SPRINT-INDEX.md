@@ -1,7 +1,7 @@
 # Sprint Index
 
 **Project**: EndiorBot
-**Framework**: SDLC 6.3.1
+**Framework**: SDLC 6.4.0
 **Last Updated**: 2026-06-23 (Sprint 155 COMPLETE)
 
 ---
@@ -275,4 +275,4 @@ Next: cross-product packaging (MTClaw S124 dependency).
 ---
 
 **Maintained by**: @pm (AI)
-**SDLC Framework**: 6.3.1
+**SDLC Framework**: 6.4.0

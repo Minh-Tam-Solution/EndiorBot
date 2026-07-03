@@ -9,7 +9,7 @@
  * @date 2026-04-12
  * @status ACTIVE — Sprint 135
  * @authority ADR-041 Permission Audit Trail + Sprint 135 Surface Parity
- * @sdlc SDLC Framework 6.3.1
+ * @sdlc SDLC Framework 6.4.0
  */
 
 import { readFileSync, existsSync } from "node:fs";

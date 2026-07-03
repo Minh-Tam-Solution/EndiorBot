@@ -11,7 +11,7 @@
  * @authority ADR-001 Multi-Model Orchestrator, ADR-002 Project Context Switching
  * @pillar 2 - Sprint Governance
  * @stage 04 - BUILD
- * @sdlc SDLC Framework 6.3.1
+ * @sdlc SDLC Framework 6.4.0
  */
 
 import { DEFAULT_CONFIG, type ProjectTier } from "./schema.js";
@@ -159,7 +159,7 @@ export function getTierDefaults(tier: ProjectTier): TierDefaults {
           expertModelWeight: 1.0,
         },
         sdlc: {
-          frameworkVersion: "6.3.1",
+          frameworkVersion: "6.4.0",
           docsRoot: "docs",
           tier: "LITE",
           strict: false,
@@ -173,7 +173,7 @@ export function getTierDefaults(tier: ProjectTier): TierDefaults {
     case "STANDARD":
       return {
         sdlc: {
-          frameworkVersion: "6.3.1",
+          frameworkVersion: "6.4.0",
           docsRoot: "docs",
           tier: "STANDARD",
           strict: true,
@@ -206,7 +206,7 @@ export function getTierDefaults(tier: ProjectTier): TierDefaults {
           expertModelWeight: 1.0,
         },
         sdlc: {
-          frameworkVersion: "6.3.1",
+          frameworkVersion: "6.4.0",
           docsRoot: "docs",
           tier: "PROFESSIONAL",
           strict: true,
@@ -239,7 +239,7 @@ export function getTierDefaults(tier: ProjectTier): TierDefaults {
           expertModelWeight: 1.0,
         },
         sdlc: {
-          frameworkVersion: "6.3.1",
+          frameworkVersion: "6.4.0",
           docsRoot: "docs",
           tier: "ENTERPRISE",
           strict: true,

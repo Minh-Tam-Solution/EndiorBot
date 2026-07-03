@@ -1,14 +1,14 @@
 /**
  * Workspace Awareness - Static Constant & Injection Ordering Tests
  *
- * Verifies the SDLC 6.3.1 Agent Continuity pattern:
+ * Verifies the SDLC 6.4.0 Agent Continuity pattern:
  *   1. WORKSPACE_AWARENESS_SECTION is a module-level constant (immutable binding).
  *   2. Exact header text matches the declared section (no runtime drift).
  *   3. Injection ordering: SOUL → workspace-awareness → Brain L4 in the
  *      context-injector manifest.
  *
  * @module tests/agents/context/workspace-awareness
- * @sdlc_framework 6.3.1
+ * @sdlc_framework 6.4.0
  */
 
 import { describe, it, expect } from "vitest";
@@ -17,7 +17,7 @@ import {
   WORKSPACE_AWARENESS_SOURCE_ID,
 } from "../../../src/agents/context/workspace-awareness.js";
 
-describe("workspace-awareness (SDLC 6.3.1 Layer 1.25)", () => {
+describe("workspace-awareness (SDLC 6.4.0 Layer 1.25)", () => {
   describe("Static constant (code-hygiene property)", () => {
     it("WORKSPACE_AWARENESS_SECTION is a non-empty string", () => {
       expect(typeof WORKSPACE_AWARENESS_SECTION).toBe("string");
@@ -48,7 +48,7 @@ describe("workspace-awareness (SDLC 6.3.1 Layer 1.25)", () => {
       expect(WORKSPACE_AWARENESS_SECTION).toContain("What sprint is this?");
     });
 
-    it("references the SDLC 6.3.1 Agent Continuity mental model", () => {
+    it("references the SDLC 6.4.0 Agent Continuity mental model", () => {
       expect(WORKSPACE_AWARENESS_SECTION).toContain("Agent Continuity");
       expect(WORKSPACE_AWARENESS_SECTION).toContain("Mental Model #7");
     });

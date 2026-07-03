@@ -2,7 +2,7 @@
 adr: 048
 status: "FULL — @cto countersigned 2026-04-17 (9.5/10). Full expansion shipped Sprint 136 (2026-04-18)."
 date: 2026-04-17
-title: "Framework 6.3.1 Upgrade — Workspace Awareness (Agent Continuity) Adoption"
+title: "Framework 6.4.0 Upgrade — Workspace Awareness (Agent Continuity) Adoption"
 authority:
   proposer: "@pm"
   countersigners:
@@ -10,30 +10,30 @@ authority:
       date: "2026-04-17"
       grade: "9.5/10"
       reference: "docs/04-build/sprints/sprint-135-surface-parity.md"
-  trigger: "SDLC Framework 6.3.1 addendum (upstream commit cac8cdd) + MTClaw Workspace Awareness Notice (2026-04-17)"
+  trigger: "SDLC Framework 6.4.0 addendum (upstream commit cac8cdd) + MTClaw Workspace Awareness Notice (2026-04-17)"
   notes: "Retroactive — the STUB shipped after the framework bump; FULL expansion landed Sprint 136. Countersign-structure migration to this object shape landed Sprint 138 P3-02."
-sdlc_framework: "6.3.1"
+sdlc_framework: "6.4.0"
 supersedes: []
 referenced_by: ["Sprint 135 P1 (Workspace Awareness)", "docs/reference/templates/souls/SOUL-coder.md", "docs/reference/templates/souls/SOUL-pm.md", "docs/reference/templates/souls/SOUL-architect.md", "docs/reference/templates/souls/SOUL-reviewer.md", "docs/reference/templates/souls/SOUL-tester.md"]
 ---
 
-# ADR-048: Framework 6.3.1 Upgrade — Workspace Awareness (Agent Continuity) Adoption
+# ADR-048: Framework 6.4.0 Upgrade — Workspace Awareness (Agent Continuity) Adoption
 
 **Status:** FULL. @cto countersigned 2026-04-17 (9.5/10). Full expansion shipped Sprint 136 (2026-04-18) — adds rollback detail, quality-gate alignment, sibling-pattern comparison (MTClaw Go vs Orchestrator Python vs EndiorBot TypeScript), and test evidence table.
 
 ## Context
 
-On 2026-04-17, MTClaw Team escalated a P1 Agent Continuity gap: agents with filesystem tools asked users for workspace state (sprint number, backlog, tech stack) that was already discoverable from the workspace. SDLC Framework responded with 6.3.1 — an addendum, not a methodology change — adding a new SASE Artifact: `Agent-Continuity-Runtime-Guidance.md` (RECOMMENDED, SHOULD). See `.sdlc-framework/05-Templates-Tools/04-SASE-Artifacts/Agent-Continuity-Runtime-Guidance.md`.
+On 2026-04-17, MTClaw Team escalated a P1 Agent Continuity gap: agents with filesystem tools asked users for workspace state (sprint number, backlog, tech stack) that was already discoverable from the workspace. SDLC Framework responded with 6.4.0 — an addendum, not a methodology change — adding a new SASE Artifact: `Agent-Continuity-Runtime-Guidance.md` (RECOMMENDED, SHOULD). See `.sdlc-framework/05-Templates-Tools/04-SASE-Artifacts/Agent-Continuity-Runtime-Guidance.md`.
 
 EndiorBot's audit showed the gap: `src/agents/context/context-injector.ts` loaded SOUL + Brain L4 + project context but never auto-loaded `CLAUDE.md` / `AGENTS.md` / sprint docs. Agents launched via Claude Code Bridge inherited zero discovery directive. For a Solo Developer Power Tool, this violates the <30s-answer promise — CEO shouldn't have to re-brief the agent on sprint state visible in the workspace.
 
 ## Decision
 
-Adopt Framework 6.3.1 via **Pattern A — System Prompt Injection** (per the SASE artifact's three options: A layered composer, B tool-use preamble, C per-agent config flag):
+Adopt Framework 6.4.0 via **Pattern A — System Prompt Injection** (per the SASE artifact's three options: A layered composer, B tool-use preamble, C per-agent config flag):
 
 - **Runtime:** Added `src/agents/context/workspace-awareness.ts` exporting `WORKSPACE_AWARENESS_SECTION` as a module-level `as const` string literal. Injected at **Layer 1.25** of the context-injector pipeline — between SOUL (layer 1) and Brain L4 (layer 2). Explicitly emitted in `buildSystemPrompt` so the directive reaches the agent regardless of manifest truncation.
 - **SOUL templates:** Added `## Workspace Awareness (MANDATORY)` section to the 5 executor SOULs (coder, pm, architect, reviewer, tester). Section cites the Solo Developer Power Tool <30s guarantee explicitly — framing is productivity-first, not SDLC-enforcer-first.
-- **Version bump:** `framework_version` 6.3.0 → 6.3.1 in `.sdlc-config.json`, `CLAUDE.md`, `AGENTS.md`, and 5 SOUL frontmatter blocks. Historical section markers (TDD, Coverage Targets introduced in 6.3.0) preserved — they describe when features were added, not the active framework claim.
+- **Version bump:** `framework_version` 6.3.0 → 6.4.0 in `.sdlc-config.json`, `CLAUDE.md`, `AGENTS.md`, and 5 SOUL frontmatter blocks. Historical section markers (TDD, Coverage Targets introduced in 6.3.0) preserved — they describe when features were added, not the active framework claim.
 
 ## Threat Model (Static Constant)
 
@@ -41,7 +41,7 @@ The workspace-awareness directive is trust-elevating — it tells the agent to f
 
 ## Back-Compat Guarantee
 
-6.3.1 is **additive only**:
+6.4.0 is **additive only**:
 - No Mental Model revision, no Pillar restructure, no protected-path edit.
 - No breaking API change. `context-injector` public surface unchanged (`InjectionRequest` / `InjectionResult`). New item `workspace_awareness` appended to `ContextSource` union (TypeScript discriminated union — existing consumers unaffected).
 - Rollback is single-file revert of `context-injector.ts` + delete `workspace-awareness.ts`. SOUL sections are markdown-only; ignorable by agents that don't have filesystem tools.
@@ -49,7 +49,7 @@ The workspace-awareness directive is trust-elevating — it tells the agent to f
 
 ## Why No Version Bump to 6.3.2
 
-Per CPO Method Steward classification: 6.3.1 addendum is a new SASE Artifact (SHOULD recommendation) — not a methodology change. No upstream bump to 6.3.2. EndiorBot mirrors upstream: `framework_version: "6.3.1"`.
+Per CPO Method Steward classification: 6.4.0 addendum is a new SASE Artifact (SHOULD recommendation) — not a methodology change. No upstream bump to 6.3.2. EndiorBot mirrors upstream: `framework_version: "6.4.0"`.
 
 ## Debt
 
@@ -57,7 +57,7 @@ This ADR is **retroactive** — shipped after the bump, not before. Recorded as 
 
 ## Rollback Plan (FULL expansion)
 
-Rollback is intentionally cheap — the entire 6.3.1 adoption can be reverted in one of three atomic operations:
+Rollback is intentionally cheap — the entire 6.4.0 adoption can be reverted in one of three atomic operations:
 
 ### Level 1 — Disable via config (zero code change, seconds)
 
@@ -80,7 +80,7 @@ The core injection lives in three files. `git revert` on Sprint 135 P1 commit `9
 - **REVERT** `src/agents/context/context-injector.ts` — remove Layer 1.25 push in `inject()` + remove explicit emission in `buildSystemPrompt`
 - **REVERT** `src/agents/context/context-manifest.ts` — remove `workspace_awareness` from `ContextSource` union
 - **REVERT** 5 executor SOULs — remove `## Workspace Awareness (MANDATORY)` sections
-- **REVERT** `.sdlc-config.json`, `CLAUDE.md`, `AGENTS.md`, 5 SOUL frontmatter — `framework_version: "6.3.1"` → `"6.3.0"`
+- **REVERT** `.sdlc-config.json`, `CLAUDE.md`, `AGENTS.md`, 5 SOUL frontmatter — `framework_version: "6.4.0"` → `"6.3.0"`
 
 All 11 workspace-awareness tests are in a dedicated file (`tests/agents/context/workspace-awareness.test.ts`); the revert deletes the file, no scattered removals.
 
@@ -105,7 +105,7 @@ Per the SASE artifact guidance (lines 142–149 of `Agent-Continuity-Runtime-Gui
 
 ## Sibling-Pattern Comparison
 
-SDLC 6.3.1's SASE artifact documents **three implementation patterns** (A/B/C). Each of the three reference runtimes chose a different pattern; comparison below clarifies why EndiorBot chose A.
+SDLC 6.4.0's SASE artifact documents **three implementation patterns** (A/B/C). Each of the three reference runtimes chose a different pattern; comparison below clarifies why EndiorBot chose A.
 
 | Aspect | MTClaw (Pattern B) | SDLC Orchestrator (Pattern A) | EndiorBot (Pattern A) |
 |--------|-------------------|------------------------------|----------------------|
@@ -116,7 +116,7 @@ SDLC 6.3.1's SASE artifact documents **three implementation patterns** (A/B/C). 
 | Agent compliance cost | Low — agent sees pre-fetched results, no discovery work | Low — agent reads injected directive, runs its own reads on first prompt | Same as Orchestrator |
 | Why this pattern chosen | Go runtime already has tool-use preamble flow; natural fit | Layered prompt composer already exists (4 layers); simplest addition | ChannelRouter / context-injector already implements layered injection (SOUL → Brain L4 → Project → Search → Anchors); adding Layer 1.25 required no new architecture |
 
-**Implementation-plurality preserved** per CPO Method Steward condition (SDLC 6.3.1 non-normative note line 30–33): "Runtime implementors SHOULD adopt this pattern but MAY implement equivalent workspace discovery via alternative mechanisms provided the behavioral outcome — agent reads project state before querying user — is preserved."
+**Implementation-plurality preserved** per CPO Method Steward condition (SDLC 6.4.0 non-normative note line 30–33): "Runtime implementors SHOULD adopt this pattern but MAY implement equivalent workspace discovery via alternative mechanisms provided the behavioral outcome — agent reads project state before querying user — is preserved."
 
 ## Test Evidence Table (FULL)
 
@@ -131,14 +131,14 @@ SDLC 6.3.1's SASE artifact documents **three implementation patterns** (A/B/C). 
 
 1. **OAuth CLI integration (Sprint 136 B5 discovery).** During field test 2026-04-18, Claude Code CLI was observed to emit `"Waiting for permission to write..."` on Write/Edit tool use. EndiorBot bridge spawns CLI with `stdio: ["ignore", ...]`, so the prompt could not be answered — causing 60s timeouts. Fix: `--permission-mode=bypassPermissions` added to non-interactive bridge invocations. The Workspace Awareness directive is unchanged by B5 — this is a CLI-level non-interactivity fix, not an agent-behavior change. Recorded here so future readers understand why bridge invocations look permissive at the CLI but are constrained by `--disallowed-tools` at the orchestrator layer.
 
-2. **Historical 6.3.0 markers preserved.** SOUL sections such as `## TDD Workflow (SDLC 6.3.0 — MANDATORY)` retain the `6.3.0` marker because those features were introduced in 6.3.0. Updating them to 6.3.1 would mislead readers into thinking the TDD workflow itself changed. Only the **active framework claim** (`framework_version`, identity sentences) was bumped.
+2. **Historical 6.3.0 markers preserved.** SOUL sections such as `## TDD Workflow (SDLC 6.3.0 — MANDATORY)` retain the `6.3.0` marker because those features were introduced in 6.3.0. Updating them to 6.4.0 would mislead readers into thinking the TDD workflow itself changed. Only the **active framework claim** (`framework_version`, identity sentences) was bumped.
 
-3. **Addendum vs methodology change (CPO classification).** 6.3.1 is explicitly an **addendum** under the existing 6.3 line, not a new minor. This is a CPO Method Steward distinction — a methodology change (new Mental Model, Pillar restructure, protected-path edit) requires version bump to 6.4 and a full PR through `02-Core-Methodology/` or `03-AI-GOVERNANCE/`. The 6.3.1 SASE-artifact addition stayed in `05-Templates-Tools/04-SASE-Artifacts/`, which is runtime guidance — hence the minor-patch bump.
+3. **Addendum vs methodology change (CPO classification).** 6.4.0 is explicitly an **addendum** under the existing 6.3 line, not a new minor. This is a CPO Method Steward distinction — a methodology change (new Mental Model, Pillar restructure, protected-path edit) requires version bump to 6.4 and a full PR through `02-Core-Methodology/` or `03-AI-GOVERNANCE/`. The 6.4.0 SASE-artifact addition stayed in `05-Templates-Tools/04-SASE-Artifacts/`, which is runtime guidance — hence the minor-patch bump.
 
 ## References
 
 - **Upstream addendum:** `.sdlc-framework/05-Templates-Tools/04-SASE-Artifacts/Agent-Continuity-Runtime-Guidance.md`
-- **Upstream commit:** SDLC Framework `cac8cdd` (6.3.1 addendum)
+- **Upstream commit:** SDLC Framework `cac8cdd` (6.4.0 addendum)
 - **Trigger:** MTClaw Workspace Awareness Notice (2026-04-17), MTClaw commit `5b1463e`
 - **Sibling implementation:** SDLC Orchestrator Sprint 59, ADR-015 (Python Layer 1.25)
 - **EndiorBot implementation:** Sprint 135 P1 — `src/agents/context/workspace-awareness.ts`, `context-injector.ts` Layer 1.25

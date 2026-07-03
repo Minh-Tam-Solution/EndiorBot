@@ -16,7 +16,7 @@
  * @authority ADR-003 CLI-Desktop Protocol
  * @pillar 2 - Sprint Governance
  * @stage 04 - BUILD
- * @sdlc SDLC Framework 6.3.1
+ * @sdlc SDLC Framework 6.4.0
  */
 
 import type { Command } from "commander";

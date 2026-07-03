@@ -5,7 +5,7 @@
 **Authority**: Sprint 49 Complete, Multi-Expert Review
 **Pillar**: 2 - Sprint Governance
 **Stage**: 04 - BUILD
-**SDLC**: Framework 6.3.1
+**SDLC**: Framework 6.4.0
 **Deferred Rationale**: Composio integration requires external API dependency (`@composio/core`) and CEO use case validation for specific tool orchestration scenarios (GitHub, Gmail, Calendar). EndiorBot's current architecture (30 OTT commands, 13 SOUL agents, tmux bridge) serves the Solo Developer Power Tool use case without external tool execution. Reopen when a specific tool orchestration need arises that cannot be met by the existing command handler pattern.
 **Reopen Condition**: CEO requests real-world action execution (e.g., "create GitHub issue from chat", "send email from bot") that cannot be handled by existing `/send` command or MTClaw MCP bridge.
 

@@ -167,7 +167,7 @@ All `docs/reference/templates/souls/SOUL-*.md` files: replace `kimi-proxy` refer
 
 ## G2 Sign-off Checklist
 
-Per SDLC Framework v6.3.1 — lightweight sign-off for provider-layer architectural change.
+Per SDLC Framework v6.4.0 — lightweight sign-off for provider-layer architectural change.
 
 | Gate | Reviewer | Decision | Date |
 |------|----------|----------|------|

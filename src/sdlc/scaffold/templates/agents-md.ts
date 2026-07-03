@@ -246,7 +246,7 @@ ${details.join("\n\n---\n\n")}`;
 }
 
 /**
- * Generate thinking framework section (SDLC 6.3.1 Pillar 0).
+ * Generate thinking framework section (SDLC 6.4.0 Pillar 0).
  * Aligns all agents on shared decision-making heuristics.
  */
 function generateThinkingFrameworkSection(): string {

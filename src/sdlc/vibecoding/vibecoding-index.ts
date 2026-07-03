@@ -2,7 +2,7 @@
  * Vibecoding Index
  *
  * Quality metric for code health assessment.
- * Based on SDLC Framework v6.3.1 Section 7 QA System.
+ * Based on SDLC Framework v6.4.0 Section 7 QA System.
  *
  * Zones:
  *   - Green:  0-30  - Ship with confidence
@@ -24,7 +24,7 @@
  * @authority ADR-004 SDLC Gate Engine
  * @pillar 7 - Quality Assurance System
  * @stage 04 - BUILD
- * @sdlc SDLC Framework 6.3.1
+ * @sdlc SDLC Framework 6.4.0
  */
 
 // ============================================================================

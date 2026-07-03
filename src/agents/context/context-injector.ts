@@ -200,7 +200,7 @@ export class ContextInjector {
       )
     );
 
-    // 2a.5 (Layer 1.25). Workspace Awareness directive (MUST) - SDLC 6.3.1
+    // 2a.5 (Layer 1.25). Workspace Awareness directive (MUST) - SDLC 6.4.0
     // Static module constant: no runtime interpolation, no caller-supplied text.
     // Injected between SOUL and Brain L4 to guarantee every agent runs
     // workspace discovery before asking the user for workspace-visible state.
@@ -209,7 +209,7 @@ export class ContextInjector {
       createContextItem(
         WORKSPACE_AWARENESS_SOURCE_ID,
         "MUST",
-        "Workspace awareness directive (SDLC 6.3.1 Layer 1.25)",
+        "Workspace awareness directive (SDLC 6.4.0 Layer 1.25)",
         WORKSPACE_AWARENESS_SECTION
       )
     );
@@ -758,7 +758,7 @@ export class ContextInjector {
     // Add SOUL content
     sections.push(soulContent);
 
-    // Layer 1.25: Workspace Awareness directive (SDLC 6.3.1) - always injected
+    // Layer 1.25: Workspace Awareness directive (SDLC 6.4.0) - always injected
     // right after SOUL so every agent sees the discovery protocol before Brain
     // L4 context is evaluated. Emitted explicitly (not via manifest items)
     // because the static constant is authoritative and must not be subject to

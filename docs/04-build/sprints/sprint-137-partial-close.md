@@ -4,7 +4,7 @@ status: PARTIAL CLOSE — P0 + P1 + P2 shipped; P2 spikes + P3 governance carry 
 close_date: 2026-04-19
 planned_duration: ~5d (tiered P0/P1/P2)
 actual_duration: 1 session (single day)
-framework: "6.3.1"
+framework: "6.4.0"
 previous_sprint: "Sprint 136 — Part A governance + Part A' UX hardening (CLOSED 2026-04-18)"
 next_sprint: "Sprint 138 — pick up P2 spikes + P3 governance; CEO to confirm appetite"
 authority: "CTO APPROVED 9.5/10, @pm partial-close authorized 2026-04-19"
@@ -128,4 +128,4 @@ Per CTO recommendation: spikes need fresh focus, not end-of-session bandwidth.
 
 ---
 
-*EndiorBot | Solo Developer Power Tool (LOCKED, LOCAL-ONLY) | SDLC 6.3.1 | Sprint 137 Partial Close — 2026-04-19*
+*EndiorBot | Solo Developer Power Tool (LOCKED, LOCAL-ONLY) | SDLC 6.4.0 | Sprint 137 Partial Close — 2026-04-19*

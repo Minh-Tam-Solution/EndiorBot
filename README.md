@@ -17,7 +17,7 @@ It integrates with Claude Code as an Agent Orchestrator, enabling @agent invocat
 
 ## Methodology
 
-EndiorBot implements **[SDLC Framework 6.3.1](https://github.com/Minh-Tam-Solution/SDLC-Enterprise-Framework)** — a 7-Pillar, 10-Stage AI+Human development methodology with 11 training modules (39h).
+EndiorBot implements **[SDLC Framework 6.4.0](https://github.com/Minh-Tam-Solution/SDLC-Enterprise-Framework)** — a 7-Pillar, 10-Stage AI+Human development methodology with 11 training modules (39h).
 
 - **[sdlcframework.org](https://sdlcframework.org)** — Framework documentation
 - **[endior.net](https://endior.net)** — EndiorBot documentation
@@ -30,7 +30,7 @@ EndiorBot implements **[SDLC Framework 6.3.1](https://github.com/Minh-Tam-Soluti
 - **[Usage Guide](docs/07-operate/USAGE-GUIDE.md)** — 22 workflows from setup to advanced
 - **[Plugin Architecture Guide](docs/08-collaborate/plugin-architecture-guide.md)** — tier recommendation, layered CLAUDE.md, skills, audit, hooks
 
-Application development documentation under `docs/` is written in **English** (SDLC 6.3.1); see the *Documentation language* note in [docs/README.md](docs/README.md).
+Application development documentation under `docs/` is written in **English** (SDLC 6.4.0); see the *Documentation language* note in [docs/README.md](docs/README.md).
 
 ## Prerequisites
 
@@ -242,7 +242,7 @@ pnpm lint:souls   # Validate 14 SOUL templates
 | Channels | 5 (CLI, Web, Telegram, Zalo, Desktop) |
 | SOUL agents | 14 |
 | AI providers | 6 (Anthropic, OpenAI, Gemini, Ollama, Kimi, Groq) |
-| SDLC framework | v6.3.1 |
+| SDLC framework | v6.4.0 |
 | Sprint | 154 (2026-05-27) |
 
 ## Invariants
@@ -284,4 +284,4 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for development setup and guidelines.
 
 ---
 
-*EndiorBot v0.1.0-beta.3 | Solo Developer Power Tool | SDLC Framework v6.3.1 | Sprint 154 (2026-05-27)*
+*EndiorBot v0.1.0-beta.3 | Solo Developer Power Tool | SDLC Framework v6.4.0 | Sprint 154 (2026-05-27)*

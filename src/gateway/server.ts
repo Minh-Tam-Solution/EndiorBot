@@ -11,7 +11,7 @@
  * @authority ADR-010 Gateway Architecture
  * @pillar 3 - Resource Optimization
  * @stage 04 - BUILD
- * @sdlc SDLC Framework 6.3.1
+ * @sdlc SDLC Framework 6.4.0
  */
 
 import { WebSocketServer, WebSocket, type RawData } from "ws";

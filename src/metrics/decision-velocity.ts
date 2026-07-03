@@ -20,7 +20,7 @@
  * @date 2026-04-10
  * @status ACTIVE - Sprint 131
  * @authority Sprint 131 plan (Sau Sheong cherry-pick)
- * @sdlc SDLC Framework 6.3.1
+ * @sdlc SDLC Framework 6.4.0
  */
 
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";

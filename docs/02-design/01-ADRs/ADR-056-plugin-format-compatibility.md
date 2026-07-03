@@ -9,7 +9,7 @@ authority:
       reference: "Sprint 151"
   trigger: "EndiorBot scaffold output not consumable by Claude Cowork/plugin ecosystem"
   notes: "Adopts Anthropic knowledge-work-plugins format. Base profile only — no MTS-specific fields."
-sdlc_framework: "6.3.1"
+sdlc_framework: "6.4.0"
 ---
 
 # ADR-056: Plugin Format Compatibility (Base Profile)

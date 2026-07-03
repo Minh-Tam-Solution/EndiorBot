@@ -13,7 +13,7 @@
  * @status ACTIVE - Sprint 84 (CTO MF-1)
  * @authority ADR-025 Session Intelligence Envelope
  * @stage 04 - BUILD
- * @sdlc SDLC Framework 6.3.1
+ * @sdlc SDLC Framework 6.4.0
  */
 
 import { resolve, join, dirname } from "node:path";

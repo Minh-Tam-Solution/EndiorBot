@@ -3,7 +3,7 @@ sprint: 137
 status: DRAFT — backlog consolidated from Sprint 136 session (2026-04-18/19)
 start_date: TBD — CEO kickoff after Sprint 136 soak
 planned_duration: ~5d (tiered: P0 critical + P1 polish + P2 spikes)
-framework: "6.3.1"
+framework: "6.4.0"
 authority: "@pm consolidated 2026-04-19 from Sprint 136 close + session findings + CEO identity refinement + E2E API testing scope decision"
 previous_sprint: "Sprint 136 — Part A governance + Part A' UX hardening (CLOSED 2026-04-18)"
 references:
@@ -107,4 +107,4 @@ Sprint budget: core items (P0+P1+P2-01..04) ~7h. Spikes add 1-2 days if prioriti
 
 ---
 
-*EndiorBot | Solo Developer Power Tool (LOCKED, LOCAL-ONLY) | SDLC 6.3.1 | Sprint 137 Draft — consolidated 2026-04-19*
+*EndiorBot | Solo Developer Power Tool (LOCKED, LOCAL-ONLY) | SDLC 6.4.0 | Sprint 137 Draft — consolidated 2026-04-19*

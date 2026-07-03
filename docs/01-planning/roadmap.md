@@ -253,5 +253,5 @@ Per Master Plan v2.0, these are explicitly excluded:
 
 ---
 
-*Solo Developer Power Tool | SDLC Framework v6.3.1 - Stage 01: Planning*
+*Solo Developer Power Tool | SDLC Framework v6.4.0 - Stage 01: Planning*
 *Identity: LOCKED (2026-03-08) | Updated Sprint 144 (2026-04-27)*

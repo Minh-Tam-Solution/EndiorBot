@@ -1,7 +1,7 @@
 /**
  * Default Stage Contracts
  *
- * Default contracts for all 10 SDLC Framework 6.3.1 stages.
+ * Default contracts for all 10 SDLC Framework 6.4.0 stages.
  * These define the required and produced artifacts per stage.
  *
  * @module sdlc/contracts/defaults

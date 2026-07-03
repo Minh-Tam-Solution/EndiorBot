@@ -7,7 +7,7 @@ authors: ["@pm"]
 reviewers: ["@cto (9/10 Approved for sprint execution)", "@cpo (Approved with 5 refinements, applied)"]
 created: "2026-04-10"
 source: "Sau Sheong (GovTech Singapore) — From Vibe Coding to Agentic Engineering (Abridged), Apr 2026"
-sdlc_framework: "6.3.1"
+sdlc_framework: "6.4.0"
 ---
 
 # EndiorBot Strategic Positioning — Post Sau Sheong Article

@@ -345,4 +345,4 @@ cat ~/.endiorbot/serve.pid 2>/dev/null || echo "No existing serve"
 
 ---
 
-*EndiorBot | SDLC Framework **6.3.1** — Stage 06: Deploy — Updated Sprint 145 (2026-04-27)*
+*EndiorBot | SDLC Framework **6.4.0** — Stage 06: Deploy — Updated Sprint 145 (2026-04-27)*

@@ -1,7 +1,7 @@
 # Stage × Command × Workflow Spine (CPO / CTO)
 
 **Status:** APPROVED (living document)  
-**Framework:** SDLC **6.3.1**  
+**Framework:** SDLC **6.4.0**  
 **Audience:** Solo developer shipping **enterprise-grade** behavior; vision in [`product-vision.md`](./product-vision.md) (autonomous SDLC, design→build→test continuity, escalate only on critical issues).  
 **Technical SSOT:** Commands implement in `./endiorbot.mjs` core; CLI, **OTT** (Telegram/Zalo), **Web**, and **Desktop** share [`CommandDispatcher`](../../src/commands/command-dispatcher.ts) + gateway ingress where applicable — *thin client everywhere*. 39 commands across 5 channels as of Sprint 144.
 
@@ -106,4 +106,4 @@ Workflows **reuse** the same core modules as atomic commands (no duplicate busin
 
 ---
 
-*EndiorBot — Solo Developer Power Tool + enterprise SDLC discipline for solo dev | SDLC 6.3.1 — Updated Sprint 144 (2026-04-27)*
+*EndiorBot — Solo Developer Power Tool + enterprise SDLC discipline for solo dev | SDLC 6.4.0 — Updated Sprint 144 (2026-04-27)*

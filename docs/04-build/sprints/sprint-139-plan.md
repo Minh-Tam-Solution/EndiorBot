@@ -3,7 +3,7 @@ sprint: 139
 status: DRAFT — OpenMythos selective architecture adoption (Sprint A from adoption plan)
 start_date: 2026-04-20
 planned_duration: ~1-2d
-framework: "6.3.1"
+framework: "6.4.0"
 authority:
   proposer: "@pm"
   countersigners:
@@ -138,4 +138,4 @@ Estimated: ~20-30 new tests. Full regression sweep against existing 8K+ tests.
 
 ---
 
-*EndiorBot | Solo Developer Power Tool (LOCKED, LOCAL-ONLY) | SDLC 6.3.1 | Sprint 139 Draft — 2026-04-20*
+*EndiorBot | Solo Developer Power Tool (LOCKED, LOCAL-ONLY) | SDLC 6.4.0 | Sprint 139 Draft — 2026-04-20*

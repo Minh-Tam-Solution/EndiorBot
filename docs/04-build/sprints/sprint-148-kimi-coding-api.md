@@ -3,7 +3,7 @@ sprint: 148
 status: PLANNED — G2 APPROVED, awaiting G3 validation
 start_date: TBD (after Sprint 147 exit)
 planned_duration: 2-3d
-framework: "6.3.1"
+framework: "6.4.0"
 authority:
   proposer: "@architect"
   countersigners:
@@ -223,4 +223,4 @@ Day 2 PM: T7 (SOUL update) + T8 (CHANGELOG) + T9 (docs)
 
 ---
 
-*EndiorBot | Solo Developer Power Tool | SDLC 6.3.1 | Sprint 148 Planned — 2026-05-07*
+*EndiorBot | Solo Developer Power Tool | SDLC 6.4.0 | Sprint 148 Planned — 2026-05-07*

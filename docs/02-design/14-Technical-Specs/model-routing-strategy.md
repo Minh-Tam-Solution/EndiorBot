@@ -364,4 +364,4 @@ export const MODEL_ROUTING: Record<AgentRole, ModelRoutingConfig> = {
 ---
 
 *Model Routing Strategy for EndiorBot ENTERPRISE tier*
-*SDLC Framework v6.3.1 compliant*
+*SDLC Framework v6.4.0 compliant*
