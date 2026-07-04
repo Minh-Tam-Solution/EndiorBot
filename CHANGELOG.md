@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [v0.1.0-beta.5] - 2026-07-04
+
 ### Added — ST/DT Content Gates (Sprint 157-158)
 - **`contains:` content-checker primitive** (C-0) — new gate-engine checker: `contains:<glob>:<needle>`. Glob-matches files, verifies at least one contains the required string. Reusable for any content gate.
 - **`g2-requirements-trace`** (C-1) — G2 requires at least one ADR to reference `docs/01-planning/requirements`. Enforced STANDARD+ tier.

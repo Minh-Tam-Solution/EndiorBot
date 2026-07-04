@@ -209,4 +209,4 @@ All channels route through `GatewayIngress → CommandDispatcher` (39 commands).
 
 ---
 
-*EndiorBot Product Vision v3.0 | SDLC Framework 6.4.0 | Sprint 144 (2026-04-27)*
+*EndiorBot Product Vision v4.1 | SDLC Framework 6.4.0 | Sprint 158 (2026-07-04)*
