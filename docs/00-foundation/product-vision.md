@@ -26,7 +26,7 @@ Full stage index: [`docs/README.md`](../README.md).
 
 ---
 
-## Autonomy Levels — What's Implemented (Sprint 156)
+## Autonomy Levels — What's Implemented (Sprint 158)
 
 | Level | Name | Status | How It Works |
 |-------|------|--------|-------------|
@@ -37,7 +37,7 @@ Full stage index: [`docs/README.md`](../README.md).
 
 ---
 
-## What's Built (Sprint 156 — verified against code)
+## What's Built (Sprint 158 — verified against code)
 
 ### Plugin Architecture (Sprint 149-154, NEW)
 
@@ -95,6 +95,9 @@ All channels route through `GatewayIngress → CommandDispatcher` (39 commands).
 | Exec-policy (3 presets: strict/balanced/open) | SHIPPED | ADR-046, 9-module security cluster |
 | SSRF protection | SHIPPED | `src/security/http-validator.ts` |
 | Audit trail (JSONL, 10MB rotation) | SHIPPED | `~/.endiorbot/audit-logs/` |
+| `contains:` content-checker (Sprint 157) | SHIPPED | `gate-engine.ts` — `checkFileContains()`, reusable primitive |
+| G2 ST/DT content gates (Sprint 158) | SHIPPED | `g2-iceberg` + `g2-alternatives`, STANDARD+ tier |
+| G2 requirements traceability (Sprint 157) | SHIPPED | `g2-requirements-trace` — ADR→requirements link |
 
 ### Session & Context
 
@@ -161,21 +164,23 @@ All channels route through `GatewayIngress → CommandDispatcher` (39 commands).
 | HEARTBEAT autonomous work-driver (template) | SHIPPED | `HEARTBEAT.md` — beat-loop semantics, dormant-by-default |
 | TEAM auto-handoff chain (agent-to-agent) | SHIPPED | 7 TEAM-*.md — planning→design→dev→qa→ops with cite-path |
 | Progressive-trust G4-human boundary | SHIPPED | TEAM-executive, TEAM-ops, TEAM-qa — G4=SE4H-only |
+| G2 Iceberg content gate (ST enforcement) | SHIPPED | `contains:…:## Iceberg Analysis`, STANDARD+ |
+| G2 Alternatives content gate (DT enforcement) | SHIPPED | `contains:…:## Alternatives Considered`, STANDARD+ |
 
 ---
 
-## Current Stats (Sprint 156, 2026-07-04)
+## Current Stats (Sprint 158, 2026-07-04)
 
 | Metric | Value |
 |--------|-------|
-| Tests | 8,221+ passing |
+| Tests | 8,228+ passing |
 | Commands | 42 unified (all 5 channels) |
 | SOUL agents | 14 (2-tier: 6 Opus + 8 Kimi Code) |
 | TEAM charters | 7 (planning, design, dev, qa, ops, fullstack, executive) |
 | Channels | 5 (CLI, Web, Telegram, Zalo, Desktop) |
 | Active providers | 5 (Claude Code, Kimi, OpenAI, Ollama, MCP Gateway) |
 | ADRs | 57 |
-| Sprint plans | 100+ (Sprint 56-156) |
+| Sprint plans | 100+ (Sprint 56-158) |
 | Framework | SDLC 6.4.0 |
 | License | MIT |
 | Domain | endior.net |

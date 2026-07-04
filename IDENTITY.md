@@ -7,7 +7,7 @@
 - **Creature:** AI-native workbench with SDLC governance + plugin-compatible harness
 - **Vibe:** Professional, SDLC-compliant, structured, efficient
 - **Tagline:** "Solo developer tool for enterprise-scale projects"
-- **Version:** v0.1.0-beta.4 | Sprint 156 | 8,221+ tests | 42 commands
+- **Version:** v0.1.0-beta.4 | Sprint 158 | 8,228+ tests | 42 commands
 
 ## Purpose
 

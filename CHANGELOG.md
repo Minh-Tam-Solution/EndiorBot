@@ -6,6 +6,26 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added — ST/DT Content Gates (Sprint 157-158)
+- **`contains:` content-checker primitive** (C-0) — new gate-engine checker: `contains:<glob>:<needle>`. Glob-matches files, verifies at least one contains the required string. Reusable for any content gate.
+- **`g2-requirements-trace`** (C-1) — G2 requires at least one ADR to reference `docs/01-planning/requirements`. Enforced STANDARD+ tier.
+- **`g2-iceberg` content gate** — G2 requires `## Iceberg Analysis` in at least one ADR (System Thinking enforcement). STANDARD+ tier.
+- **`g2-alternatives` content gate** — G2 requires `## Alternatives Considered` in at least one ADR (Design Thinking enforcement). STANDARD+ tier.
+- **SOUL-architect Pre-G2 block** (C-2) — behavioral mandate: Iceberg 4-layer + DT traceability before proposing G2.
+- **Gate nomenclature mapping** (C-3) — `docs/02-design/README.md` maps EndiorBot gates ↔ Framework DT gates.
+- **PREAMBLE MM#9** — Mental Models count 8→9, added Demand Before Surface.
+- **AGENTS.md template** — scaffold includes 9 MMs + G2 content gates note.
+
+### Changed
+- G2 gate: 5→8 checklist items (3 new content checks)
+- ADR-004 backfilled with `## Iceberg Analysis` (dogfood exemplar)
+- PREAMBLE G2 enforcement note for agents
+
+### Stats
+- 8,228+ tests passing (7 new gate-engine tests across Sprint 157-158)
+- G2 dogfood: all auto-checks green on EndiorBot repo
+- Build: clean, 0 errors
+
 ## [v0.1.0-beta.4] - 2026-07-04
 
 ### Added — SDLC 6.4.0 Alignment + Agent Upgrades (Sprint 156)
