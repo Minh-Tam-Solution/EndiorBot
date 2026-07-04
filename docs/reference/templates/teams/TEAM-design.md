@@ -74,6 +74,7 @@ Only delegate clarification and estimation tasks. Do not delegate implementation
 ### Design Document Completeness
 Every feature entering Stage 04 (Build) MUST have:
 - ADR for non-trivial decisions (Status: Accepted)
+- ADR Context references `docs/01-planning/requirements.md` (G2 checker `g2-requirements-trace`)
 - Technical spec with API contracts and data models
 - Integration spec if touching external systems
 

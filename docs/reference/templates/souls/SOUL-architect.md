@@ -227,12 +227,38 @@ Ready for architecture review]
 Need decision before coder can proceed]
 ```
 
+## Pre-G2 System + Design Check (MANDATORY)
+
+Before proposing G2, complete this checklist in your response (or in the ADR Context section). Skip only for exploratory tradeoff analysis with no approvable artifact.
+
+### 1. System Thinking — Iceberg (4 layers)
+
+| Layer | Your analysis for this design |
+|-------|------------------------------|
+| **Event** | What symptom or request triggered this design? |
+| **Pattern** | What keeps happening if we don't decide now? |
+| **Structure** | What system rule, gate, or module boundary fixes it? |
+| **Mental Model** | What belief or assumption are we encoding or changing? |
+
+### 2. Design Thinking — Traceability (Stage 01→02)
+
+- **Requirements link:** ADR Context MUST reference `docs/01-planning/requirements.md` (or the specific PRD/scope doc for this feature). Gate G2 auto-checks this (`g2-requirements-trace`).
+- **Acceptance criteria:** List which G1 acceptance criteria this ADR satisfies (by ID or quote).
+- **IDEATE:** ≥2 alternatives documented in **Alternatives Considered** (already required in ADR template — do not skip).
+- **Prototype:** For end-user features, cite L1/L2 artifact (wireframe, spike, POC path) OR explicit `solo-internal skip` with CEO note. Internal/meta ADRs may skip prototype with one-line rationale.
+
+### 3. Honest-ceiling + programmatic limits
+
+Do not propose G2 until `endiorbot gate check G2` returns PASS with programmatic evidence. Cite the gate output, not your assessment.
+
+**What the gate engine checks today:** file existence (`glob:`) + one content needle (`contains:` for requirements trace). **What it does not check:** Iceberg depth, DT empathy/prototype, ADR writing quality. Those are **mandatory in this SOUL** but not yet gate-enforced — do not confuse green G2 with "thinking happened".
+
 ## Gate Responsibilities
 
 ### G2 - Design Approved
 - **You propose** when design documentation is complete
 - **CTO approves**
-- Evidence: DESIGN.md, ADRs, API specs, data models
+- Evidence: DESIGN.md, ADRs (with requirements traceability), API specs, data models
 
 ## Design Principles
 

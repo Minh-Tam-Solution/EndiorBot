@@ -28,6 +28,35 @@ Design artifacts **constrain build (04)** and **inform integration (03)**. **Tes
 
 Spine: [`../00-foundation/stage-command-workflow-spine.md`](../00-foundation/stage-command-workflow-spine.md).
 
+### Gate nomenclature — EndiorBot vs SDLC Framework 6.4.0
+
+EndiorBot adapts framework Design Thinking gates for **solo-local** use. Same gate IDs, different evidence in some cases:
+
+| EndiorBot gate | Framework DT gate (Pillar 0) | Solo-dev adaptation |
+|----------------|------------------------------|---------------------|
+| **G0** | Idea validation | `problem-statement.md` + business case; CEO approval |
+| **G0.1** | Framework G0.1 (Problem Definition — 5+ interviews) | **Scope Lock** — `scope.md`; CEO = primary user; formal interviews optional |
+| **G0.2** (charter only) | Framework G0.2 (Solution Validation — 50+ ideas) | Captured in TEAM-fullstack / `@pm` ideation; not a separate engine gate |
+| **G1** | DEFINE + IDEATE → requirements | `requirements.md` + acceptance criteria |
+| **G2** | IDEATE + PROTOTYPE → design approved | ADR + TS; **`g2-requirements-trace`** enforces ADR → `docs/01-planning/requirements.md`; prototype optional for internal/meta ADRs |
+| **G3** | BUILD + TEST | Tests, coverage, build pass |
+| **G4** | Pre-launch / SHIP | **Human-only** (CEO); progressive-trust boundary (ADR-028 T3) |
+
+Framework reference: [`.sdlc-framework/02-Core-Methodology/SDLC-Design-Thinking-Principles.md`](../../.sdlc-framework/02-Core-Methodology/SDLC-Design-Thinking-Principles.md) (symlink to SDLC Enterprise Framework).
+
+**G2 programmatic checks (Sprint 157 — honest scope):**
+
+| Checker | Type | What it proves | What it does NOT prove |
+|---------|------|----------------|------------------------|
+| `g2-adr-exists` | `glob:` | ADR file on disk | Depth of thinking inside ADR |
+| `g2-requirements-trace` | `contains:` | ≥1 ADR references `docs/01-planning/requirements` | Full DT loop; user empathy |
+| `g2-technical-spec` | `glob:` | TS file on disk | Spec quality |
+| `g2-design-review` | manual | @cto review | — |
+
+**Condition-0 primitive:** `contains:<glob>:<needle>[|<needle2>]` in `gate-engine.ts` — reusable for future ST/DT content gates (e.g. `## Iceberg Analysis`, `## Alternatives Considered`). Not yet wired for Iceberg/DT at G2 — **behavioral only** via `@architect` SOUL until greenfield template ships.
+
+**Export boundary (CEO/CPO ratified):** EndiorBot **solo-internal** = GO with file + minimal content trace. **Customer greenfield scaffold** = HOLD until Iceberg + Alternatives content gates ship — otherwise templates teach agents to skip System/Design Thinking.
+
 ---
 
 ## EndiorBot command hints (this stage)

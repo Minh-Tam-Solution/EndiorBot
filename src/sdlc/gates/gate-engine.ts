@@ -409,9 +409,93 @@ export class GateEngine {
         return this.checkVersionBumped(value);
       case "contract":
         return this.checkContractPassed(value);
+      case "contains":
+        return this.checkFileContains(checker);
       default:
         return { status: "pending" };
     }
+  }
+
+  /**
+   * Content-checker primitive (Condition-0 — Sprint 157).
+   *
+   * Format: `contains:<glob-or-file>:<needle>[|<needle2>…]`
+   * - Resolves a simple glob under projectRoot (or a single file path)
+   * - Passes if at least one matched file contains at least one needle
+   *
+   * Enables ST/DT content gates without one-off checker types:
+   *   contains:docs/02-design/01-ADRs/ADR-*.md:docs/01-planning/requirements
+   *   contains:docs/02-design/01-ADRs/ADR-*.md:## Iceberg Analysis
+   *   contains:docs/02-design/01-ADRs/ADR-*.md:## Alternatives Considered
+   */
+  private async checkFileContains(fullChecker: string): Promise<{
+    status: ChecklistStatus;
+    evidence?: Evidence;
+  }> {
+    // Parse: "contains:<glob>:<required>"
+    // Split only on first two colons (glob and required may contain colons in theory)
+    const afterPrefix = fullChecker.slice("contains:".length);
+    const colonIdx = afterPrefix.indexOf(":");
+    if (colonIdx < 0) return { status: "fail" };
+
+    const globPattern = afterPrefix.slice(0, colonIdx);
+    const needlesRaw = afterPrefix.slice(colonIdx + 1);
+    if (!globPattern || !needlesRaw) return { status: "fail" };
+
+    const needles = needlesRaw.split("|").filter((n) => n.length > 0);
+    if (needles.length === 0) return { status: "fail" };
+
+    // Resolve glob — simple: if pattern has *, scan directory and match
+    const dir = resolve(this.projectRoot, globPattern.replace(/\/[^/]*\*[^/]*$/, ""));
+    const filePattern = globPattern.split("/").pop() ?? "";
+
+    if (!existsSync(dir) || !statSync(dir).isDirectory()) {
+      return { status: "fail" };
+    }
+
+    let filesToCheck: string[];
+    if (filePattern.includes("*")) {
+      // Simple glob: convert * to regex
+      const regex = new RegExp(
+        "^" + filePattern.replace(/\./g, "\\.").replace(/\*/g, ".*") + "$",
+      );
+      filesToCheck = readdirSync(dir)
+        .filter((f) => regex.test(f))
+        .map((f) => resolve(dir, f));
+    } else {
+      // Exact file
+      const fullPath = resolve(this.projectRoot, globPattern);
+      filesToCheck = existsSync(fullPath) ? [fullPath] : [];
+    }
+
+    if (filesToCheck.length === 0) return { status: "fail" };
+
+    const matchingFiles: string[] = [];
+    for (const filePath of filesToCheck) {
+      try {
+        const content = await readFile(filePath, "utf-8");
+        if (needles.some((needle) => content.includes(needle))) {
+          matchingFiles.push(basename(filePath));
+        }
+      } catch {
+        // Skip unreadable files
+      }
+    }
+
+    if (matchingFiles.length === 0) {
+      return { status: "fail" };
+    }
+
+    return {
+      status: "pass",
+      evidence: {
+        type: "document",
+        path: globPattern,
+        hash: createHash("sha256").update(matchingFiles.join(",")).digest("hex").slice(0, 16),
+        description: `Content check: [${needles.join(" | ")}] found in ${matchingFiles.length} file(s) (${matchingFiles.slice(0, 3).join(", ")}${matchingFiles.length > 3 ? ", …" : ""})`,
+        collectedAt: new Date().toISOString(),
+      },
+    };
   }
 
   /**

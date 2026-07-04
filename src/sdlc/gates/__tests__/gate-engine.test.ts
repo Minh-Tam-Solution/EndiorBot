@@ -181,6 +181,41 @@ describe("GateEngine", () => {
     });
   });
 
+  describe("contains content-checker primitive (Condition-0)", () => {
+    async function setupAdrDir(root: string, adrContent: string): Promise<void> {
+      await fs.mkdir(path.join(root, "docs/02-design/01-ADRs"), {
+        recursive: true,
+      });
+      await fs.writeFile(
+        path.join(root, "docs/02-design/01-ADRs/ADR-001-test.md"),
+        adrContent,
+      );
+    }
+
+    it("should pass when ADR references planning requirements (G2 trace)", async () => {
+      await setupAdrDir(
+        tempDir,
+        "# ADR\n\n## Context\nSee docs/01-planning/requirements.md\n",
+      );
+      const engine = new GateEngine({ projectRoot: tempDir });
+      const evaluation = await engine.evaluate("G2", "feature-1", "project-1");
+
+      expect(
+        evaluation.checklist.find((i) => i.id === "g2-requirements-trace")?.status,
+      ).toBe("pass");
+    });
+
+    it("should fail when ADR omits requirements reference", async () => {
+      await setupAdrDir(tempDir, "# ADR\n\n## Context\nInternal infra only.\n");
+      const engine = new GateEngine({ projectRoot: tempDir });
+      const evaluation = await engine.evaluate("G2", "feature-1", "project-1");
+
+      expect(
+        evaluation.checklist.find((i) => i.id === "g2-requirements-trace")?.status,
+      ).toBe("fail");
+    });
+  });
+
   describe("markManualItem", () => {
     it("should mark manual item and update summary", async () => {
       const engine = new GateEngine({ projectRoot: tempDir });

@@ -259,6 +259,16 @@ export const G2_CHECKLIST: GateChecklist = {
       checker: "glob:docs/02-design/01-ADRs/ADR-*.md",
     },
     {
+      id: "g2-requirements-trace",
+      description:
+        "At least one ADR references planning requirements (Stage 01→02 traceability)",
+      required: true,
+      autoCheck: true,
+      status: "pending",
+      checker: "contains:docs/02-design/01-ADRs/ADR-*.md:docs/01-planning/requirements|01-planning/requirements",
+      minTier: "STANDARD",
+    },
+    {
       id: "g2-technical-spec",
       description: "Technical specification exists",
       required: true,
