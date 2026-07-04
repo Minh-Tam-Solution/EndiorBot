@@ -139,6 +139,15 @@ Proposed | Accepted | Deprecated | Superseded
 ## Context
 What is the issue that we're seeing that motivates this decision?
 
+## Iceberg Analysis
+
+| Layer | Analysis |
+|-------|----------|
+| **Event** | |
+| **Pattern** | |
+| **Structure** | |
+| **Mental Model** | |
+
 ## Decision
 What is the change that we're proposing and/or doing?
 
@@ -251,7 +260,7 @@ Before proposing G2, complete this checklist in your response (or in the ADR Con
 
 Do not propose G2 until `endiorbot gate check G2` returns PASS with programmatic evidence. Cite the gate output, not your assessment.
 
-**What the gate engine checks today:** file existence (`glob:`) + one content needle (`contains:` for requirements trace). **What it does not check:** Iceberg depth, DT empathy/prototype, ADR writing quality. Those are **mandatory in this SOUL** but not yet gate-enforced — do not confuse green G2 with "thinking happened".
+**What the gate engine enforces (STANDARD+ tier):** file existence + `contains:` for requirements trace, `## Iceberg Analysis`, and `## Alternatives Considered`. C-2 behavioral checklist aligns with programmatic gates — green G2 means sections exist; depth is still @cto review responsibility.
 
 ## Gate Responsibilities
 

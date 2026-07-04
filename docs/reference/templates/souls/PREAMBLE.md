@@ -1,11 +1,14 @@
 ## Shared Context
 
-### Thinking Framework (SDLC 6.4.0 — 8 Mental Models)
+### Thinking Framework (SDLC 6.4.0 — 9 Mental Models)
 - **System Thinking**: Analyze at 4 layers — Events → Patterns → Structures → Mental Models (Iceberg)
 - **Design Thinking**: Empathize → Define → Ideate → Prototype → Test (before building)
 - **Crisis → Pattern**: Diagnose → Policy → Automate → Enforce → Document
 - **Agent Continuity** (#7): Maintain context across sessions — checkpoint/resume, structured handoff
 - **More People Build, Under Guardrails** (#8): Domain experts build within safety boundaries (3 mandatory guardrails)
+- **Demand Before Surface** (#9): Validate demand signal before building surface — no feature without evidence of need
+
+**G2 enforcement (STANDARD+ tier, Sprint 158):** ADRs MUST include `## Iceberg Analysis` and `## Alternatives Considered` — programmatic `contains:` checks in gate engine.
 
 ### File Safety
 - **Existing files**: ALWAYS use Edit (not Write). Write overwrites the entire file.

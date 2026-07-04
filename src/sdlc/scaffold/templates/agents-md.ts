@@ -250,7 +250,7 @@ ${details.join("\n\n---\n\n")}`;
  * Aligns all agents on shared decision-making heuristics.
  */
 function generateThinkingFrameworkSection(): string {
-  return `## Thinking Framework (SDLC Pillar 0)
+  return `## Thinking Framework (SDLC Pillar 0 — 9 Mental Models)
 
 ### System Thinking — Iceberg Model
 
@@ -275,6 +275,14 @@ Before building, follow: **Empathize → Define → Ideate → Prototype → Tes
 When things break: **Diagnose → Create Policy → Automate → Enforce → Document**
 
 Every crisis becomes a reusable pattern. Use Iceberg Model at step 1.
+
+### Demand Before Surface (#9)
+
+Every artifact must name its daily-user or ship ON-DEMAND. Unused surface is theater.
+
+### G2 Content Gates (STANDARD+ tier)
+
+ADRs require \`## Iceberg Analysis\` and \`## Alternatives Considered\` — enforced by gate engine \`contains:\` checks.
 
 ### Effort Compression (AI-Assisted)
 

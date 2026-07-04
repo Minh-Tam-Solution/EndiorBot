@@ -231,6 +231,19 @@ interface GateConfirmationFile {
 
 ---
 
+## Iceberg Analysis
+
+Traces to `docs/01-planning/requirements.md` (FR-003 gate automation).
+
+| Layer | Analysis |
+|-------|----------|
+| **Event** | Agents claim G2/G3 pass without running programmatic checks; shallow ADRs pass when only file existence is verified |
+| **Pattern** | Every autonomous sprint produces "design approved" artifacts with no System/Design Thinking sections |
+| **Structure** | Gate engine lacked `contains:` content primitive; G2 used `glob:` only — structure rewarded document theater |
+| **Mental Model** | "File on disk = done" → **shift to** "Evidence + thinking sections = done" (Sprint 158, CEO directive) |
+
+---
+
 ## Alternatives Considered
 
 | Alternative | Pros | Cons | Decision |

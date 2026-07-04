@@ -214,6 +214,42 @@ describe("GateEngine", () => {
         evaluation.checklist.find((i) => i.id === "g2-requirements-trace")?.status,
       ).toBe("fail");
     });
+
+    it("should pass g2-iceberg when ADR has Iceberg Analysis section", async () => {
+      await setupAdrDir(
+        tempDir,
+        "# ADR\n\n## Iceberg Analysis\n| Event | Agents confabulate gates |\n",
+      );
+      const engine = new GateEngine({ projectRoot: tempDir });
+      const evaluation = await engine.evaluate("G2", "feature-1", "project-1");
+
+      expect(
+        evaluation.checklist.find((i) => i.id === "g2-iceberg")?.status,
+      ).toBe("pass");
+    });
+
+    it("should pass g2-alternatives when ADR has Alternatives Considered section", async () => {
+      await setupAdrDir(
+        tempDir,
+        "# ADR\n\n## Alternatives Considered\n| A | B |\n",
+      );
+      const engine = new GateEngine({ projectRoot: tempDir });
+      const evaluation = await engine.evaluate("G2", "feature-1", "project-1");
+
+      expect(
+        evaluation.checklist.find((i) => i.id === "g2-alternatives")?.status,
+      ).toBe("pass");
+    });
+
+    it("should fail g2-iceberg when ADR lacks Iceberg Analysis section", async () => {
+      await setupAdrDir(tempDir, "# ADR\n\n## Context\nNo iceberg here.\n");
+      const engine = new GateEngine({ projectRoot: tempDir });
+      const evaluation = await engine.evaluate("G2", "feature-1", "project-1");
+
+      expect(
+        evaluation.checklist.find((i) => i.id === "g2-iceberg")?.status,
+      ).toBe("fail");
+    });
   });
 
   describe("markManualItem", () => {

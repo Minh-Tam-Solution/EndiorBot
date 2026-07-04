@@ -269,6 +269,27 @@ export const G2_CHECKLIST: GateChecklist = {
       minTier: "STANDARD",
     },
     {
+      id: "g2-iceberg",
+      description:
+        "At least one ADR contains Iceberg Analysis (System Thinking enforcement)",
+      required: true,
+      autoCheck: true,
+      status: "pending",
+      checker: "contains:docs/02-design/01-ADRs/ADR-*.md:## Iceberg Analysis",
+      minTier: "STANDARD",
+    },
+    {
+      id: "g2-alternatives",
+      description:
+        "At least one ADR contains Alternatives Considered (Design Thinking enforcement)",
+      required: true,
+      autoCheck: true,
+      status: "pending",
+      checker:
+        "contains:docs/02-design/01-ADRs/ADR-*.md:## Alternatives Considered|## Alternatives",
+      minTier: "STANDARD",
+    },
+    {
       id: "g2-technical-spec",
       description: "Technical specification exists",
       required: true,

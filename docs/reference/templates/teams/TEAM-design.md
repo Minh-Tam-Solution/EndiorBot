@@ -75,6 +75,7 @@ Only delegate clarification and estimation tasks. Do not delegate implementation
 Every feature entering Stage 04 (Build) MUST have:
 - ADR for non-trivial decisions (Status: Accepted)
 - ADR Context references `docs/01-planning/requirements.md` (G2 checker `g2-requirements-trace`)
+- ADR includes `## Iceberg Analysis` (G2 checker `g2-iceberg`) and `## Alternatives Considered` (G2 checker `g2-alternatives`)
 - Technical spec with API contracts and data models
 - Integration spec if touching external systems
 
