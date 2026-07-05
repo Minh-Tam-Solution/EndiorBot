@@ -1,4 +1,7 @@
 name: Publish to npm
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false  # publish: never cancel mid-run (serialize)
 
 on:
   release:
