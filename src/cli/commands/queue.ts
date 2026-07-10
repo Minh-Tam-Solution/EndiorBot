@@ -28,6 +28,7 @@
 
 import * as readline from "readline";
 import type { Command } from "commander";
+import { padEndTruncate } from "../../utils/text-helpers.js";
 import { getCommandLogger } from "../logger.js";
 import {
   createApprovalQueue,
@@ -118,16 +119,6 @@ function formatAge(createdAt: string): string {
 }
 
 /**
- * Pad string to fixed width.
- */
-function pad(str: string, width: number): string {
-  if (str.length >= width) {
-    return str.slice(0, width);
-  }
-  return str + " ".repeat(width - str.length);
-}
-
-/**
  * Prompt user for confirmation.
  */
 async function confirm(question: string): Promise<boolean> {
@@ -178,7 +169,7 @@ async function listAction(options: ListCommandOptions): Promise<void> {
     console.log("  " + "=".repeat(78));
     console.log("");
     console.log(
-      `  ${pad("ID", 12)} ${pad("URGENCY", 14)} ${pad("TYPE", 22)} ${pad("AGE", 6)} ${pad("EXPIRES", 10)} STATUS`,
+      `  ${padEndTruncate("ID", 12)} ${padEndTruncate("URGENCY", 14)} ${padEndTruncate("TYPE", 22)} ${padEndTruncate("AGE", 6)} ${padEndTruncate("EXPIRES", 10)} STATUS`,
     );
     console.log("  " + "-".repeat(78));
 
@@ -191,7 +182,7 @@ async function listAction(options: ListCommandOptions): Promise<void> {
       const status = req.status.toUpperCase();
 
       console.log(
-        `  ${pad(id, 12)} ${pad(urgency, 14)} ${pad(type, 22)} ${pad(age, 6)} ${pad(expires, 10)} ${status}`,
+        `  ${padEndTruncate(id, 12)} ${padEndTruncate(urgency, 14)} ${padEndTruncate(type, 22)} ${padEndTruncate(age, 6)} ${padEndTruncate(expires, 10)} ${status}`,
       );
     }
 

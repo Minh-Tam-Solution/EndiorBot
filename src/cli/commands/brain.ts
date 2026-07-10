@@ -24,6 +24,7 @@ import { join } from 'path';
 
 import type { Command } from 'commander';
 
+import { truncate } from '../../utils/text-helpers.js';
 import { loadCEOProfile } from '../../brain/ceo-profile.js';
 import { getBrainHealth, getVersionString } from '../../brain/evolution.js';
 import { getAllEvents } from '../../brain/layers/events.js';
@@ -96,14 +97,6 @@ function formatRelativeTime(isoString: string): string {
   if (minutes < 60) return `${minutes}m ago`;
   if (hours < 24) return `${hours}h ago`;
   return `${days}d ago`;
-}
-
-/**
- * Truncate string to max length
- */
-function truncate(str: string, maxLength: number): string {
-  if (str.length <= maxLength) return str;
-  return str.slice(0, maxLength - 3) + '...';
 }
 
 // ============================================================================

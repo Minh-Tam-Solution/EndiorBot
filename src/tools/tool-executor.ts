@@ -11,6 +11,7 @@
 
 import crypto from 'crypto';
 import { z } from 'zod';
+import { truncate } from "../utils/text-helpers.js";
 import type { ToolCall, ToolResult, ToolRisk, ToolExecutionEvent } from './types.js';
 import { ComposioClient } from './composio-client.js';
 import { AuditLogger } from './audit-logger.js';
@@ -235,7 +236,7 @@ export class ToolExecutor {
         toolCall.name,
         argsHash,
         context.connection_id ?? '',
-        this.truncate(JSON.stringify(composioResult), 256),
+        truncate(JSON.stringify(composioResult), 256),
         duration,
         risk
       );
@@ -275,7 +276,7 @@ export class ToolExecutor {
         principal_id: toolCall.principal_id,
         input_hash: argsHash,
         output_summary: result.success
-          ? this.truncate(JSON.stringify(result.output), 256)
+          ? truncate(JSON.stringify(result.output), 256)
           : `ERROR: ${result.error?.message}`,
         success: result.success,
         latency_ms: result.duration_ms,
@@ -392,11 +393,6 @@ export class ToolExecutor {
       .createHash('sha256')
       .update(JSON.stringify(args))
       .digest('hex');
-  }
-
-  private truncate(str: string, maxLength: number): string {
-    if (str.length <= maxLength) return str;
-    return str.slice(0, maxLength - 3) + '...';
   }
 }
 

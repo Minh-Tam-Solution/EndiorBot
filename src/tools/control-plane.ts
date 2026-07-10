@@ -5,6 +5,7 @@
  */
 
 import crypto from 'crypto';
+import { truncate } from "../utils/text-helpers.js";
 import type {
   Tool,
   ToolResult,
@@ -148,7 +149,7 @@ export class ToolControlPlane {
         toolName,
         argsHash,
         connection_id ?? '',
-        this.truncate(JSON.stringify(output), 256),
+        truncate(JSON.stringify(output), 256),
         duration,
         risk
       );
@@ -160,7 +161,7 @@ export class ToolControlPlane {
           tool_name: toolName,
           principal_id,
           input_hash: argsHash,
-          output_summary: this.truncate(JSON.stringify(output), 256),
+          output_summary: truncate(JSON.stringify(output), 256),
           success: true,
           latency_ms: duration,
           cost_usd: 0,
@@ -529,10 +530,5 @@ export class ToolControlPlane {
 
   private hashArgs(args: unknown): string {
     return crypto.createHash('sha256').update(JSON.stringify(args)).digest('hex');
-  }
-
-  private truncate(str: string, maxLength: number): string {
-    if (str.length <= maxLength) return str;
-    return str.slice(0, maxLength - 3) + '...';
   }
 }

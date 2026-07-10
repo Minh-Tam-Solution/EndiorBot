@@ -21,6 +21,7 @@
  */
 
 import type { Command } from "commander";
+import { truncate } from "../../utils/text-helpers.js";
 import { createEvaluatorLoop } from "../../evaluator/loop.js";
 import {
   getRecentFeedback,
@@ -102,11 +103,6 @@ function formatDuration(ms: number): string {
 function formatTimestamp(ts: string): string {
   const date = new Date(ts);
   return date.toLocaleString();
-}
-
-function truncate(text: string, maxLen: number): string {
-  if (text.length <= maxLen) return text;
-  return text.slice(0, maxLen - 3) + "...";
 }
 
 // ============================================================================

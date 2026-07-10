@@ -22,6 +22,7 @@ import {
   type ValidationResult,
   type ValidationIssue,
 } from "./schema.js";
+import { deepMerge } from "../utils/json.js";
 
 // ============================================================================
 // Validation Options
@@ -113,47 +114,6 @@ export function validatePartialConfig(
     data: result.data,
     warnings,
   };
-}
-
-/**
- * Deep merge two objects, with source values taking precedence over target.
- * Target provides defaults, source provides overrides.
- */
-function deepMerge<T extends Record<string, unknown>>(
-  target: T,
-  source: Partial<T>,
-): T {
-  const result = { ...target } as T;
-
-  for (const key of Object.keys(source) as Array<keyof T>) {
-    const sourceValue = source[key];
-    const targetValue = target[key];
-
-    if (sourceValue === undefined) {
-      // Keep target value (default)
-      continue;
-    }
-
-    if (
-      typeof sourceValue === "object" &&
-      sourceValue !== null &&
-      !Array.isArray(sourceValue) &&
-      typeof targetValue === "object" &&
-      targetValue !== null &&
-      !Array.isArray(targetValue)
-    ) {
-      // Recursively merge nested objects
-      result[key] = deepMerge(
-        targetValue as Record<string, unknown>,
-        sourceValue as Record<string, unknown>,
-      ) as T[keyof T];
-    } else {
-      // Override with source value
-      result[key] = sourceValue as T[keyof T];
-    }
-  }
-
-  return result;
 }
 
 /**
