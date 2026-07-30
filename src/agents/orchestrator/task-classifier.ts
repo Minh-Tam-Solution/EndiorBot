@@ -23,6 +23,7 @@ import type {
   TaskComplexity,
   TaskType,
 } from "../types.js";
+import { OPUS, KIMI_K3 } from "../../config/models.js";
 
 // ============================================================================
 // Task Type Patterns
@@ -243,30 +244,30 @@ export class TaskClassifier {
         return [
           { provider: "openai", model: "gpt-5.4", role: "primary" },
           { provider: "google", model: "gemini-2.5-pro", role: "expert" },
-          { provider: "kimi", model: "kimi-k2-6", role: "expert" },
+          { provider: "kimi", model: KIMI_K3, role: "expert" },
         ];
       case "security":
         return [
           { provider: "openai", model: "gpt-5.4", role: "primary" },
           { provider: "google", model: "gemini-2.5-pro", role: "expert" },
-          { provider: "kimi", model: "kimi-k2-6", role: "expert" },
+          { provider: "kimi", model: KIMI_K3, role: "expert" },
         ];
       case "code_gen":
       case "bug_fix":
         return [
-          { provider: "kimi", model: "kimi-k2-6", role: "primary" },
+          { provider: "kimi", model: KIMI_K3, role: "primary" },
           { provider: "openai", model: "gpt-5.4", role: "expert" },
         ];
       case "research":
         return [
           { provider: "openai", model: "gpt-5.4", role: "primary" },
           { provider: "google", model: "gemini-2.5-pro", role: "expert" },
-          { provider: "kimi", model: "kimi-k2-6", role: "expert" },
+          { provider: "kimi", model: KIMI_K3, role: "expert" },
         ];
       default:
         return [
           { provider: "openai", model: "gpt-5.4", role: "primary" },
-          { provider: "kimi", model: "kimi-k2-6", role: "expert" },
+          { provider: "kimi", model: KIMI_K3, role: "expert" },
         ];
     }
   }
@@ -509,7 +510,7 @@ export class TaskClassifier {
     // Critical complexity → Claude Opus (Tier 1)
     if (complexity === "critical") {
       return {
-        model: "claude-opus-4",
+        model: OPUS,
         provider: "claude-code",
         reason: "Critical task requires expert-level reasoning (Tier 1)",
       };
@@ -518,7 +519,7 @@ export class TaskClassifier {
     // Security and architecture need powerful+ → Claude Opus (Tier 1)
     if (taskType === "security" || taskType === "architecture") {
       return {
-        model: "claude-opus-4",
+        model: OPUS,
         provider: "claude-code",
         reason: `${taskType} task requires thorough analysis (Tier 1)`,
       };
@@ -527,7 +528,7 @@ export class TaskClassifier {
     // Complex coding tasks → Kimi k2.6 (Tier 2)
     if (complexity === "complex" && (taskType === "code_gen" || taskType === "bug_fix")) {
       return {
-        model: "kimi-k2-6",
+        model: KIMI_K3,
         provider: "kimi",
         reason: "Complex coding task — Kimi k2.6 provides strong reasoning at lower cost (Tier 2)",
       };
@@ -536,7 +537,7 @@ export class TaskClassifier {
     // Complex non-coding → Kimi k2.6 (Tier 2)
     if (complexity === "complex") {
       return {
-        model: "kimi-k2-6",
+        model: KIMI_K3,
         provider: "kimi",
         reason: "Complex task — Kimi k2.6 balanced power and cost (Tier 2)",
       };
@@ -545,7 +546,7 @@ export class TaskClassifier {
     // Moderate tasks → Kimi k2.6 (Tier 2)
     if (complexity === "moderate") {
       return {
-        model: "kimi-k2-6",
+        model: KIMI_K3,
         provider: "kimi",
         reason: "Balanced speed and quality via Kimi k2.6 (Tier 2)",
       };
@@ -562,7 +563,7 @@ export class TaskClassifier {
 
     // Simple coding → Kimi k2.6 (still Tier 2 for coding quality)
     return {
-      model: "kimi-k2-6",
+      model: KIMI_K3,
       provider: "kimi",
       reason: "Simple task — Kimi k2.6 fast and cost-effective (Tier 2)",
     };

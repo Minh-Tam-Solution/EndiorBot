@@ -13,6 +13,7 @@
  */
 
 import { AnthropicProvider } from "../anthropic/index.js";
+import { KIMI_FOR_CODING, KIMI_K3, KIMI_K3_256K } from "../../config/models.js";
 import type {
   AIProvider,
   ChatChunk,
@@ -26,12 +27,30 @@ import type {
 /** Default Kimi Coding API endpoint ( AnthropicProvider appends /v1/messages ). */
 const DEFAULT_KIMI_CODING_URL = "https://api.kimi.com/coding";
 
-/** Kimi-for-coding model definition. */
+/**
+ * Kimi Code subscription models (api.kimi.com/coding namespace).
+ * IDs verified from ~/.kimi-code/config.toml: kimi-for-coding (K2.7 Coding),
+ * k3, k3-256k. [0] kimi-for-coding is the proven default fallback.
+ */
 const KIMI_CODING_MODELS: ModelDefinition[] = [
   {
-    id: "kimi-for-coding",
-    name: "Kimi for Coding",
+    id: KIMI_FOR_CODING,
+    name: "Kimi for Coding (K2.7)",
     contextWindow: 256000,
+    maxOutputTokens: 16384,
+    supportedFeatures: ["chat", "vision", "tools", "streaming"],
+  },
+  {
+    id: KIMI_K3,
+    name: "Kimi K3",
+    contextWindow: 1_000_000,
+    maxOutputTokens: 16384,
+    supportedFeatures: ["chat", "vision", "tools", "streaming"],
+  },
+  {
+    id: KIMI_K3_256K,
+    name: "Kimi K3 256K",
+    contextWindow: 256_000,
     maxOutputTokens: 16384,
     supportedFeatures: ["chat", "vision", "tools", "streaming"],
   },
@@ -84,8 +103,8 @@ export class KimiCodingProvider implements AIProvider {
   private resolveCodingModel(model: string): string {
     const codingModelIds = KIMI_CODING_MODELS.map((m) => m.id);
     if (codingModelIds.includes(model)) return model;
-    // Non-coding model name (e.g. "sonnet", "gpt-4o") → use default
-    return KIMI_CODING_MODELS[0]?.id ?? "kimi-for-coding";
+    // Non-coding model name (e.g. "sonnet", "gpt-4o") → proven default (K2.7).
+    return KIMI_CODING_MODELS[0]?.id ?? KIMI_FOR_CODING;
   }
 
   async healthCheck(): Promise<ProviderHealth> {

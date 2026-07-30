@@ -12,7 +12,11 @@
  * @sprint 72
  */
 
-import { OPUS, SONNET, FABLE, HAIKU, LEGACY_OPUS, LEGACY_SONNET } from "../config/models.js";
+import {
+  OPUS, SONNET, FABLE, HAIKU,
+  KIMI_K3, KIMI_K3_256K, KIMI_FOR_CODING, MOONSHOT_K2_7_CODE,
+  LEGACY_OPUS, LEGACY_SONNET, MODEL_CAPABILITIES,
+} from "../config/models.js";
 
 // ============================================================================
 // Core Metrics
@@ -370,19 +374,18 @@ export interface ModelPricing {
  * sessions/checkpoints still price correctly.
  */
 export const MODEL_PRICING: Record<string, ModelPricing> = {
-  // Claude 5 family (current)
-  [OPUS]: { inputPer1M: 5.0, outputPer1M: 25.0 },
-  [SONNET]: { inputPer1M: 3.0, outputPer1M: 15.0 },
-  [FABLE]: { inputPer1M: 10.0, outputPer1M: 50.0 },
-  [HAIKU]: { inputPer1M: 0.25, outputPer1M: 1.25 },
-  // Kimi K3 — pricing TBD at platform.kimi.ai; conservative proxy applies
-  // via CONSERVATIVE_PROXY_PRICING until vendor numbers confirmed.
-  // Legacy (backward compat)
-  "claude-opus-4": { inputPer1M: 15.0, outputPer1M: 75.0 },
+  // Current — resolved through the SSOT capability registry (models.ts)
+  [OPUS]: { inputPer1M: MODEL_CAPABILITIES[OPUS]!.inputPer1M, outputPer1M: MODEL_CAPABILITIES[OPUS]!.outputPer1M },
+  [SONNET]: { inputPer1M: MODEL_CAPABILITIES[SONNET]!.inputPer1M, outputPer1M: MODEL_CAPABILITIES[SONNET]!.outputPer1M },
+  [FABLE]: { inputPer1M: MODEL_CAPABILITIES[FABLE]!.inputPer1M, outputPer1M: MODEL_CAPABILITIES[FABLE]!.outputPer1M },
+  [HAIKU]: { inputPer1M: MODEL_CAPABILITIES[HAIKU]!.inputPer1M, outputPer1M: MODEL_CAPABILITIES[HAIKU]!.outputPer1M },
+  [KIMI_K3]: { inputPer1M: MODEL_CAPABILITIES[KIMI_K3]!.inputPer1M, outputPer1M: MODEL_CAPABILITIES[KIMI_K3]!.outputPer1M },
+  [KIMI_K3_256K]: { inputPer1M: MODEL_CAPABILITIES[KIMI_K3_256K]!.inputPer1M, outputPer1M: MODEL_CAPABILITIES[KIMI_K3_256K]!.outputPer1M },
+  [KIMI_FOR_CODING]: { inputPer1M: MODEL_CAPABILITIES[KIMI_FOR_CODING]!.inputPer1M, outputPer1M: MODEL_CAPABILITIES[KIMI_FOR_CODING]!.outputPer1M },
+  [MOONSHOT_K2_7_CODE]: { inputPer1M: MODEL_CAPABILITIES[MOONSHOT_K2_7_CODE]!.inputPer1M, outputPer1M: MODEL_CAPABILITIES[MOONSHOT_K2_7_CODE]!.outputPer1M },
+  // Legacy (backward compat for historical sessions — dated IDs only)
   [LEGACY_OPUS]: { inputPer1M: 15.0, outputPer1M: 75.0 },
-  "claude-sonnet-4": { inputPer1M: 3.0, outputPer1M: 15.0 },
   [LEGACY_SONNET]: { inputPer1M: 3.0, outputPer1M: 15.0 },
-  "claude-haiku-4": { inputPer1M: 0.25, outputPer1M: 1.25 },
 };
 
 /**

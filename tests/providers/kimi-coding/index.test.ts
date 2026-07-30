@@ -24,9 +24,11 @@ describe("KimiCodingProvider", () => {
   it("should have correct provider metadata", () => {
     expect(provider.id).toBe("kimi-coding");
     expect(provider.name).toBe("Kimi Coding (CEO subscription)");
-    expect(provider.models).toHaveLength(1);
+    // Subscription serves kimi-for-coding (K2.7, default) + k3 + k3-256k.
+    expect(provider.models).toHaveLength(3);
     expect(provider.models[0]?.id).toBe("kimi-for-coding");
     expect(provider.models[0]?.contextWindow).toBe(256000);
+    expect(provider.models.map((m) => m.id)).toEqual(["kimi-for-coding", "k3", "k3-256k"]);
   });
 
   it("should initialize with default endpoint", async () => {

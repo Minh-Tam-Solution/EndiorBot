@@ -13,9 +13,8 @@
 
 import { OpenAIProvider } from "../openai/index.js";
 import {
-  KIMI_K3,
-  KIMI_K3_256K,
-  LEGACY_KIMI_K2_6,
+  MOONSHOT_K2_7_CODE,
+  KIMI_K2_6_PROXY,
   LEGACY_MOONSHOT_128K,
   LEGACY_MOONSHOT_32K,
 } from "../../config/models.js";
@@ -32,27 +31,23 @@ import type {
 /** Default Moonshot API endpoint (corrected .cn → .ai per ADR-053). */
 const DEFAULT_MOONSHOT_URL = "https://api.moonshot.ai/v1";
 
-/** Kimi model definitions via Moonshot API. Current = K3 (1M ctx). */
+/**
+ * Moonshot direct-API models (api.moonshot.ai namespace — DOTTED ids).
+ * K3 is NOT here — it lives only in the kimi-code subscription namespace
+ * (see kimi-coding provider). Verified from ~/.kimi-code/config.toml.
+ */
 const KIMI_API_MODELS: ModelDefinition[] = [
   {
-    id: KIMI_K3,
-    name: "Kimi K3",
-    contextWindow: 1_000_000,
-    maxOutputTokens: 16384,
-    supportedFeatures: ["chat", "vision", "tools", "streaming"],
-  },
-  {
-    id: KIMI_K3_256K,
-    name: "Kimi K3 256K",
+    id: MOONSHOT_K2_7_CODE,
+    name: "Kimi K2.7 Code (Moonshot)",
     contextWindow: 256_000,
     maxOutputTokens: 16384,
     supportedFeatures: ["chat", "vision", "tools", "streaming"],
   },
-  // Legacy — backward compat for persisted sessions referencing old IDs.
   {
-    id: LEGACY_KIMI_K2_6,
-    name: "Kimi K2.6 (legacy)",
-    contextWindow: 256000,
+    id: KIMI_K2_6_PROXY,
+    name: "Kimi K2.6 (Moonshot, sunset 2026-08-31)",
+    contextWindow: 256_000,
     maxOutputTokens: 16384,
     supportedFeatures: ["chat", "vision", "tools", "streaming"],
   },
@@ -86,7 +81,7 @@ export class KimiApiProvider implements AIProvider {
 
   private inner = new OpenAIProvider({
     baseUrl: DEFAULT_MOONSHOT_URL,
-    defaultModel: KIMI_K3,
+    defaultModel: MOONSHOT_K2_7_CODE,
     maxRequestsPerMinute: 60,
   });
 

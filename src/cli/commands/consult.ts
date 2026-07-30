@@ -257,9 +257,6 @@ const CLAUDE_MODEL_MAP: Record<string, string> = {
   "claude-sonnet-5": SONNET,
   "claude-fable-5": FABLE,
   "claude-haiku-4": "claude-haiku-4-5-20251001",
-  // Legacy aliases still resolve for backward compat.
-  "claude-opus-4": OPUS,
-  "claude-sonnet-4": SONNET,
 };
 
 /**
@@ -584,7 +581,7 @@ export function registerConsultCommand(program: Command): void {
       console.log("└─────────────────────────────────────────────────────────────┘");
       console.log("");
       console.log("Usage:");
-      console.log("  endiorbot consult --openai o3 --gemini gemini-2.5-pro --kimi kimi-k2-6 \"your question\"");
+      console.log("  endiorbot consult --openai o3 --gemini gemini-2.5-pro --kimi k3 \"your question\"");
       console.log("");
     });
 }

@@ -269,13 +269,13 @@ describe("AERCalculator", () => {
         {
           timestamp: "2026-03-02T10:00:00Z",
           type: "model_call",
-          model: "claude-sonnet-4",
+          model: "claude-sonnet-5",
           cost: 0.05,
         },
         {
           timestamp: "2026-03-02T10:01:00Z",
           type: "model_call",
-          model: "claude-sonnet-4",
+          model: "claude-sonnet-5",
           cost: 0.03,
         },
       ];
@@ -291,7 +291,7 @@ describe("AERCalculator", () => {
         {
           timestamp: "2026-03-02T10:00:00Z",
           type: "model_call",
-          model: "claude-sonnet-4",
+          model: "claude-sonnet-5",
           inputTokens: 1000,
           outputTokens: 500,
         },
@@ -332,7 +332,7 @@ describe("AERCalculator", () => {
         {
           timestamp: "2026-03-02T10:00:00Z",
           type: "model_call",
-          model: "claude-opus-4",
+          model: "claude-opus-5",
           inputTokens: 1000,
           outputTokens: 500,
           durationSeconds: 10,
@@ -340,7 +340,7 @@ describe("AERCalculator", () => {
         {
           timestamp: "2026-03-02T10:01:00Z",
           type: "model_call",
-          model: "claude-sonnet-4",
+          model: "claude-sonnet-5",
           inputTokens: 2000,
           outputTokens: 1000,
           durationSeconds: 5,
@@ -348,7 +348,7 @@ describe("AERCalculator", () => {
         {
           timestamp: "2026-03-02T10:02:00Z",
           type: "model_call",
-          model: "claude-haiku-4",
+          model: "claude-haiku-4-5-20251001",
           inputTokens: 500,
           outputTokens: 200,
           durationSeconds: 2,
@@ -468,21 +468,21 @@ describe("AERCalculator", () => {
 
 describe("Type Functions", () => {
   describe("calculateModelCost", () => {
-    it("should calculate Opus cost", () => {
-      // Opus: $15/1M input, $75/1M output
-      const cost = calculateModelCost("claude-opus-4", 1_000_000, 100_000);
-      expect(cost).toBeCloseTo(15 + 7.5);
+    it("should calculate Opus 5 cost", () => {
+      // Opus 5: $5/1M input, $25/1M output
+      const cost = calculateModelCost("claude-opus-5", 1_000_000, 100_000);
+      expect(cost).toBeCloseTo(5 + 2.5);
     });
 
-    it("should calculate Sonnet cost", () => {
-      // Sonnet: $3/1M input, $15/1M output
-      const cost = calculateModelCost("claude-sonnet-4", 1_000_000, 100_000);
+    it("should calculate Sonnet 5 cost", () => {
+      // Sonnet 5: $3/1M input, $15/1M output
+      const cost = calculateModelCost("claude-sonnet-5", 1_000_000, 100_000);
       expect(cost).toBeCloseTo(3 + 1.5);
     });
 
     it("should calculate Haiku cost", () => {
       // Haiku: $0.25/1M input, $1.25/1M output
-      const cost = calculateModelCost("claude-haiku-4", 1_000_000, 100_000);
+      const cost = calculateModelCost("claude-haiku-4-5-20251001", 1_000_000, 100_000);
       expect(cost).toBeCloseTo(0.25 + 0.125);
     });
 

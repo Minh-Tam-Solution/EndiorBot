@@ -16,6 +16,7 @@ import type { TmuxBridge } from "../tmux/tmux-bridge.js";
 import type { PricingRegistry } from "../../budget/pricing-registry.js";
 import { TEAM_LEADER_ROLES } from "../intelligence/team-installer.js";
 import type { TeamId } from "../../agents/types/team.js";
+import { SONNET } from "../../config/models.js";
 
 // ============================================================================
 // Types
@@ -59,7 +60,7 @@ export const ESTIMATED_TOKENS_PER_MINUTE = {
 } as const;
 
 /** Default model for cost estimation. */
-const DEFAULT_COST_MODEL = "claude-sonnet-4";
+const DEFAULT_COST_MODEL = SONNET;
 
 // ============================================================================
 // Functions

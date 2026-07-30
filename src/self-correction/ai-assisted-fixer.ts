@@ -24,6 +24,7 @@ import type {
   FixConfidence,
 } from "./types.js";
 import type { BudgetTracker } from "../budget/budget-tracker.js";
+import { SONNET } from "../config/models.js";
 
 // ============================================================================
 // Types
@@ -55,7 +56,7 @@ export interface AIAssistedFixerConfig {
 export const DEFAULT_AI_FIXER_CONFIG: AIAssistedFixerConfig = {
   estimatedCostPerConsultation: 0.05, // $0.05 per consultation
   maxTokens: 1000,
-  model: "claude-sonnet-4",
+  model: SONNET,
   provider: "anthropic",
   dryRun: false,
   timeout: 30000, // 30s

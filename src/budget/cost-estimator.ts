@@ -11,6 +11,7 @@
  * Based on ADR-007 Autonomous Execution Budget specification.
  */
 
+import { SONNET } from "../config/models.js";
 import type {
   CostEstimate,
   TaskContext,
@@ -78,7 +79,7 @@ export const DEFAULT_ESTIMATOR_CONFIG: CostEstimatorConfig = {
   minSessionsForMedium: 10, // Need 10 real sessions for MEDIUM
   minSessionsForHigh: 50, // Need 50 real sessions for HIGH
   accuracyThresholdForHigh: 0.8, // 80% accuracy for HIGH
-  defaultModel: "claude-sonnet-4",
+  defaultModel: SONNET,
 };
 
 /** Base output token estimates by task type */
@@ -642,7 +643,7 @@ export function createCostEstimator(
 export function quickEstimate(
   prompt: string,
   taskType: TaskType = "general",
-  model: string = "claude-sonnet-4",
+  model: string = SONNET,
 ): CostEstimate {
   const estimator = createCostEstimator();
   return estimator.estimate({ prompt, taskType }, model);
