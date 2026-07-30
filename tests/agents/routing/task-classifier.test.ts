@@ -277,13 +277,13 @@ describe("Model Recommendations", () => {
   it("should recommend Opus for critical tasks", () => {
     const result = classifier.classify("critical security vulnerability @critical");
 
-    expect(result.recommendedModel.model).toBe("claude-opus-4");
+    expect(result.recommendedModel.model).toBe("claude-opus-5");
   });
 
   it("should recommend Opus for security tasks", () => {
     const result = classifier.classify("security review of authentication");
 
-    expect(result.recommendedModel.model).toBe("claude-opus-4");
+    expect(result.recommendedModel.model).toBe("claude-opus-5");
   });
 
   it("should recommend appropriate model for simple vs moderate tasks", () => {
@@ -291,11 +291,11 @@ describe("Model Recommendations", () => {
     const moderate = classifier.classify("implement a todo list component with local storage");
 
     // ADR-052: Simple coding tasks still use Kimi k2.6 (Tier 2)
-    expect(simple.recommendedModel.model).toBe("kimi-k2-6");
+    expect(simple.recommendedModel.model).toBe("k3");
     expect(simple.recommendedModel.provider).toBe("kimi");
 
     // Moderate coding tasks use Kimi k2.6
-    expect(moderate.recommendedModel.model).toBe("kimi-k2-6");
+    expect(moderate.recommendedModel.model).toBe("k3");
     expect(moderate.recommendedModel.provider).toBe("kimi");
   });
 
