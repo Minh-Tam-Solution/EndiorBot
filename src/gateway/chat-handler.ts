@@ -27,6 +27,7 @@ import type { AIProvider, ChatRequest, ChatResponse, Message } from "../provider
 import { getProviderRegistry } from "../providers/provider-registry.js";
 import { getContextBudget } from "../brain/context-budget.js";
 import { getWorkspaceContext, formatWorkspaceContext } from "../agents/intelligence/workspace-context.js";
+import { SONNET, KIMI_K3 } from "../config/models.js";
 
 // ============================================================================
 // Types
@@ -120,10 +121,10 @@ export interface ChatHandlerResponse {
 
 /** Default models — latest and most capable (demands top-tier) */
 export const DEFAULT_MODELS = {
-  anthropic: "claude-sonnet-4-5-20250929", // Claude via Bridge (OAuth), not API
-  openai: "gpt-5.4",                       // Latest OpenAI for consultation
-  gemini: "gemini-2.5-pro",                // Latest Gemini for consultation
-  kimi: "kimi-k2-6",                       // Latest Kimi for consultation
+  anthropic: SONNET,        // Claude via Bridge (OAuth), not API
+  openai: "gpt-5.4",        // Latest OpenAI for consultation
+  gemini: "gemini-2.5-pro", // Latest Gemini for consultation
+  kimi: KIMI_K3,            // Latest Kimi for consultation
 };
 
 /** Per-model timeout (30s) */

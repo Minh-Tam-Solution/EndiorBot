@@ -11,6 +11,8 @@
  * @sprint 72
  */
 
+import { OPUS, SONNET, HAIKU } from "../config/models.js";
+
 // ============================================================================
 // Model Tiers
 // ============================================================================
@@ -87,7 +89,7 @@ export interface ModelConfig {
 export const MODEL_CONFIGS: ModelConfig[] = [
   {
     tier: ModelTier.ELITE,
-    model: "claude-opus-4-5-20251101",
+    model: OPUS,
     maxCostPerCall: 1.0,
     maxTimePerCall: 300, // 5 minutes
     taskTypes: [
@@ -101,7 +103,7 @@ export const MODEL_CONFIGS: ModelConfig[] = [
   },
   {
     tier: ModelTier.STANDARD,
-    model: "claude-sonnet-4-5-20250929",
+    model: SONNET,
     maxCostPerCall: 0.10,
     maxTimePerCall: 60, // 1 minute
     taskTypes: [
@@ -117,7 +119,7 @@ export const MODEL_CONFIGS: ModelConfig[] = [
   },
   {
     tier: ModelTier.EFFICIENCY,
-    model: "claude-haiku-4-5-20251001",
+    model: HAIKU,
     maxCostPerCall: 0.01,
     maxTimePerCall: 10, // 10 seconds
     taskTypes: [

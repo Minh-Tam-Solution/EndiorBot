@@ -390,7 +390,7 @@ describe("getTierDefaults", () => {
 
 describe("getDefaultModel", () => {
   it("should return anthropic primary model", () => {
-    expect(getDefaultModel("anthropic", "primary")).toBe("claude-sonnet-4-5");
+    expect(getDefaultModel("anthropic", "primary")).toBe("claude-sonnet-5");
   });
 
   it("should return openai fast model", () => {

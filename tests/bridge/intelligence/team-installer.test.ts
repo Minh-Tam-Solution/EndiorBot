@@ -218,7 +218,7 @@ describe("TeamInstaller — installTeams()", () => {
     installTeams(tmpDir);
     const content = readFileSync(join(tmpDir, ".claude", "agents", "dev-team.md"), "utf-8");
     const fm = parseFrontmatter(content);
-    expect(fm["model"]).toBe("claude-sonnet-4-5");
+    expect(fm["model"]).toBe("claude-sonnet-5");
   });
 
   it("should include Agent in allowed-tools (C7)", () => {

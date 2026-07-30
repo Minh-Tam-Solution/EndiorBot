@@ -486,9 +486,11 @@ describe("Type Functions", () => {
       expect(cost).toBeCloseTo(0.25 + 0.125);
     });
 
-    it("should default to Sonnet pricing for unknown models", () => {
+    it("should use conservative proxy (highest tier) for unknown models", () => {
+      // CEO directive: $0/silent-Sonnet for unpriced = budget-guard blind.
+      // Unknown → over-estimate at $10/$50 per 1M so the guard trips early.
       const cost = calculateModelCost("unknown-model", 1_000_000, 100_000);
-      expect(cost).toBeCloseTo(3 + 1.5);
+      expect(cost).toBeCloseTo(10 + 5);
     });
   });
 

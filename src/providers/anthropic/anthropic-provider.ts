@@ -17,6 +17,11 @@ import type {
 import { ProviderError, type ProviderErrorCode } from "../types.js";
 import { RateLimiter } from "../../security/rate-limiter.js";
 import { safeFetch } from "../../security/safe-fetch.js";
+import {
+  SONNET, OPUS, HAIKU, FABLE,
+  KIMI_K2_6_PROXY, KIMI_FOR_CODING,
+  LEGACY_SONNET, LEGACY_OPUS, LEGACY_SONNET_35, LEGACY_HAIKU_3,
+} from "../../config/models.js";
 
 // Anthropic API response types
 interface AnthropicResponse {
@@ -30,62 +35,82 @@ interface AnthropicResponse {
   stop_reason?: string;
 }
 
-// Anthropic model definitions — Sonnet first (default for chat/fallback)
+const CHAT_FEATURES: ModelDefinition["supportedFeatures"] = ["chat", "vision", "tools", "streaming"];
+
+// Anthropic model definitions — all IDs imported from config/models SSOT
 const ANTHROPIC_MODELS: ModelDefinition[] = [
-  // Default: Sonnet (best cost/quality balance)
+  // Claude 5 family
   {
-    id: "claude-sonnet-4-5-20250929",
-    name: "Claude 4.5 Sonnet",
-    contextWindow: 200000,
+    id: SONNET,
+    name: "Claude Sonnet 5",
+    contextWindow: 1_000_000,
     maxOutputTokens: 16384,
-    supportedFeatures: ["chat", "vision", "tools", "streaming"],
+    supportedFeatures: CHAT_FEATURES,
   },
   {
-    id: "claude-haiku-4-5-20251001",
+    id: HAIKU,
     name: "Claude 4.5 Haiku",
-    contextWindow: 200000,
+    contextWindow: 200_000,
     maxOutputTokens: 8192,
-    supportedFeatures: ["chat", "vision", "tools", "streaming"],
+    supportedFeatures: CHAT_FEATURES,
   },
-  // Opus: explicit architecture decisions only (CLAUDE.md invariant 4)
   {
-    id: "claude-opus-4-5-20251101",
-    name: "Claude 4.5 Opus",
-    contextWindow: 200000,
+    id: OPUS,
+    name: "Claude Opus 5",
+    contextWindow: 1_000_000,
+    maxOutputTokens: 128_000,
+    supportedFeatures: CHAT_FEATURES,
+  },
+  {
+    id: FABLE,
+    name: "Claude Fable 5",
+    contextWindow: 1_000_000,
+    maxOutputTokens: 128_000,
+    supportedFeatures: CHAT_FEATURES,
+  },
+  // Legacy models (backward compat for persisted sessions/checkpoints)
+  {
+    id: LEGACY_SONNET,
+    name: "Claude 4.5 Sonnet (legacy)",
+    contextWindow: 200_000,
     maxOutputTokens: 16384,
-    supportedFeatures: ["chat", "vision", "tools", "streaming"],
+    supportedFeatures: CHAT_FEATURES,
   },
-  // Legacy models
   {
-    id: "claude-3-5-sonnet-20241022",
-    name: "Claude 3.5 Sonnet",
-    contextWindow: 200000,
+    id: LEGACY_OPUS,
+    name: "Claude 4.5 Opus (legacy)",
+    contextWindow: 200_000,
+    maxOutputTokens: 16384,
+    supportedFeatures: CHAT_FEATURES,
+  },
+  {
+    id: LEGACY_SONNET_35,
+    name: "Claude 3.5 Sonnet (legacy)",
+    contextWindow: 200_000,
     maxOutputTokens: 8192,
-    supportedFeatures: ["chat", "vision", "tools", "streaming"],
+    supportedFeatures: CHAT_FEATURES,
   },
   {
-    id: "claude-3-haiku-20240307",
-    name: "Claude 3 Haiku",
-    contextWindow: 200000,
+    id: LEGACY_HAIKU_3,
+    name: "Claude 3 Haiku (legacy)",
+    contextWindow: 200_000,
     maxOutputTokens: 4096,
-    supportedFeatures: ["chat", "vision", "tools", "streaming"],
+    supportedFeatures: CHAT_FEATURES,
   },
-  // Sprint 143: Passthrough models — when AnthropicProvider is used as
-  // inner delegate by kimi-coding (ADR-053), the endpoint routes these model
-  // names to Kimi. They must pass validateModel() to reach the HTTP call.
+  // Passthrough models — kimi-coding (ADR-053) proxy routes these to Kimi
   {
-    id: "kimi-k2.6",
+    id: KIMI_K2_6_PROXY,
     name: "Kimi K2.6 (via proxy)",
-    contextWindow: 256000,
+    contextWindow: 256_000,
     maxOutputTokens: 16384,
-    supportedFeatures: ["chat", "vision", "tools", "streaming"],
+    supportedFeatures: CHAT_FEATURES,
   },
   {
-    id: "kimi-for-coding",
+    id: KIMI_FOR_CODING,
     name: "Kimi for Coding (via proxy)",
-    contextWindow: 256000,
+    contextWindow: 256_000,
     maxOutputTokens: 16384,
-    supportedFeatures: ["chat", "vision", "tools", "streaming"],
+    supportedFeatures: CHAT_FEATURES,
   },
 ];
 
@@ -297,7 +322,7 @@ export class AnthropicProvider extends BaseProvider {
           "anthropic-version": "2023-06-01",
         },
         body: JSON.stringify({
-          model: "claude-haiku-4",
+          model: HAIKU,
           max_tokens: 1,
           messages: [{ role: "user", content: "hi" }],
         }),

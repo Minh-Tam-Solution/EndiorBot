@@ -15,6 +15,7 @@
  */
 
 import { z } from "zod";
+import { SONNET } from "./models.js";
 
 // ============================================================================
 // Provider Configuration
@@ -64,7 +65,7 @@ export const AgentDefaultsSchema = z.object({
   maxConcurrent: z.number().int().positive().default(3),
   model: z
     .object({
-      primary: z.string().default("anthropic/claude-sonnet-4-5"),
+      primary: z.string().default(`anthropic/${SONNET}`),
     })
     .optional(),
   contextPruning: z
@@ -363,7 +364,7 @@ export const DEFAULT_CONFIG: EndiorBotConfig = {
     defaults: {
       maxConcurrent: 3,
       model: {
-        primary: "anthropic/claude-sonnet-4-5",
+        primary: `anthropic/${SONNET}`,
       },
       contextPruning: {
         mode: "cache-ttl",
