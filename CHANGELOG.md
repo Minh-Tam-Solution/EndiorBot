@@ -6,6 +6,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [v0.1.0-beta.6] - 2026-07-30
+
+### Added — Model Upgrade + SE4A Spike (Sprint 160)
+- **Claude 5 family** — `claude-opus-5` ($5/$25), `claude-sonnet-5` ($3/$15), `claude-fable-5` ($10/$50), all 1M context; Haiku unchanged. Legacy dated IDs retained for persisted checkpoints/sessions.
+- **Kimi K3** — `kimi-k3` (1M ctx) + `kimi-k3-256k` now default for the Kimi provider; `kimi-k2-6`/`moonshot-v1-*` demoted to legacy compat.
+- **SE4A coordinator spike** (`src/autonomy/se4a-coordinator.ts`) — federated-workflow pipeline DEFINE→DISPATCH→EXECUTE→REVIEW→GATE for the `feature-development` template. CLI: `endiorbot workflow se4a feature-development --feature "..."`.
+- **Objective GATE** — runs the project test command and reads the exit code (exit-0 = pass; non-zero/unreadable = FAIL; never fake-green). Governance invariants (gate-authority, verify-not-producer, evidence-first) recorded with cited source version.
+
+### Changed
+- **True SSOT** — every model ID string centralized as named constants in `src/config/models.ts`; 12 consumer files import from there (was 11 hardcoded drift points).
+- **Conservative pricing proxy** — unpriced models cost at the highest known tier ($10/$50) with a loud warning instead of a silent $0/Sonnet fallback (budget-guard no longer blind).
+- `getModelTier` + `ModelUsageBreakdown` gain a `fable` tier.
+
+### Fixed
+- Anthropic provider healthcheck used an invalid `claude-haiku-4` model ID → now the real Haiku SSOT constant.
+
 ## [v0.1.0-beta.5] - 2026-07-04
 
 ### Added — ST/DT Content Gates (Sprint 157-158)
