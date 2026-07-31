@@ -146,9 +146,9 @@ describe("CostEstimator", () => {
     it("should calculate cost for different models", () => {
       const context = createTestContext();
 
-      const opusEstimate = estimator.estimate(context, "claude-opus-4");
-      const sonnetEstimate = estimator.estimate(context, "claude-sonnet-4");
-      const haikuEstimate = estimator.estimate(context, "claude-haiku-3.5");
+      const opusEstimate = estimator.estimate(context, "claude-opus-5");
+      const sonnetEstimate = estimator.estimate(context, "claude-sonnet-5");
+      const haikuEstimate = estimator.estimate(context, "claude-haiku-4-5-20251001");
 
       // Opus > Sonnet > Haiku in cost
       expect(opusEstimate.estimated_cost).toBeGreaterThan(
@@ -238,12 +238,12 @@ describe("CostEstimator", () => {
   describe("estimateForModels", () => {
     it("should estimate for multiple models", () => {
       const context = createTestContext();
-      const models = ["claude-opus-4", "claude-sonnet-4", "self-hosted/qwen3-coder"];
+      const models = ["claude-opus-5", "claude-sonnet-5", "self-hosted/qwen3-coder"];
 
       const estimates = estimator.estimateForModels(context, models);
 
       expect(estimates.size).toBe(3);
-      expect(estimates.has("claude-opus-4")).toBe(true);
+      expect(estimates.has("claude-opus-5")).toBe(true);
       expect(estimates.has("self-hosted/qwen3-coder")).toBe(true);
     });
   });
@@ -266,11 +266,11 @@ describe("CostEstimator", () => {
 
     it("should find cheapest from specified models", () => {
       const context = createTestContext();
-      const models = ["claude-opus-4", "claude-sonnet-4", "claude-haiku-3.5"];
+      const models = ["claude-opus-5", "claude-sonnet-5", "claude-haiku-4-5-20251001"];
 
       const result = estimator.findCheapestModel(context, models);
 
-      expect(result?.model).toBe("claude-haiku-3.5");
+      expect(result?.model).toBe("claude-haiku-4-5-20251001");
     });
   });
 
@@ -280,18 +280,18 @@ describe("CostEstimator", () => {
 
   describe("recordActualCost", () => {
     it("should update historical data", () => {
-      estimator.recordActualCost("general", "claude-sonnet-4", 0.05);
+      estimator.recordActualCost("general", "claude-sonnet-5", 0.05);
 
       const historical = estimator.getHistoricalData();
 
       expect(historical.avgCostPerTask.general).toBe(0.05);
-      expect(historical.avgCostPerModel["claude-sonnet-4"]).toBe(0.05);
+      expect(historical.avgCostPerModel["claude-sonnet-5"]).toBe(0.05);
       expect(historical.totalSpent).toBe(0.05);
     });
 
     it("should average costs over multiple records", () => {
-      estimator.recordActualCost("general", "claude-sonnet-4", 0.10);
-      estimator.recordActualCost("general", "claude-sonnet-4", 0.20);
+      estimator.recordActualCost("general", "claude-sonnet-5", 0.10);
+      estimator.recordActualCost("general", "claude-sonnet-5", 0.20);
 
       const historical = estimator.getHistoricalData();
 
@@ -302,7 +302,7 @@ describe("CostEstimator", () => {
     it("should increment session count", () => {
       const initialCount = estimator.getSessionCount();
 
-      estimator.recordActualCost("general", "claude-sonnet-4", 0.05);
+      estimator.recordActualCost("general", "claude-sonnet-5", 0.05);
 
       expect(estimator.getSessionCount()).toBe(initialCount + 1);
     });
@@ -367,7 +367,7 @@ describe("CostEstimator", () => {
         taskType: "documentation",
       });
 
-      const estimate = estimator.estimate(context, "claude-opus-4");
+      const estimate = estimator.estimate(context, "claude-opus-5");
 
       expect(estimate.recommendation).toContain("Self-Hosted");
     });
@@ -386,7 +386,7 @@ describe("CostEstimator", () => {
         files: [{ path: "big.ts", content: "B".repeat(50000) }],
       });
 
-      const estimate = estimator.estimate(context, "claude-opus-4");
+      const estimate = estimator.estimate(context, "claude-opus-5");
 
       expect(estimate.recommendation).toContain("Sonnet");
     });
@@ -411,7 +411,7 @@ describe("CostEstimator", () => {
     });
 
     it("should reset historical data", () => {
-      estimator.recordActualCost("general", "claude-sonnet-4", 0.10);
+      estimator.recordActualCost("general", "claude-sonnet-5", 0.10);
       expect(estimator.getHistoricalData().totalSpent).toBe(0.10);
 
       estimator.resetHistoricalData();
@@ -465,8 +465,8 @@ describe("quickEstimate", () => {
   });
 
   it("should use specified model", () => {
-    const opusEstimate = quickEstimate("Hello", "general", "claude-opus-4");
-    const haikuEstimate = quickEstimate("Hello", "general", "claude-haiku-3.5");
+    const opusEstimate = quickEstimate("Hello", "general", "claude-opus-5");
+    const haikuEstimate = quickEstimate("Hello", "general", "claude-haiku-4-5-20251001");
 
     expect(opusEstimate.estimated_cost).toBeGreaterThan(
       haikuEstimate.estimated_cost,

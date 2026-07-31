@@ -23,6 +23,7 @@ import type { TeamId, TeamDefinition } from "../../agents/types/team.js";
 import { TEAM_DISPLAY_NAMES } from "../../agents/types/team.js";
 import { createTeamRegistry } from "../../agents/orchestrator/team-registry.js";
 import { getFeatureFlagWithEnvOverride } from "../../config/feature-flags.js";
+import { SONNET } from "../../config/models.js";
 
 // ============================================================================
 // Constants
@@ -84,7 +85,7 @@ const TEAM_LEADER_TOOLS = ["Agent", "Read", "Write", "Edit", "Bash", "Grep", "Gl
 const TEAM_MAX_TURNS = 25;
 
 /** Model for team leader files */
-const TEAM_MODEL = "claude-sonnet-4-5";
+const TEAM_MODEL = SONNET;
 
 // ============================================================================
 // Types

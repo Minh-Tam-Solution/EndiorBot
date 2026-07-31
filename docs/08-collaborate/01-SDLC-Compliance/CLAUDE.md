@@ -419,10 +419,10 @@ const mentalModels = await getBrain().getMentalModels();
 
 ---
 
-*Claude Code integration for EndiorBot v0.1.0-beta.5*
+*Claude Code integration for EndiorBot v0.1.0-beta.6*
 *Identity: Solo Developer Power Tool*
 *SDLC Framework v6.4.0*
-*Sprint 158 | 8,228+ tests | 42 commands | 42 unified commands | 14 SOUL agents (2-tier) | 7 TEAM charters | 6 providers*
+*Sprint 160 | 8,272+ tests | 42 commands | 42 unified commands | 14 SOUL agents (2-tier) | 7 TEAM charters | 6 providers | Claude 5 + Kimi K3*
 *Plugin Architecture: layered CLAUDE.md + Anthropic Base profile + skill loader + audit + self-improving hooks*
 
 ## graphify

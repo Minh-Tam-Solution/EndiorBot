@@ -20,6 +20,8 @@
  * @sdlc SDLC Framework 6.4.0
  */
 
+import { KIMI_K3 } from "../../config/models.js";
+
 // ============================================================================
 // Types
 // ============================================================================
@@ -183,7 +185,7 @@ export const DEFAULT_ORCHESTRATOR_CONFIG: OrchestratorConfig = {
     },
     {
       provider: "kimi",
-      model: "kimi-k2-6",
+      model: KIMI_K3,
       role: "expert",
       purpose: "Code generation, Chinese-context knowledge, alternative perspective",
       taskTypes: ["code_review", "architecture", "security"],

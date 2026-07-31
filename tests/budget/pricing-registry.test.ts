@@ -46,8 +46,8 @@ describe("PricingRegistry", () => {
     it("should create with default config when no file exists", () => {
       const registry = new PricingRegistry(tempConfigPath);
 
-      expect(registry.hasModel("claude-opus-4")).toBe(true);
-      expect(registry.hasModel("claude-sonnet-4")).toBe(true);
+      expect(registry.hasModel("claude-opus-5")).toBe(true);
+      expect(registry.hasModel("claude-sonnet-5")).toBe(true);
     });
 
     it("should load from file when it exists", () => {
@@ -92,7 +92,7 @@ describe("PricingRegistry", () => {
       const registry = new PricingRegistry(tempConfigPath);
 
       // Should have both default and custom models
-      expect(registry.hasModel("claude-opus-4")).toBe(true);
+      expect(registry.hasModel("claude-opus-5")).toBe(true);
       expect(registry.hasModel("new-model")).toBe(true);
     });
 
@@ -101,7 +101,7 @@ describe("PricingRegistry", () => {
 
       const registry = new PricingRegistry(tempConfigPath);
 
-      expect(registry.hasModel("claude-opus-4")).toBe(true);
+      expect(registry.hasModel("claude-opus-5")).toBe(true);
     });
   });
 
@@ -113,12 +113,12 @@ describe("PricingRegistry", () => {
     it("should return pricing for known model", () => {
       const registry = new PricingRegistry(tempConfigPath);
 
-      const pricing = registry.getPricing("claude-opus-4");
+      const pricing = registry.getPricing("claude-opus-5");
 
       expect(pricing).toBeDefined();
       expect(pricing?.provider).toBe("anthropic");
-      expect(pricing?.input_per_1k).toBe(0.015);
-      expect(pricing?.output_per_1k).toBe(0.075);
+      expect(pricing?.input_per_1k).toBe(0.005);
+      expect(pricing?.output_per_1k).toBe(0.025);
     });
 
     it("should return undefined for unknown model", () => {
@@ -138,9 +138,9 @@ describe("PricingRegistry", () => {
     it("should return pricing for known model", () => {
       const registry = new PricingRegistry(tempConfigPath);
 
-      const pricing = registry.getPricingOrDefault("claude-opus-4");
+      const pricing = registry.getPricingOrDefault("claude-opus-5");
 
-      expect(pricing.input_per_1k).toBe(0.015);
+      expect(pricing.input_per_1k).toBe(0.005);
     });
 
     it("should return fallback for unknown model", () => {
@@ -157,10 +157,10 @@ describe("PricingRegistry", () => {
 
       const pricing = registry.getPricingOrDefault(
         "unknown-model",
-        "claude-haiku-3.5",
+        "claude-haiku-4-5-20251001",
       );
 
-      expect(pricing.input_per_1k).toBe(0.001);
+      expect(pricing.input_per_1k).toBe(0.00025);
     });
   });
 
@@ -174,8 +174,8 @@ describe("PricingRegistry", () => {
 
       const models = registry.listModels();
 
-      expect(models).toContain("claude-opus-4");
-      expect(models).toContain("claude-sonnet-4");
+      expect(models).toContain("claude-opus-5");
+      expect(models).toContain("claude-sonnet-5");
       expect(models).toContain("gpt-4o");
       expect(models).toContain("self-hosted/qwen3-coder");
     });
@@ -191,9 +191,9 @@ describe("PricingRegistry", () => {
 
       const models = registry.listModelsByProvider("anthropic");
 
-      expect(models).toContain("claude-opus-4");
-      expect(models).toContain("claude-sonnet-4");
-      expect(models).toContain("claude-haiku-3.5");
+      expect(models).toContain("claude-opus-5");
+      expect(models).toContain("claude-sonnet-5");
+      expect(models).toContain("claude-haiku-4-5-20251001");
       expect(models).not.toContain("gpt-4o");
     });
 
@@ -204,7 +204,7 @@ describe("PricingRegistry", () => {
 
       expect(models).toContain("gpt-4-turbo");
       expect(models).toContain("gpt-4o");
-      expect(models).not.toContain("claude-opus-4");
+      expect(models).not.toContain("claude-opus-5");
     });
 
     it("should list self-hosted models", () => {
@@ -229,7 +229,7 @@ describe("PricingRegistry", () => {
 
       expect(freeModels).toContain("self-hosted/qwen3-coder");
       expect(freeModels).toContain("self-hosted/deepseek-coder");
-      expect(freeModels).not.toContain("claude-opus-4");
+      expect(freeModels).not.toContain("claude-opus-5");
     });
   });
 
@@ -242,16 +242,16 @@ describe("PricingRegistry", () => {
       const registry = new PricingRegistry(tempConfigPath);
 
       // 1000 input + 1000 output tokens
-      const cost = registry.calculateCost("claude-opus-4", 1000, 1000);
+      const cost = registry.calculateCost("claude-opus-5", 1000, 1000);
 
-      // (1000/1000 * 0.015) + (1000/1000 * 0.075) = 0.015 + 0.075 = 0.09
-      expect(cost).toBeCloseTo(0.09, 5);
+      // (1000/1000 * 0.005) + (1000/1000 * 0.025) = 0.005 + 0.025 = 0.03
+      expect(cost).toBeCloseTo(0.03, 5);
     });
 
     it("should calculate cost for Sonnet", () => {
       const registry = new PricingRegistry(tempConfigPath);
 
-      const cost = registry.calculateCost("claude-sonnet-4", 1000, 1000);
+      const cost = registry.calculateCost("claude-sonnet-5", 1000, 1000);
 
       // (1000/1000 * 0.003) + (1000/1000 * 0.015) = 0.003 + 0.015 = 0.018
       expect(cost).toBeCloseTo(0.018, 5);
@@ -294,7 +294,7 @@ describe("PricingRegistry", () => {
 
       const cheapest = registry.getCheapestModel("anthropic");
 
-      expect(cheapest).toBe("claude-haiku-3.5");
+      expect(cheapest).toBe("claude-haiku-4-5-20251001");
     });
 
     it("should return cheapest OpenAI model", () => {
@@ -394,13 +394,13 @@ describe("PricingRegistry", () => {
     it("should update pricing for a model", () => {
       const registry = new PricingRegistry(tempConfigPath);
 
-      registry.updatePricing("claude-opus-4", {
+      registry.updatePricing("claude-opus-5", {
         provider: "anthropic",
         input_per_1k: 0.02,
         output_per_1k: 0.08,
       });
 
-      const pricing = registry.getPricing("claude-opus-4");
+      const pricing = registry.getPricing("claude-opus-5");
       expect(pricing?.input_per_1k).toBe(0.02);
       expect(pricing?.output_per_1k).toBe(0.08);
     });
@@ -462,7 +462,7 @@ describe("PricingRegistry", () => {
 
       // Verify file contents
       const newRegistry = new PricingRegistry(tempConfigPath);
-      expect(newRegistry.hasModel("claude-opus-4")).toBe(true);
+      expect(newRegistry.hasModel("claude-opus-5")).toBe(true);
     });
   });
 });
@@ -497,10 +497,10 @@ describe("createPricingRegistry", () => {
 
 describe("getDefaultModelPricing", () => {
   it("should return pricing for known model", () => {
-    const pricing = getDefaultModelPricing("claude-opus-4");
+    const pricing = getDefaultModelPricing("claude-opus-5");
 
     expect(pricing).toBeDefined();
-    expect(pricing?.input_per_1k).toBe(0.015);
+    expect(pricing?.input_per_1k).toBe(0.005);
   });
 
   it("should return undefined for unknown model", () => {
@@ -523,9 +523,9 @@ describe("Constants", () => {
   it("should have all required models in default config", () => {
     const models = Object.keys(DEFAULT_PRICING_CONFIG.models);
 
-    expect(models).toContain("claude-opus-4");
-    expect(models).toContain("claude-sonnet-4");
-    expect(models).toContain("claude-haiku-3.5");
+    expect(models).toContain("claude-opus-5");
+    expect(models).toContain("claude-sonnet-5");
+    expect(models).toContain("claude-haiku-4-5-20251001");
     expect(models).toContain("gpt-4-turbo");
     expect(models).toContain("gpt-4o");
     expect(models).toContain("self-hosted/qwen3-coder");

@@ -21,6 +21,7 @@
 
 import type { Command } from "commander";
 import { getMetricsCollector, type DailyMetrics } from "../../analytics/index.js";
+import { SONNET } from "../../config/models.js";
 
 // ============================================================================
 // Types
@@ -40,7 +41,7 @@ interface CostReportOptions {
 // ============================================================================
 
 const PRE_ADR052_BASELINE = {
-  model: "claude-sonnet-4",
+  model: SONNET,
   inputPer1k: 0.003,
   outputPer1k: 0.015,
 };

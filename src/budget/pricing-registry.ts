@@ -11,6 +11,11 @@ import { readFileSync, existsSync, writeFileSync, mkdirSync } from "fs";
 import { join, dirname } from "path";
 import { homedir } from "os";
 import type { ModelPricing } from "./types.js";
+import {
+  OPUS, SONNET, HAIKU, FABLE,
+  KIMI_K3, KIMI_K3_256K, KIMI_FOR_CODING, MOONSHOT_K2_7_CODE,
+  MODEL_CAPABILITIES,
+} from "../config/models.js";
 
 // ============================================================================
 // Types
@@ -54,23 +59,29 @@ export const DEFAULT_PRICING_CONFIG: PricingConfig = {
   updatedAt: "2026-02-22",
   source: "manual",
   models: {
-    // Anthropic models
-    "claude-opus-4": {
+    // Anthropic — Claude 5 (per-1k = registry per-1M / 1000)
+    [OPUS]: {
       provider: "anthropic",
-      input_per_1k: 0.015,
-      output_per_1k: 0.075,
-      notes: "Most capable, highest cost",
+      input_per_1k: MODEL_CAPABILITIES[OPUS]!.inputPer1M / 1000,
+      output_per_1k: MODEL_CAPABILITIES[OPUS]!.outputPer1M / 1000,
+      notes: "Most capable",
     },
-    "claude-sonnet-4": {
+    [SONNET]: {
       provider: "anthropic",
-      input_per_1k: 0.003,
-      output_per_1k: 0.015,
+      input_per_1k: MODEL_CAPABILITIES[SONNET]!.inputPer1M / 1000,
+      output_per_1k: MODEL_CAPABILITIES[SONNET]!.outputPer1M / 1000,
       notes: "Balanced performance/cost",
     },
-    "claude-haiku-3.5": {
+    [FABLE]: {
       provider: "anthropic",
-      input_per_1k: 0.001,
-      output_per_1k: 0.005,
+      input_per_1k: MODEL_CAPABILITIES[FABLE]!.inputPer1M / 1000,
+      output_per_1k: MODEL_CAPABILITIES[FABLE]!.outputPer1M / 1000,
+      notes: "Creative/long-form specialist",
+    },
+    [HAIKU]: {
+      provider: "anthropic",
+      input_per_1k: MODEL_CAPABILITIES[HAIKU]!.inputPer1M / 1000,
+      output_per_1k: MODEL_CAPABILITIES[HAIKU]!.outputPer1M / 1000,
       notes: "Fast, economical",
     },
     // OpenAI models
@@ -102,18 +113,31 @@ export const DEFAULT_PRICING_CONFIG: PricingConfig = {
       output_per_1k: 0.0003,
       notes: "Fast, very economical",
     },
-    // Kimi models (Moonshot AI)
-    "kimi-k2-6": {
+    // Kimi Code subscription (api.kimi.com/coding) — k3, k3-256k, kimi-for-coding.
+    // Pricing = estimate (pricingConfirmed:false in registry); confirm at platform.kimi.ai.
+    [KIMI_K3]: {
       provider: "kimi",
-      input_per_1k: 0.003,
-      output_per_1k: 0.015,
-      notes: "Kimi k2.6 — served by kimi-api (Moonshot backup)",
+      input_per_1k: MODEL_CAPABILITIES[KIMI_K3]!.inputPer1M / 1000,
+      output_per_1k: MODEL_CAPABILITIES[KIMI_K3]!.outputPer1M / 1000,
+      notes: "Kimi K3 (1M ctx) — newest subscription model. Pricing estimate.",
     },
-    "kimi-for-coding": {
+    [KIMI_K3_256K]: {
       provider: "kimi",
-      input_per_1k: 0.003,
-      output_per_1k: 0.015,
-      notes: "Kimi coding-specialized — pay-per-token via kimi-api (Moonshot). When served by kimi-coding (CEO subscription), marginal cost is $0 (flat-rate).",
+      input_per_1k: MODEL_CAPABILITIES[KIMI_K3_256K]!.inputPer1M / 1000,
+      output_per_1k: MODEL_CAPABILITIES[KIMI_K3_256K]!.outputPer1M / 1000,
+      notes: "Kimi K3 256K. Pricing estimate.",
+    },
+    [KIMI_FOR_CODING]: {
+      provider: "kimi",
+      input_per_1k: MODEL_CAPABILITIES[KIMI_FOR_CODING]!.inputPer1M / 1000,
+      output_per_1k: MODEL_CAPABILITIES[KIMI_FOR_CODING]!.outputPer1M / 1000,
+      notes: "K2.7 Coding. Flat-rate $0 marginal when served by kimi-coding (CEO subscription).",
+    },
+    [MOONSHOT_K2_7_CODE]: {
+      provider: "kimi",
+      input_per_1k: MODEL_CAPABILITIES[MOONSHOT_K2_7_CODE]!.inputPer1M / 1000,
+      output_per_1k: MODEL_CAPABILITIES[MOONSHOT_K2_7_CODE]!.outputPer1M / 1000,
+      notes: "Kimi K2.7 Code via Moonshot direct API (kimi-api backup).",
     },
     // ADR-053: Flat-rate marker for cost tracking when provider is kimi-coding
     "kimi-coding": {
@@ -200,7 +224,7 @@ export class PricingRegistry {
   /**
    * Get pricing or fallback to default.
    */
-  getPricingOrDefault(model: string, fallback: string = "claude-sonnet-4"): ModelPricing {
+  getPricingOrDefault(model: string, fallback: string = SONNET): ModelPricing {
     return this.pricing.get(model) ?? this.pricing.get(fallback) ?? this.getDefaultPricing();
   }
 
@@ -411,9 +435,9 @@ export class PricingRegistry {
   private getDefaultPricing(): ModelPricing {
     return {
       provider: "anthropic",
-      model: "claude-sonnet-4",
-      input_per_1k: 0.003,
-      output_per_1k: 0.015,
+      model: SONNET,
+      input_per_1k: MODEL_CAPABILITIES[SONNET]!.inputPer1M / 1000,
+      output_per_1k: MODEL_CAPABILITIES[SONNET]!.outputPer1M / 1000,
       updatedAt: new Date(),
     };
   }

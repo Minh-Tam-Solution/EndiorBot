@@ -472,6 +472,7 @@ export class AERCalculator {
       opus: { calls: 0, tokens: 0, cost: 0, timeSeconds: 0 },
       sonnet: { calls: 0, tokens: 0, cost: 0, timeSeconds: 0 },
       haiku: { calls: 0, tokens: 0, cost: 0, timeSeconds: 0 },
+      fable: { calls: 0, tokens: 0, cost: 0, timeSeconds: 0 },
     };
 
     for (const event of events) {

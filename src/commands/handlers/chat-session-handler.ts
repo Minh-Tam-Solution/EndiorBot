@@ -25,6 +25,7 @@ import type { ChatRequest, Message, SystemBlock } from "../../providers/types.js
 import { getSoulLoader } from "../../bridge/intelligence/soul-loader.js";
 import { getWorkspaceContext, formatWorkspaceContext } from "../../agents/intelligence/workspace-context.js";
 import { HistoryCompactor, type CompactionState } from "../../agents/quality/history-compactor.js";
+import { SONNET } from "../../config/models.js";
 
 // ============================================================================
 // Types (CTO C1: separate from SDLC Session)
@@ -88,7 +89,7 @@ const PROVIDER_MODELS: Record<string, string> = {
   openai: "gpt-5.4",
   gemini: "gemini-2.5-pro",
   ollama: "qwen3.5:9b",
-  anthropic: "claude-sonnet-4-5-20250929",
+  anthropic: SONNET,
 };
 
 // ============================================================================

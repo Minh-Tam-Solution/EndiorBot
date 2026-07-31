@@ -21,6 +21,7 @@ import { execSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { platform, arch } from "node:os";
 import type { Session } from "../types.js";
+import { OPUS } from "../../config/models.js";
 import {
   type CheckpointState,
   type CheckpointSummary,
@@ -320,7 +321,7 @@ export async function createCheckpoint(options: CreateCheckpointOptions): Promis
     repoCommitSha: gitCommit,
     lockfilesHash: lockfileHash,
     nodeVersion: process.version.slice(1),
-    modelConfig: { model: "claude-opus-4" },
+    modelConfig: { model: OPUS },
     envFingerprint,
     executionTraceDigest,
     runtimeFingerprint,

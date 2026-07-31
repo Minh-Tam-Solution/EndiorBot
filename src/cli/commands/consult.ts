@@ -36,6 +36,15 @@ import {
 } from "../../gateway/chat-handler.js";
 import { initializeProvidersFromEnv } from "../../providers/init.js";
 import { getClaudeCodeBridge } from "../../agents/invoke/claude-code-bridge.js";
+import {
+  OPUS,
+  SONNET,
+  FABLE,
+  KIMI_K3,
+  KIMI_K3_256K,
+  KIMI_FOR_CODING,
+  LEGACY_KIMI_K2_6,
+} from "../../config/models.js";
 
 // ============================================================================
 // Constants - Available Models (per ADR-001)
@@ -48,9 +57,10 @@ import { getClaudeCodeBridge } from "../../agents/invoke/claude-code-bridge.js";
 export const AVAILABLE_MODELS = {
   openai: ["gpt-5.4", "o3", "o3-mini", "o1", "gpt-4o", "gpt-4o-mini"],
   gemini: ["gemini-2.5-pro", "gemini-2.5-flash", "gemini-2.0-flash-thinking", "gemini-2.0-flash"],
-  kimi: ["kimi-k2-6", "kimi-for-coding", "moonshot-v1-128k", "moonshot-v1-32k"],
-  anthropic: ["claude-opus-4", "claude-sonnet-4", "claude-haiku-4"],
+  kimi: [KIMI_K3, KIMI_K3_256K, KIMI_FOR_CODING, LEGACY_KIMI_K2_6],
+  anthropic: ["claude-opus-5", "claude-sonnet-5", "claude-fable-5", "claude-haiku-4"],
 } as const;
+// Note: anthropic entries are short aliases resolved via CLAUDE_MODEL_MAP below.
 
 /**
  * Default models — latest and most capable from each provider.
@@ -59,7 +69,7 @@ export const AVAILABLE_MODELS = {
 const DEFAULT_MODELS = {
   openai: "gpt-5.4",
   gemini: "gemini-2.5-pro",
-  kimi: "kimi-k2-6",
+  kimi: KIMI_K3,
 } as const;
 
 // ============================================================================
@@ -243,8 +253,9 @@ interface ConsultOptions {
  * Map short Claude aliases to full model IDs.
  */
 const CLAUDE_MODEL_MAP: Record<string, string> = {
-  "claude-opus-4": "claude-opus-4-5-20251101",
-  "claude-sonnet-4": "claude-sonnet-4-5-20250929",
+  "claude-opus-5": OPUS,
+  "claude-sonnet-5": SONNET,
+  "claude-fable-5": FABLE,
   "claude-haiku-4": "claude-haiku-4-5-20251001",
 };
 
@@ -570,7 +581,7 @@ export function registerConsultCommand(program: Command): void {
       console.log("└─────────────────────────────────────────────────────────────┘");
       console.log("");
       console.log("Usage:");
-      console.log("  endiorbot consult --openai o3 --gemini gemini-2.5-pro --kimi kimi-k2-6 \"your question\"");
+      console.log("  endiorbot consult --openai o3 --gemini gemini-2.5-pro --kimi k3 \"your question\"");
       console.log("");
     });
 }

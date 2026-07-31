@@ -15,6 +15,7 @@
  */
 
 import { DEFAULT_CONFIG, type ProjectTier } from "./schema.js";
+import { SONNET, OPUS, HAIKU } from "./models.js";
 
 // ============================================================================
 // Re-export DEFAULT_CONFIG for convenience
@@ -142,7 +143,7 @@ export function getTierDefaults(tier: ProjectTier): TierDefaults {
         agents: {
           defaults: {
             maxConcurrent: 1,
-            model: { primary: "anthropic/claude-haiku-4" },
+            model: { primary: `anthropic/${HAIKU}` },
             contextPruning: { mode: "none", ttl: "1h" },
             compaction: { mode: "none", threshold: 0.8 },
           },
@@ -189,7 +190,7 @@ export function getTierDefaults(tier: ProjectTier): TierDefaults {
         agents: {
           defaults: {
             maxConcurrent: 5,
-            model: { primary: "anthropic/claude-sonnet-4-5" },
+            model: { primary: `anthropic/${SONNET}` },
             contextPruning: { mode: "cache-ttl", ttl: "2h" },
             compaction: { mode: "safeguard", threshold: 0.75 },
           },
@@ -222,7 +223,7 @@ export function getTierDefaults(tier: ProjectTier): TierDefaults {
         agents: {
           defaults: {
             maxConcurrent: 10,
-            model: { primary: "anthropic/claude-opus-4-5" },
+            model: { primary: `anthropic/${OPUS}` },
             contextPruning: { mode: "cache-ttl", ttl: "4h" },
             compaction: { mode: "aggressive", threshold: 0.7 },
           },
@@ -274,9 +275,9 @@ export function getTierDefaults(tier: ProjectTier): TierDefaults {
  */
 export const DEFAULT_MODELS = {
   anthropic: {
-    primary: "claude-sonnet-4-5",
-    expert: "claude-opus-4-5",
-    fast: "claude-haiku-4",
+    primary: SONNET,
+    expert: OPUS,
+    fast: HAIKU,
   },
   openai: {
     primary: "gpt-5",

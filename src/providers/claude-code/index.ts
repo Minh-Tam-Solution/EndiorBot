@@ -25,6 +25,7 @@ import type {
   Message,
 } from "../types.js";
 import { TIMEOUTS } from "../../config/timeouts.js";
+import { SONNET, OPUS, HAIKU, getCapability } from "../../config/models.js";
 
 // ============================================================================
 // Constants
@@ -32,10 +33,13 @@ import { TIMEOUTS } from "../../config/timeouts.js";
 
 const CLAUDE_CLI = "claude";
 
+// Context windows resolve through the SSOT registry (Claude 5 = 1M; Haiku 200k).
+// Abstract ids "sonnet"/"opus"/"haiku" are the CLI tier labels; the bridge
+// resolves them to the current dated model at run time.
 const MODELS: ModelDefinition[] = [
-  { id: "sonnet", name: "Claude Sonnet", contextWindow: 200000, maxOutputTokens: 16384, supportedFeatures: ["chat"] },
-  { id: "haiku", name: "Claude Haiku", contextWindow: 200000, maxOutputTokens: 8192, supportedFeatures: ["chat"] },
-  { id: "opus", name: "Claude Opus", contextWindow: 200000, maxOutputTokens: 16384, supportedFeatures: ["chat"] },
+  { id: "sonnet", name: "Claude Sonnet", contextWindow: getCapability(SONNET).contextWindow, maxOutputTokens: 16384, supportedFeatures: ["chat"] },
+  { id: "haiku", name: "Claude Haiku", contextWindow: getCapability(HAIKU).contextWindow, maxOutputTokens: 8192, supportedFeatures: ["chat"] },
+  { id: "opus", name: "Claude Opus", contextWindow: getCapability(OPUS).contextWindow, maxOutputTokens: 16384, supportedFeatures: ["chat"] },
 ];
 
 // ============================================================================

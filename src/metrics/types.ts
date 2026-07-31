@@ -12,6 +12,12 @@
  * @sprint 72
  */
 
+import {
+  OPUS, SONNET, FABLE, HAIKU,
+  KIMI_K3, KIMI_K3_256K, KIMI_FOR_CODING, MOONSHOT_K2_7_CODE,
+  LEGACY_OPUS, LEGACY_SONNET, MODEL_CAPABILITIES,
+} from "../config/models.js";
+
 // ============================================================================
 // Core Metrics
 // ============================================================================
@@ -96,6 +102,9 @@ export interface ModelUsageBreakdown {
 
   /** Haiku usage */
   haiku: ModelTierUsage;
+
+  /** Fable usage */
+  fable: ModelTierUsage;
 }
 
 /**
@@ -359,16 +368,33 @@ export interface ModelPricing {
 }
 
 /**
- * Known model pricing.
+ * Known model pricing (per 1M tokens).
+ *
+ * Current = Claude 5 family + Kimi K3. Legacy IDs kept so historical
+ * sessions/checkpoints still price correctly.
  */
 export const MODEL_PRICING: Record<string, ModelPricing> = {
-  "claude-opus-4": { inputPer1M: 15.0, outputPer1M: 75.0 },
-  "claude-opus-4-5-20251101": { inputPer1M: 15.0, outputPer1M: 75.0 },
-  "claude-sonnet-4": { inputPer1M: 3.0, outputPer1M: 15.0 },
-  "claude-sonnet-4-5-20250929": { inputPer1M: 3.0, outputPer1M: 15.0 },
-  "claude-haiku-4": { inputPer1M: 0.25, outputPer1M: 1.25 },
-  "claude-haiku-4-5-20251001": { inputPer1M: 0.25, outputPer1M: 1.25 },
+  // Current — resolved through the SSOT capability registry (models.ts)
+  [OPUS]: { inputPer1M: MODEL_CAPABILITIES[OPUS]!.inputPer1M, outputPer1M: MODEL_CAPABILITIES[OPUS]!.outputPer1M },
+  [SONNET]: { inputPer1M: MODEL_CAPABILITIES[SONNET]!.inputPer1M, outputPer1M: MODEL_CAPABILITIES[SONNET]!.outputPer1M },
+  [FABLE]: { inputPer1M: MODEL_CAPABILITIES[FABLE]!.inputPer1M, outputPer1M: MODEL_CAPABILITIES[FABLE]!.outputPer1M },
+  [HAIKU]: { inputPer1M: MODEL_CAPABILITIES[HAIKU]!.inputPer1M, outputPer1M: MODEL_CAPABILITIES[HAIKU]!.outputPer1M },
+  [KIMI_K3]: { inputPer1M: MODEL_CAPABILITIES[KIMI_K3]!.inputPer1M, outputPer1M: MODEL_CAPABILITIES[KIMI_K3]!.outputPer1M },
+  [KIMI_K3_256K]: { inputPer1M: MODEL_CAPABILITIES[KIMI_K3_256K]!.inputPer1M, outputPer1M: MODEL_CAPABILITIES[KIMI_K3_256K]!.outputPer1M },
+  [KIMI_FOR_CODING]: { inputPer1M: MODEL_CAPABILITIES[KIMI_FOR_CODING]!.inputPer1M, outputPer1M: MODEL_CAPABILITIES[KIMI_FOR_CODING]!.outputPer1M },
+  [MOONSHOT_K2_7_CODE]: { inputPer1M: MODEL_CAPABILITIES[MOONSHOT_K2_7_CODE]!.inputPer1M, outputPer1M: MODEL_CAPABILITIES[MOONSHOT_K2_7_CODE]!.outputPer1M },
+  // Legacy (backward compat for historical sessions — dated IDs only)
+  [LEGACY_OPUS]: { inputPer1M: 15.0, outputPer1M: 75.0 },
+  [LEGACY_SONNET]: { inputPer1M: 3.0, outputPer1M: 15.0 },
 };
+
+/**
+ * Conservative proxy for UNPRICED models — highest known tier.
+ *
+ * CEO directive: $0 for unpriced = budget-guard NEVER fires (budget blind).
+ * Over-estimate instead so the guard trips early rather than never.
+ */
+const CONSERVATIVE_PROXY_PRICING: ModelPricing = { inputPer1M: 10.0, outputPer1M: 50.0 };
 
 /**
  * Calculate cost for a model call.
@@ -378,10 +404,14 @@ export function calculateModelCost(
   inputTokens: number,
   outputTokens: number
 ): number {
-  const pricing = MODEL_PRICING[model];
-  if (!pricing) {
-    // Default to Sonnet pricing for unknown models
-    return (inputTokens * 3.0 + outputTokens * 15.0) / 1_000_000;
+  const pricing = MODEL_PRICING[model] ?? CONSERVATIVE_PROXY_PRICING;
+  if (!MODEL_PRICING[model]) {
+    // Loud, not silent — unpriced model uses over-estimate proxy.
+    console.warn(
+      `[metrics] No pricing for model "${model}" — using conservative proxy ` +
+        `($${CONSERVATIVE_PROXY_PRICING.inputPer1M}/$${CONSERVATIVE_PROXY_PRICING.outputPer1M} per 1M). ` +
+        `Add real pricing to MODEL_PRICING.`
+    );
   }
   return (
     (inputTokens * pricing.inputPer1M + outputTokens * pricing.outputPer1M) / 1_000_000
@@ -391,8 +421,9 @@ export function calculateModelCost(
 /**
  * Get model tier from model ID.
  */
-export function getModelTier(model: string): "opus" | "sonnet" | "haiku" {
+export function getModelTier(model: string): "opus" | "sonnet" | "haiku" | "fable" {
   if (model.includes("opus")) return "opus";
+  if (model.includes("fable")) return "fable";
   if (model.includes("haiku")) return "haiku";
   return "sonnet";
 }
@@ -425,6 +456,7 @@ export function createEmptyMetrics(): AERMetrics {
       opus: { calls: 0, tokens: 0, cost: 0, timeSeconds: 0 },
       sonnet: { calls: 0, tokens: 0, cost: 0, timeSeconds: 0 },
       haiku: { calls: 0, tokens: 0, cost: 0, timeSeconds: 0 },
+      fable: { calls: 0, tokens: 0, cost: 0, timeSeconds: 0 },
     },
   };
 }

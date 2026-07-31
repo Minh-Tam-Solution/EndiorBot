@@ -6,6 +6,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [v0.1.0-beta.6] - 2026-07-30
+
+### Added — Model Upgrade (Sprint 160, Wave-1 + Wave-1b)
+- **Claude 5 family** — `claude-opus-5` ($5/$25), `claude-sonnet-5` ($3/$15), `claude-fable-5` ($10/$50), all 1M context; Haiku unchanged. Legacy dated IDs retained for persisted checkpoints/sessions only.
+- **Kimi — exact API-IDs verified from `~/.kimi-code/config.toml`** (display-name ≠ API-ID): `k3` / `k3-256k` in the **kimi-code subscription** namespace (`api.kimi.com/coding`, served by the `kimi-coding` provider). The Moonshot direct-API namespace (`api.moonshot.ai`, `kimi-api` provider) uses **dotted** ids — newest `kimi-k2.7-code`; the old `kimi-k2-6` (dash) is retired. `pricingConfirmed: false` on Kimi entries — cost is an estimate pending vendor confirmation.
+- **Capability registry** (`MODEL_CAPABILITIES` in `src/config/models.ts`) — single source for context window, pricing tier, and pricing per model. Router (`model-selector`, `claude-code`), pricing (`budget/*`, `metrics`), and consult routing (`task-classifier`) all resolve through it. Next vendor upgrade = edit the registry only.
+
+### Changed
+- **True SSOT (Wave-1b)** — routing + pricing cluster now resolves through the capability registry: `model-selector`, `task-classifier`, `multi-model-orchestrator`, `budget/pricing-registry`, `budget-tracker`, `cost-estimator`, `metrics`, `team-monitor`, `claude-code` provider. Autonomous routing targets K3 / Opus 5, not the sunsetting `kimi-k2-6`. **Live routing/pricing code = 0 fabricated model IDs** (legacy dated IDs retained under `LEGACY_*` for checkpoint compat).
+- **Conservative pricing proxy** — unpriced models cost at the highest known tier ($10/$50) with a loud warning instead of a silent $0/Sonnet fallback (budget-guard no longer blind).
+- `getModelTier` + `ModelUsageBreakdown` gain a `fable` tier.
+
+### Fixed
+- **Fabricated Kimi IDs** — an initial pass used invented `kimi-k3` / `kimi-k2-6` (dash) that would 404. Corrected to verified `k3` / `k3-256k` and dotted Moonshot ids after reading the Kimi Code config.
+- Anthropic provider healthcheck used an invalid `claude-haiku-4` model ID → now the real Haiku SSOT constant.
+- Claude Code bridge model context windows were stale at 200k → now resolve to Claude 5 (1M) via the registry.
+
+> **Note:** the SE4A coordinator spike (federated-workflow) depends on the herdr terminal-backend (Sprint 159 bridge track) and ships with that track, not this model-only changeset.
+
 ## [v0.1.0-beta.5] - 2026-07-04
 
 ### Added — ST/DT Content Gates (Sprint 157-158)

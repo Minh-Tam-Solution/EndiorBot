@@ -16,11 +16,13 @@
 import type { TaskComplexity, TaskType, ModelTier } from "../types.js";
 import type {
   ModelCapability,
+  ModelFeature,
   ModelSelectionResult,
   SelectionCriteria,
   ProviderId,
   BudgetConstraint,
 } from "./types.js";
+import { OPUS, SONNET, HAIKU, getCapability } from "../../config/models.js";
 import {
   QualityGatesEvaluator,
   createQualityGates,
@@ -37,43 +39,37 @@ import {
 // ============================================================================
 
 /**
+ * Build an Anthropic ModelCapability from the SSOT capability registry.
+ * cost/context resolve through models.ts — next vendor bump = edit registry only.
+ */
+function anthropicCapability(
+  modelId: string,
+  name: string,
+  strengths: TaskType[],
+  features: ModelFeature[],
+): ModelCapability {
+  const c = getCapability(modelId);
+  return {
+    providerId: "anthropic",
+    modelId,
+    name,
+    tier: c.tier as ModelTier,
+    inputCost: c.inputPer1M / 1000,   // registry is per-1M; this table is per-1K
+    outputCost: c.outputPer1M / 1000,
+    maxTokens: c.contextWindow,
+    strengths,
+    features,
+  };
+}
+
+/**
  * Default model capabilities for common providers.
  */
 export const DEFAULT_MODEL_CAPABILITIES: ModelCapability[] = [
-  // Anthropic
-  {
-    providerId: "anthropic",
-    modelId: "claude-opus-4",
-    name: "Claude Opus 4",
-    tier: "expert",
-    inputCost: 0.015,
-    outputCost: 0.075,
-    maxTokens: 200000,
-    strengths: ["architecture", "security", "research"],
-    features: ["reasoning", "coding", "vision", "context"],
-  },
-  {
-    providerId: "anthropic",
-    modelId: "claude-sonnet-4",
-    name: "Claude Sonnet 4",
-    tier: "powerful",
-    inputCost: 0.003,
-    outputCost: 0.015,
-    maxTokens: 200000,
-    strengths: ["code_gen", "bug_fix", "general"],
-    features: ["reasoning", "coding", "vision", "streaming"],
-  },
-  {
-    providerId: "anthropic",
-    modelId: "claude-haiku-4",
-    name: "Claude Haiku 4",
-    tier: "fast",
-    inputCost: 0.00025,
-    outputCost: 0.00125,
-    maxTokens: 200000,
-    strengths: ["general"],
-    features: ["fast", "streaming"],
-  },
+  // Anthropic — resolved through SSOT (Claude 5, 1M context)
+  anthropicCapability(OPUS, "Claude Opus 5", ["architecture", "security", "research"], ["reasoning", "coding", "vision", "context"]),
+  anthropicCapability(SONNET, "Claude Sonnet 5", ["code_gen", "bug_fix", "general"], ["reasoning", "coding", "vision", "streaming"]),
+  anthropicCapability(HAIKU, "Claude Haiku", ["general"], ["fast", "streaming"]),
 
   // OpenAI
   {

@@ -94,7 +94,7 @@ describe("AIAssistedFixer - Configuration", () => {
     const config = fixer.getConfig();
     expect(config.estimatedCostPerConsultation).toBe(0.05);
     expect(config.maxTokens).toBe(1000);
-    expect(config.model).toBe("claude-sonnet-4");
+    expect(config.model).toBe("claude-sonnet-5");
     expect(config.provider).toBe("anthropic");
   });
 

@@ -171,7 +171,7 @@ describe("TeamMonitor — estimateSessionCost (Sprint 91)", () => {
     // Sonnet: (5000/1000)*0.003 + (2000/1000)*0.015 = 0.015 + 0.030 = 0.045
     expect(cost).toBeCloseTo(0.045, 2);
     expect(pricing.calculateCost).toHaveBeenCalledWith(
-      "claude-sonnet-4",
+      "claude-sonnet-5",
       expect.any(Number),
       expect.any(Number),
     );

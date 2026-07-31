@@ -26,7 +26,7 @@ function createUsageRecord(
 ): TokenUsageRecord {
   return {
     timestamp: new Date(),
-    model: "claude-sonnet-4",
+    model: "claude-sonnet-5",
     provider: "anthropic",
     inputTokens: 1000,
     outputTokens: 500,
@@ -208,7 +208,7 @@ describe("BudgetTracker", () => {
 
       const estimate = await tracker.estimateCost(
         createTaskContext({ prompt: "Short prompt" }),
-        "claude-sonnet-4",
+        "claude-sonnet-5",
       );
 
       expect(estimate.estimated_cost).toBeGreaterThan(0);
@@ -221,11 +221,11 @@ describe("BudgetTracker", () => {
 
       const opusEstimate = await tracker.estimateCost(
         createTaskContext(),
-        "claude-opus-4",
+        "claude-opus-5",
       );
       const haikuEstimate = await tracker.estimateCost(
         createTaskContext(),
-        "claude-haiku-3.5",
+        "claude-haiku-4-5-20251001",
       );
 
       // Opus should be more expensive than Haiku
@@ -709,7 +709,7 @@ describe("BudgetTracker", () => {
     it("should get default pricing", () => {
       const tracker = createBudgetTracker();
 
-      const pricing = tracker.getPricing("claude-sonnet-4");
+      const pricing = tracker.getPricing("claude-sonnet-5");
 
       expect(pricing).toBeDefined();
       expect(pricing!.input_per_1k).toBeGreaterThan(0);

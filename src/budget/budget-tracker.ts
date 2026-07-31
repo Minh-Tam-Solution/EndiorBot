@@ -11,6 +11,7 @@
  * - Integrates with circuit breaker state machine
  */
 
+import { OPUS, SONNET, HAIKU, MODEL_CAPABILITIES } from "../config/models.js";
 import type {
   BudgetConfig,
   BudgetState,
@@ -60,30 +61,30 @@ const BASE_OUTPUT_ESTIMATES: Record<TaskType, number> = {
   general: 1000,
 };
 
-/** Fallback pricing (Sonnet 4) for unknown models */
+/** Fallback pricing (Sonnet) for unknown models — resolved through SSOT */
 const FALLBACK_PRICING: ModelPricing = {
   provider: "anthropic",
-  model: "claude-sonnet-4",
-  input_per_1k: 0.003,
-  output_per_1k: 0.015,
+  model: SONNET,
+  input_per_1k: MODEL_CAPABILITIES[SONNET]!.inputPer1M / 1000,
+  output_per_1k: MODEL_CAPABILITIES[SONNET]!.outputPer1M / 1000,
   updatedAt: new Date(),
 };
 
-/** Default model pricing (per 1K tokens) */
+/** Default model pricing (per 1K tokens) — Anthropic resolved through SSOT */
 const DEFAULT_PRICING: Record<string, ModelPricing> = {
-  "claude-opus-4": {
+  [OPUS]: {
     provider: "anthropic",
-    model: "claude-opus-4",
-    input_per_1k: 0.015,
-    output_per_1k: 0.075,
+    model: OPUS,
+    input_per_1k: MODEL_CAPABILITIES[OPUS]!.inputPer1M / 1000,
+    output_per_1k: MODEL_CAPABILITIES[OPUS]!.outputPer1M / 1000,
     updatedAt: new Date(),
   },
-  "claude-sonnet-4": FALLBACK_PRICING,
-  "claude-haiku-3.5": {
+  [SONNET]: FALLBACK_PRICING,
+  [HAIKU]: {
     provider: "anthropic",
-    model: "claude-haiku-3.5",
-    input_per_1k: 0.001,
-    output_per_1k: 0.005,
+    model: HAIKU,
+    input_per_1k: MODEL_CAPABILITIES[HAIKU]!.inputPer1M / 1000,
+    output_per_1k: MODEL_CAPABILITIES[HAIKU]!.outputPer1M / 1000,
     updatedAt: new Date(),
   },
   "gpt-4-turbo": {
@@ -251,7 +252,7 @@ export class BudgetTracker {
    */
   async estimateCost(
     context: TaskContext,
-    model: string = "claude-sonnet-4",
+    model: string = SONNET,
   ): Promise<CostEstimate> {
     const inputTokens = this.estimateInputTokens(context);
     const taskType = context.taskType ?? "general";
